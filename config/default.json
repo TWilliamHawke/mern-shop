@@ -1,0 +1,4 @@
+{
+  "mongoUrl": "mongodb+srv://twilliam:stoprescue567@cluster0-hx4hc.azure.mongodb.net/test?retryWrites=true&w=majority",
+  "isLocal": false
+}

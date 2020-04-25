@@ -1,0 +1,29 @@
+.navbar {
+  background: rgb(51, 103, 214);
+  width: 100%;
+  color: #fff;
+  padding: 0 40px;
+  ul {
+    display: flex;
+    justify-content: flex-end;
+    li {
+      list-style: none;
+      a {
+        padding: 20px 20px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: #fff;
+        cursor: pointer;
+        &:hover {
+          background: rgb(83, 120, 202);
+        }
+      }
+      .active {
+        background: rgb(99, 134, 211);
+      }
+    }
+  }
+}
