@@ -1,17 +1,46 @@
 .auth-form {
+  width: 400px;
+  margin: 0 auto;
+  text-align: left;
+  &__radio {
+    margin: 10px auto;
+    text-align: center;
+  }
+  fieldset {
+    border: none;
+    width: 90%;
+    margin: 0 auto;
+  }
   input {
     font-size: 20px;
     border-radius: 3px;
     border: 1px solid rgb(160, 159, 159);
-    padding: 2px 10px;
+    padding: 5px 10px;
+    display: block;
+    width: 100%;
   }
   input[type='radio'] {
     display: none;
   }
+  
   input:checked + label {
     color: rgb(43, 184, 141);
   }
   input:not(:checked) + label {
     cursor: pointer;
+  }
+  button {
+    border: none;
+    margin: 0 auto;
+    display: block;
+    padding: 15px 25px;
+    font-size: 16px;
+    color: white;
+    background: rgb(17, 67, 160);
+    border-radius: 3px;
+    &:hover {
+      cursor: pointer;
+      background: rgb(24, 100, 241);
+    }
   }
 }

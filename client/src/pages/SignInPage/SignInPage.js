@@ -5,7 +5,7 @@ const SignInPage = () => {
   return (
     <div>
       <h2>Sign In</h2>
-      <AuthForm buttonName='Sign in'/>
+      <AuthForm buttonName='Sign in' fetchForm={() => {}}/>
     </div>
   );
 };
