@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const router = Router()
 
-router.get('/', (req, res) => {
+router.post('/createUser', (req, res) => {
   res.json({message: 'hello world'})
 })
 

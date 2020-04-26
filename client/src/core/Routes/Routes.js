@@ -2,11 +2,11 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import ProtectedRoute from './components/ProtectedRoute'
-import MainPage from './pages/MainPage'
-import LoginPage from './pages/LoginPage'
-import SignInPage from './pages/SignInPage'
-import CartPage from './pages/CartPage'
+import ProtectedRoute from 'src/components/ProtectedRoute'
+import MainPage from 'src/pages/MainPage'
+import LoginPage from 'src/pages/LoginPage'
+import SignInPage from 'src/pages/SignInPage'
+import CartPage from 'src/pages/CartPage'
 
 export const Routes = ({isGuest, isUser}) => {
   return (

@@ -3,9 +3,10 @@ import { useRouteMatch } from 'react-router-dom'
 import AuthInput from './AuthInput';
 
 import './auth-form.scss'
+import { connect } from 'react-redux';
 
 
-const AuthForm = ({ buttonName, fetchForm }) => {
+const AuthForm = ({ buttonName, fetchForm, loading }) => {
   const { path }= useRouteMatch()
   const [isEmail, setIsEmail] = useState(true)
   const [formValues, setFormValues] = useState({
@@ -14,6 +15,13 @@ const AuthForm = ({ buttonName, fetchForm }) => {
     userName: '',
     password: ''
   })
+
+  const inputs = [
+    {type: 'text', name: 'phone', label: 'Phone', hide: isEmail},
+    {type: 'email', name: 'email', label: 'Email', hide: !isEmail},
+    {type: 'text', name: 'userName', label: 'Username', hide: path === '/login'},
+    {type: 'password', name: 'password', label: 'Password'},
+  ]
 
   const inputHandle = e => {
     e.preventDefault()
@@ -24,19 +32,6 @@ const AuthForm = ({ buttonName, fetchForm }) => {
       [name]: value
     })
   }
-
-  const inputs = [
-    {type: 'text', name: 'phone', label: 'Phone', hide: isEmail},
-    {type: 'email', name: 'email', label: 'Email', hide: !isEmail},
-    {type: 'text', name: 'userName', label: 'Username', hide: path === '/login'},
-    {type: 'password', name: 'password', label: 'Password'},
-  ].map((input) => {
-    const {hide, name} = input
-    if(hide) return null
-    return(
-      <AuthInput key={name} data={input} values={formValues} onInput={inputHandle}  />
-    )
-  })
 
   const radioHandle = () => {
     setIsEmail(isEmail => !isEmail)
@@ -63,10 +58,19 @@ const AuthForm = ({ buttonName, fetchForm }) => {
           id='radioPhone'/>
         <label htmlFor='radioPhone'>Phone</label>
       </fieldset>
-      {inputs}
-      <button type='submit'>{buttonName}</button>
+      {inputs.map((input) => {
+        const {hide, name} = input
+        if(hide) return null
+        return(
+          <AuthInput key={name} data={input} values={formValues} onInput={inputHandle}  />
+        )})}
+      <button disabled={loading} type='submit'>{buttonName}</button>
     </form>
   );
 };
 
-export default AuthForm;
+const mapStatetoProps = ({auth: {loading}}) => ({
+  loading
+})
+
+export default connect(mapStatetoProps)(AuthForm);

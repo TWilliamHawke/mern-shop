@@ -10,11 +10,13 @@ describe('componemt test', () => {
   let wrapper
   let fetchTest = jest.fn(() => {})
   beforeAll(() => {
-    wrapper = shallow(<AuthForm buttonName='testName' fetchForm={fetchTest}/>)
+    wrapper = shallow(<AuthForm loading={true} buttonName='testName' fetchForm={fetchTest}/>)
   })
 
   test('button name should be equal props', () => {
     expect(wrapper.find('button').text()).toBe('testName')
+    expect(wrapper.find('button').prop('disabled')).toBe(true)
+
   })
 
   it('should render Auth input 2 times', () => {
