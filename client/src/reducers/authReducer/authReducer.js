@@ -1,4 +1,4 @@
-import { AUTH_REQUEST, CREATE_USER_SUCCESS, LOGIN_SUCCESS, AUTH_FAILURE } from "./types"
+import { AUTH_REQUEST, CREATE_USER_SUCCESS, LOGIN_SUCCESS, AUTH_FAILURE, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS } from "./types"
 
 
 
@@ -7,6 +7,8 @@ const initialState = {
   errors: [],
   userType: 'guest',
   isGuest: true,
+  successMessage: false,
+  allowRedirect: false,
 }
 
 const handlers = {
@@ -14,11 +16,14 @@ const handlers = {
   [AUTH_REQUEST]: state => ({
     ...state,
     loading: true,
+    successMessage: false,
     errors: []
   }),
   [CREATE_USER_SUCCESS]: (state) => ({
     ...state,
     loading: false,
+    successMessage: true,
+    allowRedirect: true,
   }),
   [LOGIN_SUCCESS]: (state, payload) => ({
     ...state,
@@ -29,6 +34,14 @@ const handlers = {
     ...state,
     errors: payload,
     loading: false
+  }),
+  [HIDE_SUCCESS_MESSAGE]: (state) => ({
+    ...state,
+    successMessage: false
+  }),
+  [REDIRECT_SUCCESS]: state => ({
+    ...state,
+    allowRedirect: false
   })
 }
 

@@ -1,13 +1,19 @@
 import React from 'react';
 import AuthForm from '../../components/AuthForm';
+import { loginUser} from '../../actions/syncActions'
+import { connect } from 'react-redux';
 
-const LoginPage = () => {
+export const LoginPage = ({loginUser}) => {
   return (
     <div>
       <h2>Login</h2>
-      <AuthForm buttonName='Login' fetchForm={() => {}} />
+      <AuthForm buttonName='Login' fetchForm={loginUser} />
     </div>
   );
 };
 
-export default LoginPage;
+const mapDispatchToProps = {
+  loginUser
+}
+
+export default connect(null, mapDispatchToProps)(LoginPage);

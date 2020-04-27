@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import { useRouteMatch } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { useRouteMatch, useHistory } from 'react-router-dom'
 import AuthInput from './AuthInput';
+import { hideSuccessMessage, redirectSuccess } from '../../actions/syncActions'
+import ErrorMessages from '../ErrorMessages/ErrorMessages'
 
 import './auth-form.scss'
 import { connect } from 'react-redux';
 
 
-const AuthForm = ({ buttonName, fetchForm, loading }) => {
+export const AuthForm = ({ buttonName, fetchForm, loading, successMessage, hideSuccessMessage, redirectSuccess, allowRedirect, errors }) => {
   const { path }= useRouteMatch()
+  const history = useHistory()
   const [isEmail, setIsEmail] = useState(true)
   const [formValues, setFormValues] = useState({
     phone: '',
@@ -15,7 +18,22 @@ const AuthForm = ({ buttonName, fetchForm, loading }) => {
     userName: '',
     password: ''
   })
+  
+  useEffect(() => {
+    if(!allowRedirect) return
+    history.push('/login')
+    redirectSuccess()
+    // eslint-disable-next-line
+  }, [allowRedirect, path])
 
+  useEffect (() => {
+    return () => {
+      if(path !== '/login' || !successMessage) return
+      hideSuccessMessage()
+    }
+  // eslint-disable-next-line
+  }, [hideSuccessMessage, path])
+  
   const inputs = [
     {type: 'text', name: 'phone', label: 'Phone', hide: isEmail},
     {type: 'email', name: 'email', label: 'Email', hide: !isEmail},
@@ -64,13 +82,23 @@ const AuthForm = ({ buttonName, fetchForm, loading }) => {
         return(
           <AuthInput key={name} data={input} values={formValues} onInput={inputHandle}  />
         )})}
+      <ErrorMessages errors={errors} />
+      {successMessage && <div
+        className='success-message'>Account has been created
+        <button onClick={hideSuccessMessage}>Close</button>
+      </div>}
       <button disabled={loading} type='submit'>{buttonName}</button>
     </form>
   );
 };
 
-const mapStatetoProps = ({auth: {loading}}) => ({
-  loading
+const mapDispatchToProps = {
+  hideSuccessMessage,
+  redirectSuccess
+}
+
+const mapStatetoProps = ({auth: {loading, successMessage, allowRedirect, errors}}) => ({
+  loading, successMessage, redirectSuccess, allowRedirect, errors
 })
 
-export default connect(mapStatetoProps)(AuthForm);
+export default connect(mapStatetoProps, mapDispatchToProps)(AuthForm);

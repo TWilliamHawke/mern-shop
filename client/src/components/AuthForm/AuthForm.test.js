@@ -1,21 +1,23 @@
 import React from 'react';
 import { shallow } from 'enzyme'
-import AuthForm from './AuthForm';
+import ConnectedAuthForm, { AuthForm } from './AuthForm';
+import configMockStore from 'redux-mock-store'
 
 jest.mock('react-router-dom', () => ({
-  useRouteMatch: jest.fn(() => ({path: '/login'}))
+  useRouteMatch: jest.fn(() => ({path: '/login'})),
+  useHistory: jest.fn(() => ({push: () => {}}))
 }))
 
 describe('componemt test', () => {
   let wrapper
   let fetchTest = jest.fn(() => {})
   beforeAll(() => {
-    wrapper = shallow(<AuthForm loading={true} buttonName='testName' fetchForm={fetchTest}/>)
+    wrapper = shallow(<AuthForm successMessage={true} loading={true} buttonName='testName' fetchForm={fetchTest}/>)
   })
 
   test('button name should be equal props', () => {
-    expect(wrapper.find('button').text()).toBe('testName')
-    expect(wrapper.find('button').prop('disabled')).toBe(true)
+    expect(wrapper.find('[type="submit"]').text()).toBe('testName')
+    expect(wrapper.find('[type="submit"]').prop('disabled')).toBe(true)
 
   })
 
@@ -27,5 +29,24 @@ describe('componemt test', () => {
     const button = wrapper.find('form')
     button.simulate('submit', {preventDefault: () => {}})
     expect(fetchTest).toBeCalled()
+  })
+
+  it('should render success-message', () => {
+    expect(wrapper.exists('.success-message')).toBe(true)
+  })
+})
+
+describe('test connected component', () => {
+  let wrapper
+  beforeAll(() => {
+    const mockStore = configMockStore()
+    const state = {auth: {loading: 'testLoading', successMessage: 'testMessage', errors: 'testArray'}}
+    const store = mockStore(state)
+    wrapper = shallow(<ConnectedAuthForm store={store} />).find('AuthForm')
+  })
+  test('component should receive props from connect function', () => {
+    expect(wrapper.prop('hideSuccessMessage')).toBeInstanceOf(Function)
+    expect(wrapper.prop('redirectSuccess')).toBeInstanceOf(Function)
+    expect(wrapper.prop('errors')).toBe('testArray')
   })
 })

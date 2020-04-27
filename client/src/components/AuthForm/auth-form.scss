@@ -1,3 +1,6 @@
+$success-bg: rgba(93, 158, 102, 0.247);
+$success-font: rgb(6, 121, 25);
+
 .auth-form {
   width: 400px;
   margin: 0 auto;
@@ -29,7 +32,7 @@
   input:not(:checked) + label {
     cursor: pointer;
   }
-  button {
+  button[type="submit"] {
     border: none;
     margin: 0 auto;
     display: block;
@@ -41,6 +44,26 @@
     &:hover {
       cursor: pointer;
       background: rgb(24, 100, 241);
+    }
+  }
+
+  .success-message {
+    margin: 15px auto;
+    width: 85%;
+    padding: 15px;
+    border-radius: 3px;
+    background: $success-bg;
+    color: $success-font;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button {
+      border: 1px solid $success-font;
+      background: transparent;
+      color: $success-font;
+      border-radius: 2px;
+      cursor: pointer;
+      padding: 5px 10px;
     }
   }
 }
