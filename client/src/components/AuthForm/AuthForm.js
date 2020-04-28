@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import AuthInput from './AuthInput';
-import { hideSuccessMessage, redirectSuccess } from '../../actions/syncActions'
+import { hideSuccessMessage, redirectSuccess } from '../../redux/authReducer/actions'
 import ErrorMessages from '../ErrorMessages/ErrorMessages'
 
 import './auth-form.scss'

@@ -8,8 +8,8 @@ const ErrorMessages = ({errors = []}) => {
   
   return (
     <div className='error-message-list'>
-      {errors.map(error => (
-        <p className='error-message'>{error}</p>
+      {errors.map((error, idx) => (
+        <p key={idx} className='error-message'>{error}</p>
       ))}
     </div>
   );

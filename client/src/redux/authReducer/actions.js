@@ -1,5 +1,5 @@
-import { AUTH_REQUEST, LOGIN_SUCCESS, AUTH_FAILURE, CREATE_USER_SUCCESS, CREATE_USER_REQUEST, CREATE_USER, LOGIN_USER, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS } from "../reducers/authReducer/types"
-import { transformErrors } from '../utils/actionHelpers'
+import { AUTH_REQUEST, LOGIN_SUCCESS, AUTH_FAILURE, CREATE_USER_SUCCESS, CREATE_USER_REQUEST, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS } from "./types"
+import { transformErrors } from './utils/transformErrors'
 
 export const authRequest = () => {
   return {type: AUTH_REQUEST}
@@ -20,14 +20,6 @@ export const createUserSuccess = () => {
 
 export const createUserRequest = () => {
   return { type: CREATE_USER_REQUEST }
-}
-
-export const createUser = (payload) => {
-  return {type: CREATE_USER, payload}
-}
-
-export const loginUser = () => {
-  return {type: LOGIN_USER}
 }
 
 export const hideSuccessMessage = () => {

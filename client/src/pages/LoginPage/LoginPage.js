@@ -1,6 +1,6 @@
 import React from 'react';
 import AuthForm from '../../components/AuthForm';
-import { loginUser} from '../../actions/syncActions'
+import { loginUser} from '../../redux/authSaga/actions'
 import { connect } from 'react-redux';
 
 export const LoginPage = ({loginUser}) => {

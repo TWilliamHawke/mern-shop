@@ -7,8 +7,11 @@ import MainPage from 'src/pages/MainPage'
 import LoginPage from 'src/pages/LoginPage'
 import SignInPage from 'src/pages/SignInPage'
 import CartPage from 'src/pages/CartPage'
+import useUserType from '../../hooks/useUserType'
 
-export const Routes = ({isGuest, isUser}) => {
+export const Routes = ({userType}) => {
+  const {isGuest, isUser} = useUserType(userType)
+  
   return (
     <Switch>
       <Route exact path='/' component={MainPage}/>
@@ -19,8 +22,8 @@ export const Routes = ({isGuest, isUser}) => {
   )
 }
 
-const mapStatetoProps = ({auth: {isGuest, isUser}}) => ({
-  isGuest, isUser
+const mapStatetoProps = ({auth: {userType}}) => ({
+  userType
 })
 
 export default connect(mapStatetoProps)(Routes)

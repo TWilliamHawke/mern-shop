@@ -15,14 +15,12 @@ describe('test dumb component', () => {
 describe('test connected component', () => {
   const mockStore = configStore()
   const store = mockStore({ auth: {
-      isGuest: 'guest test', 
-      isUser: 'user test'}
+      userType: 'testType'}
   })
   const wrapper = shallow(<ConnectedRoutes store={store} />
     ).find('Routes')
 
   it('should receive props', () => {
-    expect(wrapper.prop('isGuest')).toBe('guest test')
-    expect(wrapper.prop('isUser')).toBe('user test')
+    expect(wrapper.prop('userType')).toBe('testType')
   })
 })
