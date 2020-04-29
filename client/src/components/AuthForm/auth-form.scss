@@ -45,6 +45,11 @@ $success-font: rgb(6, 121, 25);
       cursor: pointer;
       background: rgb(24, 100, 241);
     }
+    &:disabled {
+      background: rgb(101, 121, 155);
+      cursor: default;
+    }
+
   }
 
   .success-message {

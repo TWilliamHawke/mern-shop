@@ -1,6 +1,6 @@
 import { AUTH_REQUEST, CREATE_USER_SUCCESS, LOGIN_SUCCESS, AUTH_FAILURE, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS } from "./types"
 
-const initialState = {
+export const initialState = {
   loading: false,
   errors: [],
   userType: 'guest',

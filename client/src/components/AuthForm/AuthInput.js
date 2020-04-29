@@ -3,7 +3,7 @@ import InputMask from 'react-input-mask'
 
 const AuthInput = ({data, values, onInput}) => {
   const {name, label, type} = data
-  const mask = name === 'phone' ? "+7(999)999-99-99" : undefined
+  const mask = name === 'phone' ? "+7(999)-999-99-99" : undefined
 
   return (
     <fieldset>

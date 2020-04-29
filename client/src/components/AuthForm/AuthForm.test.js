@@ -2,22 +2,27 @@ import React from 'react';
 import { shallow } from 'enzyme'
 import ConnectedAuthForm, { AuthForm } from './AuthForm';
 import configMockStore from 'redux-mock-store'
+import authValidator from '../../utils/authValidation.js';
 
 jest.mock('react-router-dom', () => ({
   useRouteMatch: jest.fn(() => ({path: '/login'})),
   useHistory: jest.fn(() => ({push: () => {}}))
 }))
 
+jest.mock('../../utils/authValidation.js')
+authValidator.mockImplementation(() => false)
+
+
 describe('componemt test', () => {
   let wrapper
   let fetchTest = jest.fn(() => {})
   beforeAll(() => {
-    wrapper = shallow(<AuthForm successMessage={true} loading={true} buttonName='testName' fetchForm={fetchTest}/>)
+    wrapper = shallow(<AuthForm successMessage={true} loading='testLoadingProp' buttonName='testName' fetchForm={fetchTest}/>)
   })
 
   test('button name should be equal props', () => {
     expect(wrapper.find('[type="submit"]').text()).toBe('testName')
-    expect(wrapper.find('[type="submit"]').prop('disabled')).toBe(true)
+    expect(wrapper.find('[type="submit"]').prop('disabled')).toBe(false)
 
   })
 
@@ -28,6 +33,7 @@ describe('componemt test', () => {
   it('should call fetchForm function on submit', () => {
     const button = wrapper.find('form')
     button.simulate('submit', {preventDefault: () => {}})
+    expect(authValidator.mock.calls[0][0].loading).toBe('testLoadingProp')
     expect(fetchTest).toBeCalled()
   })
 

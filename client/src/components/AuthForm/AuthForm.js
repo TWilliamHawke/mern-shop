@@ -6,6 +6,7 @@ import ErrorMessages from '../ErrorMessages/ErrorMessages'
 
 import './auth-form.scss'
 import { connect } from 'react-redux';
+import authValidator from '../../utils/authValidation';
 
 
 export const AuthForm = ({ buttonName, fetchForm, loading, successMessage, hideSuccessMessage, redirectSuccess, allowRedirect, errors }) => {
@@ -13,7 +14,7 @@ export const AuthForm = ({ buttonName, fetchForm, loading, successMessage, hideS
   const history = useHistory()
   const [isEmail, setIsEmail] = useState(true)
   const [formValues, setFormValues] = useState({
-    phone: '',
+    phone: '+7(999)-999-99-99',
     email: '',
     userName: '',
     password: ''
@@ -52,12 +53,22 @@ export const AuthForm = ({ buttonName, fetchForm, loading, successMessage, hideS
   }
 
   const radioHandle = () => {
+    setFormValues({
+      ...formValues,
+      email: isEmail ? 'test@mail.com' : '',
+      phone: !isEmail ? '+7(999)-999-99-99' : ''
+    })
     setIsEmail(isEmail => !isEmail)
+  }
+
+  const formValidation = () => {
+    return authValidator({loading, path, ...formValues})
   }
 
   const submitHandle = e => {
     e.preventDefault()
-    fetchForm(formValues)
+    if(formValidation()) return
+    fetchForm({...formValues, isEmail})
   }
 
   return (
@@ -87,7 +98,7 @@ export const AuthForm = ({ buttonName, fetchForm, loading, successMessage, hideS
         className='success-message'>Account has been created
         <button onClick={hideSuccessMessage}>Close</button>
       </div>}
-      <button disabled={loading} type='submit'>{buttonName}</button>
+      <button disabled={formValidation()} type='submit'>{buttonName}</button>
     </form>
   );
 };
