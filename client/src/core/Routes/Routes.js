@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -8,10 +8,17 @@ import LoginPage from 'src/pages/LoginPage'
 import SignInPage from 'src/pages/SignInPage'
 import CartPage from 'src/pages/CartPage'
 import useUserType from '../../hooks/useUserType'
+import { checkUserType } from '../../redux/authSaga/actions'
 
-export const Routes = ({userType}) => {
+export const Routes = ({userType, checkUserType}) => {
   const {isGuest, isUser} = useUserType(userType)
   
+  useEffect(() => {
+    checkUserType()
+  }, [checkUserType])
+
+  if(!userType) return <p>...Loading...</p>
+
   return (
     <Switch>
       <Route exact path='/' component={MainPage}/>
@@ -26,4 +33,8 @@ const mapStatetoProps = ({auth: {userType}}) => ({
   userType
 })
 
-export default connect(mapStatetoProps)(Routes)
+const mapDispathtoProps = {
+  checkUserType
+}
+
+export default connect(mapStatetoProps, mapDispathtoProps)(Routes)

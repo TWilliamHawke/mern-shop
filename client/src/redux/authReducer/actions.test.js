@@ -1,5 +1,5 @@
-import { authRequest, loginSuccess, authFailure, createUserSuccess, redirectSuccess, hideSuccessMessage } from "./actions"
-import { AUTH_REQUEST, LOGIN_SUCCESS, AUTH_FAILURE, CREATE_USER_SUCCESS, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS } from "./types"
+import { authRequest, loginSuccess, authFailure, createUserSuccess, redirectSuccess, hideSuccessMessage, setUserType } from "./actions"
+import { AUTH_REQUEST, LOGIN_SUCCESS, AUTH_FAILURE, CREATE_USER_SUCCESS, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS, SET_USERTYPE } from "./types"
 import { transformErrors } from './utils/transformErrors'
 
 jest.mock('./utils/transformErrors')
@@ -29,6 +29,10 @@ describe('auth reducer actions test', () => {
 
   it('should return REDIRECT_SUCCESS type', () => {
     expect(redirectSuccess()).toEqual({type: REDIRECT_SUCCESS})
+  })
+
+  it('should return SET_USERTYPE type', () => {
+    expect(setUserType('testType')).toEqual({type: SET_USERTYPE, payload: 'testType'})
   })
 
 })

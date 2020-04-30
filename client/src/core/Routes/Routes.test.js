@@ -5,7 +5,7 @@ import React from 'react'
 
 describe('test dumb component', () => {
   it('should rednder correctly', () => {
-    const wrapper = shallow(<Routes />)
+    const wrapper = shallow(<Routes userType='guest' />)
 
     expect(wrapper.find('Route').prop('path')).toBe('/')
   })
@@ -22,5 +22,6 @@ describe('test connected component', () => {
 
   it('should receive props', () => {
     expect(wrapper.prop('userType')).toBe('testType')
+    expect(wrapper.prop('checkUserType')).toBeInstanceOf(Function)
   })
 })

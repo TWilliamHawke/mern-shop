@@ -1,9 +1,9 @@
-import { AUTH_REQUEST, CREATE_USER_SUCCESS, LOGIN_SUCCESS, AUTH_FAILURE, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS } from "./types"
+import { AUTH_REQUEST, CREATE_USER_SUCCESS, LOGIN_SUCCESS, AUTH_FAILURE, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS, SET_USERTYPE } from "./types"
 
 export const initialState = {
   loading: false,
   errors: [],
-  userType: 'guest',
+  userType: null,
   successMessage: false,
   allowRedirect: false,
 }
@@ -39,6 +39,10 @@ const handlers = {
   [REDIRECT_SUCCESS]: state => ({
     ...state,
     allowRedirect: false
+  }),
+  [SET_USERTYPE]: (state, payload) => ({
+    ...state,
+    userType: payload
   })
 }
 

@@ -1,6 +1,6 @@
 import authReducer, {initialState as reducerState} from './authReducer';
 import { authRequest, createUserSuccess, loginSuccess } from './actions';
-import { AUTH_FAILURE, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS } from './types';
+import { AUTH_FAILURE, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS, SET_USERTYPE } from './types';
 
 describe('test with random action', () => {
   it('should return initial state', () => {
@@ -94,6 +94,19 @@ describe('REDIRECT_SUCCESS test', () => {
     expect(authReducer(initialState, {type: REDIRECT_SUCCESS})).toEqual({
       ...reducerState,
       allowRedirect: false
+    })
+  })
+})
+
+describe('SET_USERTYPE test', () => {
+  it('should set user type', () => {
+    const initialState = {
+      ...reducerState,
+      userType: ''
+    }
+    expect(authReducer(initialState, {type: SET_USERTYPE, payload: 'testType'})).toEqual({
+      ...reducerState,
+      userType: 'testType'
     })
   })
 })

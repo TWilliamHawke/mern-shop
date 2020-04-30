@@ -38,4 +38,21 @@ describe('login test', () => {
   })
 })
 
+describe('refresh test', () => {
+  beforeAll(() => {
+    axios.post.mockResolvedValue('tokens')
+  })
+
+  afterAll(() => {
+    axios.post.mockClear()
+  })
+
+
+  it('should call axios and return mock data', async () => {
+    const response = await authService.refresh('userData')
+    expect(axios.post.mock.calls[0][1]).toBe('userData')
+    expect(response).toBe('tokens')
+  })
+})
+
 

@@ -3,7 +3,7 @@ const router = Router()
 const { check, validationResult } = require('express-validator')
 const User = require('../models/User')
 const bcryptjs = require('bcryptjs')
-const { getTokensById } = require('../utils/getTokens')
+const { getTokensById, getTokensByRef } = require('../utils/getTokens')
 
 const setLogin = (req, res, next) => {
   const {phone, email, isEmail} = req.body
@@ -74,6 +74,18 @@ router.post('/loginUser', setLogin, async(req, res) => {
     
     res.json({userType, tokens})
 
+  } catch(e) {
+    console.log(e)
+    res.status(401).json({message: 'Some server error'})
+  }
+})
+
+router.post('/refresh', (req, res) => {
+  try {
+    const {refToken, userType} = req.body
+    const tokens = getTokensByRef(userType, refToken)
+    
+    res.json({userType, tokens})
   } catch(e) {
     console.log(e)
     res.status(401).json({message: 'Some server error'})

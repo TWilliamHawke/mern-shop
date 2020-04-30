@@ -9,6 +9,10 @@ class AuthServise {
   login = async(userData) => {
     return axios.post('/api/auth/loginUser', userData)
   }
+
+  refresh = async(userData) => {
+    return axios.post('/api/auth/refresh', userData)
+  }
 }
 
 const authServise = new AuthServise()

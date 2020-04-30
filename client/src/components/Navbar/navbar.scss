@@ -6,21 +6,24 @@
   ul {
     display: flex;
     justify-content: flex-end;
+    a, button {
+      padding: 13px 20px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      font-size: inherit;
+      &:hover {
+        background: rgb(83, 120, 202);
+      }
+    }
     li {
       list-style: none;
-      a {
-        padding: 20px 20px;
-        height: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-decoration: none;
-        color: #fff;
-        cursor: pointer;
-        &:hover {
-          background: rgb(83, 120, 202);
-        }
-      }
       .active {
         background: rgb(99, 134, 211);
       }

@@ -1,4 +1,4 @@
-import { AUTH_REQUEST, LOGIN_SUCCESS, AUTH_FAILURE, CREATE_USER_SUCCESS, CREATE_USER_REQUEST, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS } from "./types"
+import { AUTH_REQUEST, LOGIN_SUCCESS, AUTH_FAILURE, CREATE_USER_SUCCESS, CREATE_USER_REQUEST, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS, SET_USERTYPE } from "./types"
 import { transformErrors } from './utils/transformErrors'
 
 export const authRequest = () => {
@@ -29,3 +29,8 @@ export const hideSuccessMessage = () => {
 export const redirectSuccess = () => {
   return {type: REDIRECT_SUCCESS}
 }
+
+export const setUserType = (payload) => {
+  return {type: SET_USERTYPE, payload}
+}
+
