@@ -1,4 +1,8 @@
 {
   "mongoUrl": "mongodb+srv://twilliam:stoprescue567@cluster0-hx4hc.azure.mongodb.net/test?retryWrites=true&w=majority",
-  "isLocal": false
+  "isLocal": false,
+  "usersecret": "top secret",
+  "usersecretRef": "top secret secret",
+  "adminsecret": "i am law",
+  "adminsecretRef": "i am law two"
 }

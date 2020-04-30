@@ -49,10 +49,10 @@ describe('loginSuccess test', () => {
       loading: true,
       userType: 'guest'
     }
-    expect(authReducer(initialState, loginSuccess({userType: 'user'}))).toEqual({
+    expect(authReducer(initialState, loginSuccess('usertype'))).toEqual({
       ...reducerState,
       loading: false,
-      userType: 'user'
+      userType: 'usertype'
     })
   })
 })

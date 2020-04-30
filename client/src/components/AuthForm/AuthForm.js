@@ -17,7 +17,7 @@ export const AuthForm = ({ buttonName, fetchForm, loading, successMessage, hideS
     phone: '+7(999)-999-99-99',
     email: '',
     userName: '',
-    password: ''
+    password: 'qwerty'
   })
   
   useEffect(() => {

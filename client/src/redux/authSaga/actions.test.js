@@ -9,6 +9,6 @@ describe('createUser action', () => {
 
 describe('loginUser action', () => {
   it('should return LOGIN_USER type', () => {
-    expect(loginUser()).toEqual({type:LOGIN_USER})
+    expect(loginUser('userData')).toEqual({type:LOGIN_USER, payload: 'userData'})
   })
 })

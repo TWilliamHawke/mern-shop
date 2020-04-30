@@ -24,7 +24,7 @@ const handlers = {
   }),
   [LOGIN_SUCCESS]: (state, payload) => ({
     ...state,
-    ...payload,
+    userType: payload,
     loading: false,
   }),
   [AUTH_FAILURE]: (state, payload) => ({
