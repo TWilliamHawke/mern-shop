@@ -25,7 +25,7 @@ export function* loginUserSaga({payload}) {
   yield put(authRequest())
   try {
     const {data} = yield call(authService.login, payload)
-    yield storage.setItem('userData', data)
+    yield call(storage.setItem, 'userData', data)
     yield put(loginSuccess(data.userType))
 
   } catch(e) {
@@ -37,13 +37,12 @@ export function* loginUserSaga({payload}) {
 
 export function* checkUserTypeSaga() {
   try {
-    const {userType, tokens: {refToken}} = yield storage.getItem('userData')
+    const {userType, tokens: {refToken}} = yield call(storage.getItem, 'userData')
     const {data} = yield call(authService.refresh, {userType, refToken})
     yield call(storage.setItem, 'userData', data)
     yield put(setUserType(data.userType))
   } catch(e) {
-    yield call(storage.removeItem, 'userData')
-    yield logoutSaga()
+    yield call(logoutSaga)
   }
 }
 
@@ -60,7 +59,7 @@ export function* watchcheckUserTypeSaga() {
   yield takeEvery(CHECK_USERTYPE, checkUserTypeSaga)
 }
 
-export default function* rootSaga() {
+export default function* authSaga() {
   yield all([
     watchCreateUserRequest(),
     watchLoginUserRequest(),

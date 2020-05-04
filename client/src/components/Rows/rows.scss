@@ -1,0 +1,11 @@
+.row-wrapper {
+  display: flex;
+}
+
+.row-left {
+  width: 200px;
+}
+
+.row-right {
+  flex-grow: 1;
+}

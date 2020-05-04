@@ -7,7 +7,7 @@ describe('test dumb component', () => {
   it('should rednder correctly', () => {
     const wrapper = shallow(<Routes userType='guest' />)
 
-    expect(wrapper.find('Route').prop('path')).toBe('/')
+    expect(wrapper.find('Route').first().prop('path')).toBe('/')
   })
 
 })

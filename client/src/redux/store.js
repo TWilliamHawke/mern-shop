@@ -1,7 +1,7 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import authReducer from './authReducer'
 import createSagas from 'redux-saga'
-import rootSaga from './authSaga/sagas'
+import rootSaga from './rootSaga'
 import {composeWithDevTools} from 'redux-devtools-extension'
 
 

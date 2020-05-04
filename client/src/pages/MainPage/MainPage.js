@@ -1,10 +1,10 @@
 import React from 'react';
+import Rows from '../../components/Rows/Rows';
+import Categories from './components/Categories/Categories';
 
 const MainPage = () => {
   return (
-    <div>
-      Main Page
-    </div>
+    <Rows left={<Categories />} right='content' />
   );
 };
 
