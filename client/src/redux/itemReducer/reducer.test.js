@@ -45,11 +45,13 @@ describe('test LOAD_IMAGE_SUCCESS action', () => {
       ...reducerState,
       loading: true,
       imageUrl: '',
+      imageId: null
     }
     expect(reducer(initialState, 
-      {type: LOAD_IMAGE_SUCCESS, payload: 'newUrl'})).toEqual({
+      {type: LOAD_IMAGE_SUCCESS, payload: {img: 'newUrl', id: 'id'}})).toEqual({
         ...reducerState,
         imageUrl: 'newUrl',
+        imageId: 'id',
         loading: false,
       })
   })

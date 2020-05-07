@@ -1,7 +1,7 @@
 import axios from "axios"
 
 class ItemService{
-  fetchImg = (data, token) => {
+  fetchImg = (token, data) => {
     return axios.post('/api/items/image', data, {headers: {authorization: token}})
   }
 }

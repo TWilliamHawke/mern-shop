@@ -3,7 +3,8 @@ import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, LOAD_IMAGE_SUCCESS } from "./ty
 export const initialState = {
   loading: false,
   errors: [],
-  imageUrl: 'images/no-image.png'
+  imageUrl: 'images/no-image.png',
+  imageId: null
 }
 
 const handlers = {
@@ -21,7 +22,8 @@ const handlers = {
   [LOAD_IMAGE_SUCCESS]: (state, payload) => ({
     ...state,
     loading: false,
-    imageUrl: payload
+    imageUrl: payload.img,
+    imageId: payload.id
   }),
 }
 

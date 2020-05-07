@@ -5,12 +5,14 @@ import rootSaga from './rootSaga'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import templateReducer from './templateReducer/templateReducer'
 import itemReducer from './itemReducer/reducer'
+import globalReducer from './globalReducer/globalReducer'
 
 
 const reducer = combineReducers({
   item: itemReducer,
   template: templateReducer,
-  auth: authReducer
+  auth: authReducer,
+  global: globalReducer
 })
 
 const sagasMiddleware = createSagas()
