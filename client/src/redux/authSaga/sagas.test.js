@@ -1,8 +1,9 @@
-import { createUserRequest, logoutSaga, loginUserSaga, checkUserTypeSaga } from './sagas'
+import { createUserRequest, logoutSaga, loginUserSaga, checkUserTypeSaga, refreshTokenSaga } from './sagas'
 import { call, put } from 'redux-saga/effects'
 import { authRequest, createUserSuccess, authFailure, setUserType, loginSuccess } from '../authReducer/actions'
 import authService from '../../services/authService'
 import storage from '../../services/storageServices'
+import { logout } from './actions'
 
 describe('test user createUserRequest acion', () => {
   const iterator = createUserRequest({payload: 'someData'})
@@ -79,23 +80,18 @@ describe('test checkUserTypeSaga', () => {
     expect(saga.next().value).toEqual(call(storage.getItem, 'userData'))
   })
 
-  it('should call axios refresh', () => {
+  it('should call refresh token saga', () => {
     const userData = {userType: 'testType', tokens: {refToken: 'token'}}
-    expect(saga.next(userData).value).toEqual(call(authService.refresh, {userType: 'testType', refToken: 'token'}))
-  })
-
-  it('should call storage setitem', () => {
-    const response = {data: {userType: 'someType'}}
-    expect(saga.next(response).value).toEqual(call(storage.setItem, 'userData', {userType: 'someType'}))
+    expect(saga.next(userData).value).toEqual(call(refreshTokenSaga, 'testType', 'token'))
   })
 
   it('should set usertype', () => {
-    expect(saga.next().value).toEqual(put(setUserType('someType')))
+    expect(saga.next({userType: 'someType'}).value).toEqual(put(setUserType('someType')))
   })
 
   it('should call logoutSaga', () => {
     const error = {response: {data: {}}}
-    expect(saga.throw(error).value).toEqual(call(logoutSaga))
+    expect(saga.throw(error).value).toEqual(put(logout()))
   })
 
 

@@ -2,6 +2,7 @@ import { call, takeEvery, all, put } from 'redux-saga/effects'
 import authService from '../../services/authService';
 import { CREATE_USER, LOGIN_USER, CHECK_USERTYPE, LOGOUT } from './types';
 import { authRequest, createUserSuccess, authFailure, loginSuccess, setUserType } from '../authReducer/actions';
+import { logout } from './actions'
 import storage from '../../services/storageServices'
 
 export function* createUserRequest({payload}) {
@@ -34,36 +35,43 @@ export function* loginUserSaga({payload}) {
 
 }
 
+export function* refreshTokenSaga(userType, refToken) {
+  const {data} = yield call(authService.refresh, {userType, refToken})
+  yield call(storage.setItem, 'userData', data)
+  return data
+}
 
-export function* checkUserTypeSaga() {
+export function* getTokenSaga() {
   try {
-    const {userType, tokens: {refToken}} = yield call(storage.getItem, 'userData')
-    const {data} = yield call(authService.refresh, {userType, refToken})
-    yield call(storage.setItem, 'userData', data)
-    yield put(setUserType(data.userType))
+    const tokens = yield call(storage.getItem, 'userData')
+    const {userType, tokens: {refToken, token, tokenDie}} = tokens
+  
+    if(tokenDie > Date.now()) return `Bearer ${token}`
+  
+    const userData = yield call(refreshTokenSaga, userType, refToken)
+    return `Bearer ${userData.tokens.token}`  
   } catch(e) {
-    yield call(logoutSaga)
+    yield put(logout())
   }
 }
 
-export function* watchCreateUserRequest() {
-  yield takeEvery(CREATE_USER, createUserRequest)
-}
-export function* watchLogoutSaga() {
-  yield takeEvery(LOGOUT, logoutSaga)
-}
-export function* watchLoginUserRequest() {
-  yield takeEvery(LOGIN_USER, loginUserSaga)
-}
-export function* watchcheckUserTypeSaga() {
-  yield takeEvery(CHECK_USERTYPE, checkUserTypeSaga)
+
+export function* checkUserTypeSaga() {
+  try {  
+    const tokens = yield call(storage.getItem, 'userData')
+    const {userType, tokens: {refToken}} = tokens
+    const data = yield call(refreshTokenSaga, userType, refToken)
+    yield put(setUserType(data.userType))
+  } catch(e) {
+    yield put(logout())
+  }
 }
 
 export default function* authSaga() {
   yield all([
-    watchCreateUserRequest(),
-    watchLoginUserRequest(),
-    watchcheckUserTypeSaga(),
-    watchLogoutSaga()
+    takeEvery(CREATE_USER, createUserRequest),
+    takeEvery(LOGOUT, logoutSaga),
+    takeEvery(LOGIN_USER, loginUserSaga),
+    takeEvery(CHECK_USERTYPE, checkUserTypeSaga)
   ])
 }

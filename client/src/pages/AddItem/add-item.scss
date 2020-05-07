@@ -1,0 +1,42 @@
+.add-item-form {
+  max-width: 600px;
+  margin: 0 auto;
+  .form-wrapper {
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+    text-align: left;  
+    font-size: 20px;
+    padding: 10px 12px;
+    label {
+      margin-right: 15px;
+    }
+    input {
+      flex-grow: 1;
+    }
+  }
+  .item-image {
+    max-width: 240px;
+    padding: 0;
+    cursor: pointer;
+    label {
+      background: rgba(0, 0, 0, 0.295);
+      display: block;
+      height: 240px;
+      cursor: pointer;
+      &:hover img {
+        opacity: .5;
+        z-index: -1;
+      }
+    }
+    input {
+      display: none;
+    }
+    img {
+      width: 100%;
+    }
+  }
+  textarea {
+    width: 100%;
+  }
+}

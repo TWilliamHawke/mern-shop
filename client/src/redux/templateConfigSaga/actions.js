@@ -1,5 +1,9 @@
-import { ADD_FIELD } from "./types";
+import { ADD_FIELD, GET_FIELDS } from "./types";
 
 export const addField = (payload) => ({
   type: ADD_FIELD, payload
+})
+
+export const getFields = () => ({
+  type: GET_FIELDS
 })

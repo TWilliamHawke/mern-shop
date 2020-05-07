@@ -55,7 +55,7 @@ router.post('/createUser', normalizePhone, [
   
   } catch(e) {
     console.log(e)
-    res.status(401).json({message: 'Some server error'})
+    res.status(500).json({message: 'Some server error'})
   }
 })
 
@@ -76,7 +76,7 @@ router.post('/loginUser', setLogin, async(req, res) => {
 
   } catch(e) {
     console.log(e)
-    res.status(401).json({message: 'Some server error'})
+    res.status(500).json({message: 'Some server error'})
   }
 })
 
@@ -88,7 +88,7 @@ router.post('/refresh', (req, res) => {
     res.json({userType, tokens})
   } catch(e) {
     console.log(e)
-    res.status(401).json({message: 'Some server error'})
+    res.status(500).json({message: 'Some server error'})
   }
 })
 

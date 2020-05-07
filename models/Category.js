@@ -1,12 +1,11 @@
-const {Schema, model} = require('mongoose')
+const {Schema, model, Types} = require('mongoose')
 
 const categorySchema = new Schema({
   name: {type: String},
   path: {type: String},
-  data: [
+  fields: [
     {
-      prop: {type: String},
-      valueType: {type: String}
+        type: Types.ObjectId, ref: 'Field'
     }
   ]
 })

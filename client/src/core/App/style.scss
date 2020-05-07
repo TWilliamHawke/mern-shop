@@ -34,3 +34,16 @@ h1 {
   cursor: pointer;
   margin: 10px auto;
 }
+
+fieldset {
+  border: none;
+  width: 90%;
+  margin: 0 auto;
+  text-align: left;
+  input, label, textarea {
+    font-size: 20px;
+  }
+  textarea {
+    display: block;
+  }
+}
