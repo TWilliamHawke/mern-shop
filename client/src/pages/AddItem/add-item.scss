@@ -1,19 +1,34 @@
 .add-item-form {
   max-width: 600px;
   margin: 0 auto;
+  .default-field {
+    display: flex;
+    &-text {
+      flex-grow: 1;
+      font-size: 20px;
+    }
+    .form-wrapper {
+      margin: 0;
+      width: 100%;
+    }
+  }
   .form-wrapper {
     display: flex;
     width: 90%;
     margin: 0 auto;
     text-align: left;  
     font-size: 20px;
-    padding: 10px 12px;
+    padding: 7px 12px;
     label {
       margin-right: 15px;
     }
     input {
       flex-grow: 1;
     }
+  }
+  span {
+    font-size: 20px;
+    margin: 0 10px;
   }
   .item-image {
     max-width: 240px;

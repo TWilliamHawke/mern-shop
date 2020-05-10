@@ -2,6 +2,7 @@ const { Router } = require('express')
 const upload = require('../middleware/save-image')
 const { checkAdmin } = require('../middleware/checkToken')
 const Image = require('../models/Image')
+const Category = require('../models/Category')
 const fs = require('fs')
 
 const router = new Router()
@@ -24,6 +25,17 @@ router.post('/image', checkAdmin, upload.single('itemImg'), async(req, res) => {
     await image.save()
 
     res.json({img, id: image._id})
+  } catch(e) {
+    console.log(e)
+    res.status(500).json({message: 'Server error'})
+  }
+})
+
+router.get('/template', checkAdmin, async(req, res) => {
+  try {
+    const category = await (await Category.findOne({path: req.query.cat})).populate('fields').execPopulate()
+
+    res.json(category)
   } catch(e) {
     console.log(e)
     res.status(500).json({message: 'Server error'})

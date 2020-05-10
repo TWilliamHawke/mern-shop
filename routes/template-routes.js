@@ -2,6 +2,7 @@ const { Router } = require('express')
 const { checkAdmin} = require('../middleware/checkToken')
 const { check, validationResult } = require('express-validator')
 const Fields = require('../models/Field')
+const Category = require('../models/Category')
 
 const router = new Router()
 
@@ -10,7 +11,7 @@ router.post('/addField', checkAdmin, [
   check('values', 'Wrong values').isArray(),
   check('measure', 'wrong Unit of measure').isString(),
   check('type', 'wrong type').isString()
-], async (req, res) => {
+  ], async (req, res) => {
 
   try {
     const errors = validationResult(req)
@@ -45,10 +46,36 @@ router.post('/addField', checkAdmin, [
 
 router.get('/fields', checkAdmin, async (req, res) => {
   try {
+    const category = await Category.findOne({path: req.query.cat})
     const fields = await Fields.find({})
+    
+    const changedFields = fields.map((field) => {
+      return {...field._doc, enable: category.fields.includes(field._id)}
+    })
+    res.json({fields: changedFields})
 
-    res.json({fields})
+  } catch(e) {
+    console.log(e)
+    res.status(500).json({message: 'Something went wrong'})
+  }
+})
 
+router.post('/fields', checkAdmin, async(req, res) => {
+  try {
+    const {name, path, fields} = req.body
+
+    const category = await Category.findOne({path})
+    if(!category) {
+      return res.status(400).json({ message: 'Category not exist'})
+    }
+    category.fields = fields
+
+    await category.save()
+    
+
+
+
+    res.json({message: 'OK'})
   } catch(e) {
     console.log(e)
     res.status(500).json({message: 'Something went wrong'})

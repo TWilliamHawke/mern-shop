@@ -10,4 +10,4 @@ const ItemSchema = new Schema({
   other: Schema.Types.Mixed
 })
 
-module.exports = model(ItemSchema, 'Item')
+module.exports = model('Item', ItemSchema)

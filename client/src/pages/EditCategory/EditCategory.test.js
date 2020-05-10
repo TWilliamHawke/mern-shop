@@ -22,10 +22,11 @@ describe('test connected component', () => {
     const mockStore = configMockStore()
     const state = { template: {fields: 'fieldsArray', noContent: 'mock'}}
     const store = mockStore(state)
-    wrapper = shallow(<ConnectedEditCategory store={store} />).find('EditCategory')
+    wrapper = shallow(<ConnectedEditCategory store={store} />).find('withRouter(EditCategory)')
   })
   test('component should receive props from connect function', () => {
     expect(wrapper.prop('getFields')).toBeInstanceOf(Function)
+    expect(wrapper.prop('saveTemplate')).toBeInstanceOf(Function)
     expect(wrapper.prop('fields')).toBe('fieldsArray')
     expect(wrapper.prop('noContent')).toBe('mock')
   })

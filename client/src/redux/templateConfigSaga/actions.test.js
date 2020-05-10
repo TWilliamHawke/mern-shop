@@ -7,6 +7,6 @@ describe('test template config saga action', () => {
   })
   
   it('should return GET_FIELDS type', () => {
-    expect(getFields()).toEqual({ type: GET_FIELDS })
+    expect(getFields('category')).toEqual({ type: GET_FIELDS, payload: 'category' })
   })
 })

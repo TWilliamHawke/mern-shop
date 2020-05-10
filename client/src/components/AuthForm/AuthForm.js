@@ -98,7 +98,7 @@ export const AuthForm = ({ buttonName, fetchForm, loading, successMessage, hideS
         className='success-message'>Account has been created
         <button onClick={hideSuccessMessage}>Close</button>
       </div>}
-      <button disabled={formValidation()} type='submit'>{buttonName}</button>
+      <button disabled={formValidation()} className='btn-submit' type='submit'>{buttonName}</button>
     </form>
   );
 };

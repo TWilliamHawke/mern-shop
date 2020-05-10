@@ -6,7 +6,11 @@ import ConnectedAddItem, { AddItem } from './AddItem';
 describe('test dumb component', () => {
   let wrapper
   beforeAll(() => {
-    wrapper = shallow(<AddItem location={{state: 'name'}} />)
+    wrapper = shallow(
+      <AddItem 
+        category={true}
+        location={{state: 'name'}}
+        match={{params: {name: 'testName'}}} />)
   })
   test('should render correctly', () => {
     expect(wrapper.find('PathLinks').exists()).toBe(true)
@@ -17,12 +21,12 @@ describe('test connected component', () => {
   let wrapper
   beforeAll(() => {
     const mockStore = configMockStore()
-    const state = {item: {imageUrl: 'someUrl'}}
+    const state = {item: {imageUrl: 'someUrl', category: 'someData'}}
     const store = mockStore(state)
     wrapper = shallow(<ConnectedAddItem store={store} />).find('withRouter(AddItem)')
   })
   test('component should receive props from connect function', () => {
-    expect(wrapper.prop('loadImage')).toBeInstanceOf(Function)
-    expect(wrapper.prop('imageUrl')).toBe('someUrl')
+    expect(wrapper.prop('category')).toBe('someData')
+    expect(wrapper.prop('loadTemplate')).toBeInstanceOf(Function)
   })
 })

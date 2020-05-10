@@ -12,10 +12,10 @@ export function* addFieldSaga ({payload}) {
   yield call (templateService.addField, payload, token)
 }
 
-export function* getFieldsSaga() {
+export function* getFieldsSaga({payload}) {
   try {
     const token = yield call(getTokenSaga)
-    const { data } = yield call(templateService.getFields, token)
+    const { data } = yield call(templateService.getFields, token, payload)
     yield put(getFieldsSuccess(data.fields))
   } catch (e) {
     const errorsArray = yield call(transformErrors(e.responce))

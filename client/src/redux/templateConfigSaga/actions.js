@@ -4,6 +4,6 @@ export const addField = (payload) => ({
   type: ADD_FIELD, payload
 })
 
-export const getFields = () => ({
-  type: GET_FIELDS
+export const getFields = (payload) => ({
+  type: GET_FIELDS, payload
 })

@@ -27,25 +27,6 @@ $success-font: rgb(6, 121, 25);
   input:not(:checked) + label {
     cursor: pointer;
   }
-  button[type="submit"] {
-    border: none;
-    margin: 0 auto;
-    display: block;
-    padding: 15px 25px;
-    font-size: 16px;
-    color: white;
-    background: rgb(17, 67, 160);
-    border-radius: 3px;
-    &:hover {
-      cursor: pointer;
-      background: rgb(24, 100, 241);
-    }
-    &:disabled {
-      background: rgb(101, 121, 155);
-      cursor: default;
-    }
-
-  }
 
   .success-message {
     margin: 15px auto;

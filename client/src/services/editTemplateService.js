@@ -5,8 +5,11 @@ class TemplateService {
   addField = (data, token) => {
     return axios.post('/api/template/addField', data, {headers: {authorization: token}})
   }
-  getFields = (token) => {
-    return axios.get('/api/template/fields', {headers: {authorization: token}})
+  getFields = (token, category) => {
+    return axios.get(`/api/template/fields?cat=${category}`, {headers: {authorization: token}})
+  }
+  saveTemplate = (token, data) => {
+    return axios.post('/api/template/fields', data, {headers: {authorization: token}})
   }
 }
 

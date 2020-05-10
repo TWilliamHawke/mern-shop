@@ -1,0 +1,23 @@
+table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  font-size: 20px;
+  input[type='checkbox'] {
+    font-size: 20px;
+    transform: scale(1.5);
+    margin: 5px;
+  }
+  td {
+    border: 1px solid #000;
+    &[colSpan='3'] {
+      min-width: 500px;
+    }
+    .button-wrapper {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+

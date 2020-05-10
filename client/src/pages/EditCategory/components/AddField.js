@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { addField } from '../../../redux/templateConfigSaga/actions'
 import { connect } from 'react-redux';
+import { addFieldValidation, newValueValidation } from '../../../utils/addFieldValidation';
 
 export const AddField = ({showForm, setShowForm, addField}) => {
   const [type, setType] = useState('text')
@@ -8,21 +9,26 @@ export const AddField = ({showForm, setShowForm, addField}) => {
   const [fieldName, setFieldName] = useState('')
   const [measure, setMeasure] = useState('')
   const [fieldValue, setFieldValue] = useState('')
+  
+  const fetchValidation = () => {
+    return addFieldValidation(type, values, fieldName)
+  }
 
   const submitHandler = e => {
     e.preventDefault()
+    if(fetchValidation()) return
     addField({
       fieldName,
       type,
       measure,
       values
-    })
-  }
+    })  
+  }  
 
   const cancelHandler = e => {
     e.preventDefault()
     setShowForm(false)
-  }
+  }  
 
   const selectorHandle = e => {
     setType(e.target.value)
@@ -36,10 +42,12 @@ export const AddField = ({showForm, setShowForm, addField}) => {
     setFieldValue('')
   }
 
-  if(!showForm) return <button onClick={() => setShowForm(true)} className='config-btn'>Add field</button>
+  if(!showForm) return <td colSpan={3}><button onClick={() => setShowForm(true)} className='config-btn'>Add field</button></td>
 
   return (
-    <form className='auth-form' onSubmit={submitHandler}>
+    <td colSpan={3}>
+
+    <form onSubmit={submitHandler}>
       <fieldset>
         <label htmlFor='add-field-name'>Field Name:</label>
         <input value={fieldName} onChange={e => setFieldName(e.target.value)} id='add-field-name' />
@@ -63,12 +71,15 @@ export const AddField = ({showForm, setShowForm, addField}) => {
         <p>Possible values is {values.join(', ')}</p>
         <label htmlFor='add-value'>Add value</label>
         <input value={fieldValue} onChange={e => setFieldValue(e.target.value)} id='add-value' />
-        <button onClick={addValueHandle}>Add</button>
+        <button disabled={newValueValidation(fieldValue)} onClick={addValueHandle}>Add</button>
       </fieldset>)}
 
-      <button type="submit">Confirm</button>
-      <button onClick={cancelHandler} >Cancel</button>
+      <div className='button-wrapper'>
+        <button className='config-btn btn-red' onClick={cancelHandler} >Cancel</button>
+        <button className='config-btn btn-blue' disabled={fetchValidation()} type="submit">Confirm</button>
+      </div>
     </form>
+    </td>
   );
 };
 

@@ -30,7 +30,6 @@ describe('test component with showform is true', () => {
   })
 
   it('should render button', () => {
-    expect(wrapper.find('.config-btn').exists()).toBe(false)
     expect(wrapper.find('form').exists()).toBe(true)
   })
 
