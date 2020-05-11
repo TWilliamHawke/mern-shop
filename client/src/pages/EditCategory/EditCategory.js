@@ -6,12 +6,26 @@ import Spinner from '../../components/Spinner';
 import PathLinks from '../../components/PathLinks';
 import { withRouter } from 'react-router-dom';
 import { saveTemplate } from '../../redux/dataFetchSaga/actions'
+import { saveTemplateRedirrect } from '../../redux/templateReducer/actions';
+
 import './edit-category.scss'
 
 
-export const EditCategory = ({getFields, fields, saveTemplate, noContent, match, location}) => {
+
+export const EditCategory = ({getFields, fields, saveTemplate, noContent, match, location, saveSuccess, history}) => {
   const [addField, setAddField] = useState(false)
   const [selectedFields, setSelectedFields] = useState({})
+
+  useEffect(() => {
+    if(!saveSuccess) return
+    const {name} = match.params
+    history.push(`/catalog/${name}/addItem`)
+
+    return () => {
+      saveTemplateRedirrect()
+    }
+    // eslint-disable-next-line
+  }, [saveSuccess])
 
   const checkHandle = (e) => {
     const {id} = e.target
@@ -36,9 +50,10 @@ export const EditCategory = ({getFields, fields, saveTemplate, noContent, match,
   }, [noContent])
 
   useEffect(() => {
+    if(!noContent) return
     getFields(match.params.name)
-    // eslint-disable-next-line
-  }, [getFields])
+
+  }, [getFields, noContent, match.params.name])
 
   if(noContent) return <Spinner />
 
@@ -81,8 +96,8 @@ export const EditCategory = ({getFields, fields, saveTemplate, noContent, match,
   );
 };
 
-const mapStateToProps = ({template: {fields, noContent}}) => ({
-  fields, noContent
+const mapStateToProps = ({template: {fields, noContent, saveSuccess}}) => ({
+  fields, noContent, saveSuccess
 })
 
 export default connect(mapStateToProps, { getFields, saveTemplate })(withRouter(EditCategory));

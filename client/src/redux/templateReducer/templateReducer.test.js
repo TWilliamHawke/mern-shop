@@ -1,5 +1,5 @@
 import reducer, {initialState as reducerState} from './templateReducer'
-import { TEMPLATE_REQUEST, TEMPLATE_FAILURE, GET_FIELDS_SUCCESS, ADD_FIELD_SUCCESS } from './types'
+import { TEMPLATE_REQUEST, TEMPLATE_FAILURE, GET_FIELDS_SUCCESS, ADD_FIELD_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT } from './types'
 
 
 
@@ -73,6 +73,39 @@ describe('test with ADD_FIELD_SUCCESS action', () => {
       .toEqual({
         ...reducerState,
         loading: false,
+      })
+  })
+})
+
+
+describe('test with SAVE_TEMPLATE_SUCCESS action', () => {
+  const initialState = {
+    ...reducerState,
+    saveSuccess: false
+  }
+
+  it('should set saveSuccess to true', () => {
+    expect(reducer(initialState, 
+      {type: SAVE_TEMPLATE_SUCCESS}))
+      .toEqual({
+        ...reducerState,
+        saveSuccess: true,
+      })
+  })
+})
+
+describe('test with SAVE_TEMPLATE_REDIRRECT action', () => {
+  const initialState = {
+    ...reducerState,
+    saveSuccess: true
+  }
+
+  it('should set saveSuccess to false', () => {
+    expect(reducer(initialState, 
+      {type: SAVE_TEMPLATE_REDIRRECT}))
+      .toEqual({
+        ...reducerState,
+        saveSuccess: false,
       })
   })
 })

@@ -1,4 +1,4 @@
-import { TEMPLATE_REQUEST, TEMPLATE_FAILURE, ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, LOAD_CONTENT } from "./types"
+import { TEMPLATE_REQUEST, TEMPLATE_FAILURE, ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, LOAD_CONTENT, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT } from "./types"
 
 
 export const initialState = {
@@ -6,7 +6,7 @@ export const initialState = {
   loading: true,
   errors: [],
   fields: [],
-  
+  saveSuccess: false
 }
 
 const handlers = {
@@ -26,13 +26,22 @@ const handlers = {
   }),
   [ADD_FIELD_SUCCESS]: state => ({
     ...state,
-    loading: false
+    loading: false,
+    noContent: true
   }),
   [GET_FIELDS_SUCCESS]: (state, payload) => ({
     ...state,
     noContent: false,
     fields: payload
   }),
+  [SAVE_TEMPLATE_SUCCESS]: state => ({
+    ...state,
+    saveSuccess: true
+  }),
+  [SAVE_TEMPLATE_REDIRRECT]: state => ({
+    ...state,
+    saveSuccess: false
+  })
 }
 
 const templateReducer = (state = initialState, action) => {

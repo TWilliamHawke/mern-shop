@@ -18,7 +18,6 @@ const CustomFields = ({history, data, values, changeHandler}) => {
       <span>Custom Fields</span>
       <button onClick={gotoEditTemplate} className='config-btn'>Edit template</button>
       {data.fields.map(({_id: id, fieldName, measure, type}) => {
-        console.log()
         return(
           <div key={id} className='form-wrapper'>
             <label htmlFor={id} >{`${fieldName}(${measure}):`}</label>

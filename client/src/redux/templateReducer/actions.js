@@ -1,4 +1,4 @@
-import { TEMPLATE_REQUEST, TEMPLATE_FAILURE, ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, LOAD_CONTENT } from "./types"
+import { TEMPLATE_REQUEST, TEMPLATE_FAILURE, ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, LOAD_CONTENT, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT } from "./types"
 
 
 export const templateRequest = () => ({
@@ -19,4 +19,12 @@ export const getFieldsSuccess = (payload) => ({
 
 export const loadContent = () => ({
   type: LOAD_CONTENT
+})
+
+export const saveTemplateSuccess = () => ({
+  type: SAVE_TEMPLATE_SUCCESS
+})
+
+export const saveTemplateRedirrect = () => ({
+  type: SAVE_TEMPLATE_REDIRRECT
 })
