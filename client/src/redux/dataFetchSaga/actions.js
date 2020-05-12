@@ -1,4 +1,4 @@
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE } from "./types";
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD } from "./types";
 
 
 export const loadImage = (payload) => ({
@@ -11,4 +11,8 @@ export const saveTemplate = (payload) => ({
 
 export const loadTemplate = (payload) => ({
   type: LOAD_TEMPLATE, payload
+})
+
+export const editField = (payload) => ({
+  type: EDIT_FIELD, payload
 })

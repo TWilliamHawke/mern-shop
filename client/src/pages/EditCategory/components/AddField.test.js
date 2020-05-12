@@ -49,5 +49,6 @@ describe('test connected component', () => {
   })
   test('component should receive props from connect function', () => {
     expect(wrapper.prop('addField')).toBeInstanceOf(Function)
+    expect(wrapper.prop('editField')).toBeInstanceOf(Function)
   })
 })

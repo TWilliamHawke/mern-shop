@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
+import { tfMeasure } from '../../../utils/textTransforms';
 
-const CustomFields = ({history, data, values, changeHandler}) => {
+const CustomFields = ({history, data, imputValues, setItemData}) => {
 
   const gotoEditTemplate = (e) => {
     e.preventDefault()
@@ -11,17 +12,42 @@ const CustomFields = ({history, data, values, changeHandler}) => {
     })
   }
 
-  console.log(data)
+  const changeHandler = e => {
+    const {id, value} = e.target
+    setItemData({
+      ...imputValues,
+      [id]: value
+    })
+  }
+
+
+
+  useEffect(() => {
+    const selectors = data.fields.filter(field => field.type === 'selector')
+    const vals = {}
+    selectors.forEach(({_id: id, values}) => vals[id] = values[0])
+    setItemData({
+      ...imputValues,
+      ...vals
+    })
+    console.log(vals)
+    // eslint-disable-next-line
+  }, [data])
 
   return (
     <div>
       <span>Custom Fields</span>
       <button onClick={gotoEditTemplate} className='config-btn'>Edit template</button>
-      {data.fields.map(({_id: id, fieldName, measure, type}) => {
+      {data.fields.map(({_id: id, fieldName, measure, type, values}) => {
+        
         return(
           <div key={id} className='form-wrapper'>
-            <label htmlFor={id} >{`${fieldName}(${measure}):`}</label>
-            <input onChange={changeHandler} value={values[id] || ''} id={id} type={type} />
+            <label htmlFor={id} >{`${fieldName}${tfMeasure(measure)}:`}</label>
+            {type === 'selector' ? 
+              <select onChange={changeHandler} value={imputValues[id] || values[0]} id={id}>
+                {values.map((val, idx) => <option key={idx} value={val}>{val}</option>)}
+              </select> :
+              <input onChange={changeHandler} value={imputValues[id] || ''} id={id} type={type} />}
           </div>
         )
       })}

@@ -44,6 +44,26 @@ router.post('/addField', checkAdmin, [
   }
 })
 
+router.put('/editTemplate', async(req, res) => {
+  try {
+    const {id, fieldName, measure, values, type} = req.body
+    let field = await Fields.findById(id)
+
+    if(!field) {
+      return res.status(400).json({ message: 'Field does not exists'})
+    }
+    
+    await Fields.updateOne({_id: id}, {fieldName, measure, type, values})
+
+
+    res.json({message: 'ok'})
+
+  } catch(e) {
+    console.log(e)
+    res.status(500).json({message: 'Something went wrong'})
+  }
+})
+
 router.get('/fields', checkAdmin, async (req, res) => {
   try {
     const category = await Category.findOne({path: req.query.cat})

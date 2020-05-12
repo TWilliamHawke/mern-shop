@@ -1,3 +1,4 @@
 export const LOAD_IMAGE = 'LOAD_IMAGE'
 export const SAVE_TEMPLATE = 'SAVE_TEMPLATE'
+export const EDIT_FIELD = 'EDIT_FIELD'
 export const LOAD_TEMPLATE = 'LOAD_TEMPLATE'

@@ -12,20 +12,6 @@
       width: 100%;
     }
   }
-  .form-wrapper {
-    display: flex;
-    width: 90%;
-    margin: 0 auto;
-    text-align: left;  
-    font-size: 20px;
-    padding: 7px 12px;
-    label {
-      margin-right: 15px;
-    }
-    input {
-      flex-grow: 1;
-    }
-  }
   span {
     font-size: 20px;
     margin: 0 10px;
@@ -53,5 +39,20 @@
   }
   textarea {
     width: 100%;
+  }
+}
+
+.form-wrapper {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  text-align: left;  
+  font-size: 20px;
+  padding: 7px 12px;
+  label {
+    margin-right: 15px;
+  }
+  input, select {
+    flex-grow: 1;
   }
 }

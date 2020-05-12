@@ -1,14 +1,14 @@
 import {put, call, all, takeEvery} from 'redux-saga/effects'
 import { transformErrors } from '../../utils/actionHelpers'
 import { getTokenSaga } from '../authSaga/sagas'
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE } from './types'
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD } from './types'
 //services
 import itemService from '../../services/itemService'
 import templateSevice from '../../services/editTemplateService'
 //actions
 import { fetchDataRequest, fetchDataFailure, fetchDataSuccess } from '../globalReducer/actions'
 import { loadImageSuccess, loadtemplateSuccess } from '../itemReducer/actions'
-import { saveTemplateSuccess } from '../templateReducer/actions'
+import { saveTemplateSuccess, addFieldSuccess } from '../templateReducer/actions'
 
 export const fetchSaga = (action, service) => {
   return function* ({payload}) {
@@ -40,5 +40,6 @@ export default function* () {
     takeFetchSaga(LOAD_IMAGE, loadImageSuccess, itemService.fetchImg),
     takeFetchSaga(SAVE_TEMPLATE, saveTemplateSuccess, templateSevice.saveTemplate),
     takeFetchSaga(LOAD_TEMPLATE, loadtemplateSuccess, itemService.fetchTemplate),
+    takeFetchSaga(EDIT_FIELD, addFieldSuccess, templateSevice.editTemplate),
   ])
 }

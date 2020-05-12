@@ -9,7 +9,7 @@ describe('test Categories component', () => {
   beforeAll(() => {
     wrapper = mount(
       <MemoryRouter>
-        <Categories userType='user' />
+        <Categories userType='user' categories={{}} />
       </MemoryRouter>
     )
   })
@@ -22,11 +22,12 @@ describe('test connected component', () => {
   let wrapper
   beforeAll(() => {
     const mockStore = configMockStore()
-    const state = {auth: {userType: 'user'}}
+    const state = {auth: {userType: 'user'}, global: {categories: 'CatObj'}}
     const store = mockStore(state)
     wrapper = shallow(<ConnectedCategories store={store} />).find('Categories')
   })
   test('component should receive props from connect function', () => {
     expect(wrapper.prop('userType')).toBe('user')
+    expect(wrapper.prop('categories')).toBe('CatObj')
   })
 })

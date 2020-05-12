@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { addField } from '../../../redux/templateConfigSaga/actions'
+import React, { useState, useEffect } from 'react';
+import { addField } from 'src/redux/templateConfigSaga/actions'
 import { connect } from 'react-redux';
 import { addFieldValidation, newValueValidation } from '../../../utils/addFieldValidation';
+import { editField } from '../../../redux/dataFetchSaga/actions'
 
-export const AddField = ({showForm, setShowForm, addField}) => {
+export const AddField = ({showForm, setShowForm, addField, data, editField}) => {
   const [type, setType] = useState('text')
   const [values, setValues] = useState([])
   const [fieldName, setFieldName] = useState('')
@@ -14,15 +15,27 @@ export const AddField = ({showForm, setShowForm, addField}) => {
     return addFieldValidation(type, values, fieldName)
   }
 
+  useEffect(() => {
+    if(!data) return
+    setFieldName(data.fieldName)
+    setValues(data.values)
+    setMeasure(data.measure)
+    setType(data.type)
+    // eslint-disable-next-line
+  }, [])
+
   const submitHandler = e => {
     e.preventDefault()
     if(fetchValidation()) return
-    addField({
+    const fieldData = {
       fieldName,
       type,
       measure,
       values
-    })  
+    }
+    if(!data) return addField(fieldData)
+    fieldData.id = data.id
+    editField(fieldData)  
   }  
 
   const cancelHandler = e => {
@@ -42,37 +55,41 @@ export const AddField = ({showForm, setShowForm, addField}) => {
     setFieldValue('')
   }
 
-  if(!showForm) return <td colSpan={3}><button onClick={() => setShowForm(true)} className='config-btn'>Add field</button></td>
+  if(!showForm) return <td colSpan={3}><button onClick={() => setShowForm('new')} className='config-btn'>Add field</button></td>
 
   return (
     <td colSpan={3}>
 
-    <form onSubmit={submitHandler}>
-      <fieldset>
+    <form className='add-field-form' onSubmit={submitHandler}>
+      <div className='form-wrapper'>
         <label htmlFor='add-field-name'>Field Name:</label>
         <input value={fieldName} onChange={e => setFieldName(e.target.value)} id='add-field-name' />
-      </fieldset>
-      <fieldset>
+      </div>
+      <div className='form-wrapper'>
         <label htmlFor='add-measure'>Unit of measure:</label>
         <input value={measure} onChange={e => setMeasure(e.target.value)} id='add-measure' />
-      </fieldset>
+      </div>
 
-      <fieldset>
+      <div className='form-wrapper'>
         <label htmlFor='add-type'>Type:</label>
         <select value={type} onChange={selectorHandle} id='add-type'>
           <option value='number'>Number</option>
           <option value='text'>Text</option>
           <option value='selector'>Selector</option>
         </select>
-      </fieldset>
+      </div>
       
       {type === 'selector' && (
-      <fieldset>
-        <p>Possible values is {values.join(', ')}</p>
-        <label htmlFor='add-value'>Add value</label>
-        <input value={fieldValue} onChange={e => setFieldValue(e.target.value)} id='add-value' />
-        <button disabled={newValueValidation(fieldValue)} onClick={addValueHandle}>Add</button>
-      </fieldset>)}
+        <>
+          <p>Possible values is {values.join(', ')}</p>
+          <div className='form-wrapper'>
+            <label htmlFor='add-value'>Add value</label>
+            <div>
+              <input value={fieldValue} onChange={e => setFieldValue(e.target.value)} id='add-value' />
+              <button disabled={newValueValidation(fieldValue)} onClick={addValueHandle}>Add</button>
+            </div>
+          </div>
+        </>)}
 
       <div className='button-wrapper'>
         <button className='config-btn btn-red' onClick={cancelHandler} >Cancel</button>
@@ -84,7 +101,7 @@ export const AddField = ({showForm, setShowForm, addField}) => {
 };
 
 const mapDispathtoProps = {
-  addField
+  addField, editField
 }
 
 export default connect(null, mapDispathtoProps)(AddField);

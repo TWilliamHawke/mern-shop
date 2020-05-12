@@ -11,6 +11,10 @@ class TemplateService {
   saveTemplate = (token, data) => {
     return axios.post('/api/template/fields', data, {headers: {authorization: token}})
   }
+  editTemplate = (token, data) => {
+    return axios.put('/api/template/editTemplate', data, {headers: {authorization: token}})
+  }
+  
 }
 
 const templateService = new TemplateService()

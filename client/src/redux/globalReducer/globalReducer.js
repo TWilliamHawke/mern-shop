@@ -3,7 +3,18 @@ import { FETCH_DATA_REQUEST, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE } from "./ty
 
 export const initialState = {
   loading: false,
-  errors: []
+  errors: [],
+  categories: {
+    cpu: 'CPU',
+    motherboards: 'Motherboards',
+    graphic: 'Graphic Cards',
+    coolings: 'CPU Cooling',
+    memory: 'Memory',
+    storage: 'Storage',
+    cases: 'Cases',
+    fans: 'Case Fans',
+    power: 'Power Supplies',
+  }
 }
 
 const handlers = {

@@ -4,32 +4,21 @@ import useUserType from 'src/hooks/useUserType'
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-export const Categories = ({userType}) => {
+export const Categories = ({userType, categories}) => {
   const history = useHistory()
   const {isUser} = useUserType(userType)
-  const names = [
-    {title: 'CPU', link: 'cpu'},
-    {title: 'Motherboards', link: 'motherboards'},
-    {title: 'Graphic Cards', link: 'graphic'},
-    {title: 'CPU Cooling', link: 'coolings'},
-    {title: 'Memory', link: 'memory'},
-    {title: 'Storage', link: 'storage'},
-    {title: 'Cases', link: 'cases'},
-    {title: 'Case Fans', link: 'fans'},
-    {title: 'Power Supplies', link: 'power'},
-  ]
 
   return (
     <div>
       <h3>Categories</h3>
       <ul className='categories'>
-        {names.map(({title, link}) => {
-          const location = {pathname: `/catalog/${link}/`, state: title}
+        {Object.entries(categories).map(cat => {
+          const location = {pathname: `/catalog/${cat[0]}/`, state: cat[1]}
           return(
             <li 
-              key={link} 
+              key={cat[0]} 
               onClick={() => history.push(location)}>
-              {title}
+              {cat[1]}
             </li>
           )
         })}
@@ -39,6 +28,8 @@ export const Categories = ({userType}) => {
   );
 };
 
-const mapStateToProps = ({auth: {userType}}) => ({userType})
+const mapStateToProps = ({auth: {userType}, global: {categories}}) => ({
+  userType, categories
+})
 
 export default connect(mapStateToProps)(Categories);

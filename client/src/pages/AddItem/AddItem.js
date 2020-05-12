@@ -11,6 +11,7 @@ import CustomFields from './components/CustomFields';
  
 export const AddItem = ({loadTemplate, match, category}) => {
   const [itemData, setItemData] = useState({})
+  const [customData, setCustomData] = useState({})
 
   useEffect(() => {
     loadTemplate(match.params.name)
@@ -24,13 +25,19 @@ export const AddItem = ({loadTemplate, match, category}) => {
     })
   }
 
+  const submitHandler = e => {
+    e.preventDefault()
+    console.log(itemData)
+    console.log(customData)
+  }
+
   if(!category) return <Spinner />
 
   return (
     <div>
       AddItem
-      <PathLinks />
-      <form className='add-item-form'>
+      <PathLinks action='Add Item' />
+      <form className='add-item-form' onSubmit={submitHandler}>
         <div className='default-field'>
           <div className='default-field-text'>
             <h3>Add new {category.name}</h3>
@@ -43,19 +50,20 @@ export const AddItem = ({loadTemplate, match, category}) => {
               <input onChange={inputHandler} value={itemData.itemPrice || ''}  type='number' min={0} step={0.01} id='itemPrice' />
             </div>
             <div className='form-wrapper'>
-              <label htmlFor='itemDiscount'>Discount:</label>
-              <input onChange={inputHandler} value={itemData.itemDiscount || ''}  type='number' min={0} step={1} max={99} id='itemDiscount' />
+              <label htmlFor='itemDiscount'>Discount Price:</label>
+              <input onChange={inputHandler} value={itemData.itemDiscount || ''}  type='number' min={0} step={0.01} id='itemDiscount' />
             </div>
           </div>
           <ItemImage />
         </div>
 
-        <CustomFields values={itemData} changeHandler={inputHandler} data={category} />
+        <CustomFields imputValues={customData} setItemData={setCustomData} data={category} />
       
         <fieldset>
           <label htmlFor='itemDescr'>Description</label>
           <textarea onChange={inputHandler} value={itemData.itemDescr || ''}  rows={6} id='itemDescr'/>
         </fieldset>
+        <button type='submit' className='btn-submit'>Save Item</button>
       </form>
     </div>
   );

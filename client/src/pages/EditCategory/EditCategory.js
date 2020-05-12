@@ -12,14 +12,16 @@ import './edit-category.scss'
 
 
 
-export const EditCategory = ({getFields, fields, saveTemplate, noContent, match, location, saveSuccess, history}) => {
+export const EditCategory = ({getFields, fields, saveTemplate, noContent, match,
+  location, saveSuccess, history, saveTemplateRedirrect}) => {
+
   const [addField, setAddField] = useState(false)
   const [selectedFields, setSelectedFields] = useState({})
 
   useEffect(() => {
     if(!saveSuccess) return
     const {name} = match.params
-    history.push(`/catalog/${name}/addItem`)
+    history.push(`/catalog/${name}/addItem/`)
 
     return () => {
       saveTemplateRedirrect()
@@ -38,6 +40,7 @@ export const EditCategory = ({getFields, fields, saveTemplate, noContent, match,
   useEffect(() => {
     if(noContent) return
 
+    //set checked inputs in table
     const data = fields.reduce((obj, field) => {
       return {
         ...obj,
@@ -51,6 +54,7 @@ export const EditCategory = ({getFields, fields, saveTemplate, noContent, match,
 
   useEffect(() => {
     if(!noContent) return
+    setAddField(false)
     getFields(match.params.name)
 
   }, [getFields, noContent, match.params.name])
@@ -72,11 +76,11 @@ export const EditCategory = ({getFields, fields, saveTemplate, noContent, match,
   return (
     <div>
       EditCategory
-      <PathLinks />
+      <PathLinks action='EditCategory' />
       <table>
         <tbody>
-          {fields.map(({fieldName, _id: id}) => {
-            if(addField === id) return <tr key={id}><AddField /></tr>
+          {fields.map(({fieldName, _id: id, ...other}) => {
+            if(addField === id) return <tr key={id}><AddField data={{fieldName, id, ...other}} showForm={addField === id} setShowForm={setAddField} /></tr>
             return (
               <tr key={id}>
                 <td><label htmlFor={id}>{fieldName}</label></td>
@@ -86,7 +90,7 @@ export const EditCategory = ({getFields, fields, saveTemplate, noContent, match,
             )
           })}
           <tr>
-              <AddField setShowForm={setAddField} showForm={addField} />
+            <AddField setShowForm={setAddField} showForm={addField === 'new'} />
           </tr>
         </tbody>
       </table>
@@ -100,4 +104,4 @@ const mapStateToProps = ({template: {fields, noContent, saveSuccess}}) => ({
   fields, noContent, saveSuccess
 })
 
-export default connect(mapStateToProps, { getFields, saveTemplate })(withRouter(EditCategory));
+export default connect(mapStateToProps, { getFields, saveTemplate, saveTemplateRedirrect })(withRouter(EditCategory));

@@ -13,7 +13,7 @@ describe('test dumb component', () => {
         match={{params: {name: 'testName'}}} />)
   })
   test('should render correctly', () => {
-    expect(wrapper.find('PathLinks').exists()).toBe(true)
+    expect(wrapper.find('Connect(withRouter(PathLinks))').exists()).toBe(true)
   })
 })
 

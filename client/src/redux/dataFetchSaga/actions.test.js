@@ -1,5 +1,5 @@
-import { loadImage, saveTemplate, loadTemplate } from "./actions"
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE } from "./types"
+import { loadImage, saveTemplate, loadTemplate, editField } from "./actions"
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD } from "./types"
 
 
 
@@ -17,5 +17,10 @@ describe('test itemSaga actions', () => {
   it('should return LOAD_TEMPLATE type', () => {
     expect(loadTemplate('somedata'))
       .toEqual({type: LOAD_TEMPLATE, payload: 'somedata'})
+  })
+
+  it('should return EDIT_FIELD type', () => {
+    expect(editField('somedata'))
+      .toEqual({type: EDIT_FIELD, payload: 'somedata'})
   })
 })

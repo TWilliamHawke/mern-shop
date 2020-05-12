@@ -27,6 +27,7 @@ describe('test connected component', () => {
   test('component should receive props from connect function', () => {
     expect(wrapper.prop('getFields')).toBeInstanceOf(Function)
     expect(wrapper.prop('saveTemplate')).toBeInstanceOf(Function)
+    expect(wrapper.prop('saveTemplateRedirrect')).toBeInstanceOf(Function)
     expect(wrapper.prop('fields')).toBe('fieldsArray')
     expect(wrapper.prop('noContent')).toBe('mock')
     expect(wrapper.prop('saveSuccess')).toBe(true)

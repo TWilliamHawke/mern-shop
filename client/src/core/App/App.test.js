@@ -9,6 +9,6 @@ describe('test app component', () => {
   })
 
   it('should rendered correctly', () => {
-    expect(wrapper.exists('.container')).toBe(true);
+    expect(wrapper.exists('Provider')).toBe(true);
   })
 })
