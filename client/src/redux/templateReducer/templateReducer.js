@@ -1,32 +1,19 @@
-import { TEMPLATE_REQUEST, TEMPLATE_FAILURE, ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, LOAD_CONTENT, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT } from "./types"
+import { ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_IMAGE_SUCCESS, LOAD_TEMPLATE_SUCCESS } from "./types"
 
 
 export const initialState = {
   noContent: true,
-  loading: true,
-  errors: [],
   fields: [],
-  saveSuccess: false
+  saveSuccess: false,
+  imageUrl: 'images/no-image.png',
+  imageId: null,
+  category: null
 }
 
 const handlers = {
   default: state => state,
-  [LOAD_CONTENT]: state => ({
-    ...state,
-  }),
-  [TEMPLATE_REQUEST]: state => ({
-    ...state,
-    loading: true,
-    errors: []
-  }),
-  [TEMPLATE_FAILURE]: (state, payload) => ({
-    ...state,
-    loading: false,
-    errors: payload
-  }),
   [ADD_FIELD_SUCCESS]: state => ({
     ...state,
-    loading: false,
     noContent: true
   }),
   [GET_FIELDS_SUCCESS]: (state, payload) => ({
@@ -41,7 +28,16 @@ const handlers = {
   [SAVE_TEMPLATE_REDIRRECT]: state => ({
     ...state,
     saveSuccess: false
-  })
+  }),
+  [LOAD_IMAGE_SUCCESS]: (state, {id, img}) => ({
+    ...state,
+    imageId: id,
+    imageUrl: img
+  }),
+  [LOAD_TEMPLATE_SUCCESS]: (state, payload) => ({
+    ...state,
+    category: payload
+  }),
 }
 
 const templateReducer = (state = initialState, action) => {

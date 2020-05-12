@@ -1,45 +1,11 @@
 import reducer, {initialState as reducerState} from './templateReducer'
-import { TEMPLATE_REQUEST, TEMPLATE_FAILURE, GET_FIELDS_SUCCESS, ADD_FIELD_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT } from './types'
+import { GET_FIELDS_SUCCESS, ADD_FIELD_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_IMAGE_SUCCESS, LOAD_TEMPLATE_SUCCESS } from './types'
 
 
 
 describe('test with random action', () => {
   it('should return default state', () => {
     expect(reducer(reducerState, 'randomAction')).toEqual(reducerState)
-  })
-})
-
-describe('test with TEMPLATE_REQUEST action', () => {
-  const initialState = {
-    ...reducerState,
-    loading: false,
-    errors: 'errorsArray'
-  }
-
-  it('should start loading and clear errors', () => {
-    expect(reducer(initialState, {type: TEMPLATE_REQUEST})).toEqual({
-      ...reducerState,
-      loading: true,
-      errors: []
-    })
-  })
-})
-
-describe('test with TEMPLATE_FAILURE action', () => {
-  const initialState = {
-    ...reducerState,
-    loading: true,
-    errors: []
-  }
-
-  it('should stop loading and set errors', () => {
-    expect(reducer(initialState, 
-      {type: TEMPLATE_FAILURE, payload: 'errorsArray'}))
-      .toEqual({
-        ...reducerState,
-        loading: false,
-        errors: 'errorsArray'
-      })
   })
 })
 
@@ -64,7 +30,6 @@ describe('test with GET_FIELDS_SUCCESS action', () => {
 describe('test with ADD_FIELD_SUCCESS action', () => {
   const initialState = {
     ...reducerState,
-    loading: true,
   }
 
   it('should stop loading', () => {
@@ -72,7 +37,6 @@ describe('test with ADD_FIELD_SUCCESS action', () => {
       {type: ADD_FIELD_SUCCESS}))
       .toEqual({
         ...reducerState,
-        loading: false,
       })
   })
 })
@@ -109,3 +73,34 @@ describe('test with SAVE_TEMPLATE_REDIRRECT action', () => {
       })
   })
 })
+
+describe('test LOAD_IMAGE_SUCCESS action', () => {
+  it('should set image url', () => {
+    const initialState = {
+      ...reducerState,
+      imageUrl: '',
+      imageId: null
+    }
+    expect(reducer(initialState, 
+      {type: LOAD_IMAGE_SUCCESS, payload: {img: 'newUrl', id: 'id'}})).toEqual({
+        ...reducerState,
+        imageUrl: 'newUrl',
+        imageId: 'id',
+      })
+  })
+})
+
+describe('test LOAD_TEMPLATE_SUCCESS action', () => {
+  it('should set category data', () => {
+    const initialState = {
+      ...reducerState,
+      category: null
+    }
+    expect(reducer(initialState, 
+      {type: LOAD_TEMPLATE_SUCCESS, payload: 'templateData'})).toEqual({
+        ...reducerState,
+        category: 'templateData'
+      })
+  })
+})
+

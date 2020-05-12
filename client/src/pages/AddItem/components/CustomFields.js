@@ -23,14 +23,13 @@ const CustomFields = ({history, data, imputValues, setItemData}) => {
 
 
   useEffect(() => {
-    const selectors = data.fields.filter(field => field.type === 'selector')
+    const selectors = data.fields
     const vals = {}
-    selectors.forEach(({_id: id, values}) => vals[id] = values[0])
+    selectors.forEach(({_id: id, values}) => vals[id] = values[0] || '')
     setItemData({
       ...imputValues,
       ...vals
     })
-    console.log(vals)
     // eslint-disable-next-line
   }, [data])
 

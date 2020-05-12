@@ -10,8 +10,13 @@ import './add-item.scss'
 import CustomFields from './components/CustomFields';
  
 export const AddItem = ({loadTemplate, match, category}) => {
-  const [itemData, setItemData] = useState({})
   const [customData, setCustomData] = useState({})
+  const [itemData, setItemData] = useState({
+    itemTitle: '',
+    itemPrice: '',
+    itemDiscount: '',
+    itemDescr: '',
+  })
 
   useEffect(() => {
     loadTemplate(match.params.name)
@@ -25,7 +30,7 @@ export const AddItem = ({loadTemplate, match, category}) => {
     })
   }
 
-  const submitHandler = e => {
+  const saveItemHandler = e => {
     e.preventDefault()
     console.log(itemData)
     console.log(customData)
@@ -37,7 +42,7 @@ export const AddItem = ({loadTemplate, match, category}) => {
     <div>
       AddItem
       <PathLinks action='Add Item' />
-      <form className='add-item-form' onSubmit={submitHandler}>
+      <form className='add-item-form' onSubmit={saveItemHandler}>
         <div className='default-field'>
           <div className='default-field-text'>
             <h3>Add new {category.name}</h3>

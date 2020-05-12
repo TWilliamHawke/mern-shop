@@ -39,37 +39,4 @@ describe('test FETCH_ITEM_FAILURE action', () => {
   })
 })
 
-describe('test LOAD_IMAGE_SUCCESS action', () => {
-  it('should stop loading and set image url', () => {
-    const initialState = {
-      ...reducerState,
-      loading: true,
-      imageUrl: '',
-      imageId: null
-    }
-    expect(reducer(initialState, 
-      {type: LOAD_IMAGE_SUCCESS, payload: {img: 'newUrl', id: 'id'}})).toEqual({
-        ...reducerState,
-        imageUrl: 'newUrl',
-        imageId: 'id',
-        loading: false,
-      })
-  })
-})
-
-describe('test LOAD_TEMPLATE_SUCCESS action', () => {
-  it('should stop loading and set category data', () => {
-    const initialState = {
-      ...reducerState,
-      loading: true,
-      category: null
-    }
-    expect(reducer(initialState, 
-      {type: LOAD_TEMPLATE_SUCCESS, payload: 'templateData'})).toEqual({
-        ...reducerState,
-        loading: false,
-        category: 'templateData'
-      })
-  })
-})
 

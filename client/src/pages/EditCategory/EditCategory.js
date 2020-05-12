@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import AddField from './components/AddField';
 import { connect } from 'react-redux';
-import { getFields } from '../../redux/templateConfigSaga/actions'
 import Spinner from '../../components/Spinner';
 import PathLinks from '../../components/PathLinks';
 import { withRouter } from 'react-router-dom';
-import { saveTemplate } from '../../redux/dataFetchSaga/actions'
+import { saveTemplate, getFields } from '../../redux/dataFetchSaga/actions'
 import { saveTemplateRedirrect } from '../../redux/templateReducer/actions';
 
 import './edit-category.scss'
@@ -75,8 +74,9 @@ export const EditCategory = ({getFields, fields, saveTemplate, noContent, match,
 
   return (
     <div>
-      EditCategory
       <PathLinks action='EditCategory' />
+      EditCategory
+      <h2>{location?.state}</h2>
       <table>
         <tbody>
           {fields.map(({fieldName, _id: id, ...other}) => {

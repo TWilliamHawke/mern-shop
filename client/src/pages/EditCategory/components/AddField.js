@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { addField } from 'src/redux/templateConfigSaga/actions'
 import { connect } from 'react-redux';
 import { addFieldValidation, newValueValidation } from '../../../utils/addFieldValidation';
-import { editField } from '../../../redux/dataFetchSaga/actions'
+import { editField, addField } from '../../../redux/dataFetchSaga/actions'
 
 export const AddField = ({showForm, setShowForm, addField, data, editField}) => {
   const [type, setType] = useState('text')

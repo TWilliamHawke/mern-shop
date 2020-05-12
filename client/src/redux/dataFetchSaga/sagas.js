@@ -1,14 +1,13 @@
 import {put, call, all, takeEvery} from 'redux-saga/effects'
 import { transformErrors } from '../../utils/actionHelpers'
 import { getTokenSaga } from '../authSaga/sagas'
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD } from './types'
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, ADD_FIELD, GET_FIELDS } from './types'
 //services
 import itemService from '../../services/itemService'
 import templateSevice from '../../services/editTemplateService'
 //actions
 import { fetchDataRequest, fetchDataFailure, fetchDataSuccess } from '../globalReducer/actions'
-import { loadImageSuccess, loadtemplateSuccess } from '../itemReducer/actions'
-import { saveTemplateSuccess, addFieldSuccess } from '../templateReducer/actions'
+import { saveTemplateSuccess, addFieldSuccess, loadImageSuccess, loadTemplateSuccess, getFieldsSuccess } from '../templateReducer/actions'
 
 export const fetchSaga = (action, service) => {
   return function* ({payload}) {
@@ -39,7 +38,9 @@ export default function* () {
   yield all([
     takeFetchSaga(LOAD_IMAGE, loadImageSuccess, itemService.fetchImg),
     takeFetchSaga(SAVE_TEMPLATE, saveTemplateSuccess, templateSevice.saveTemplate),
-    takeFetchSaga(LOAD_TEMPLATE, loadtemplateSuccess, itemService.fetchTemplate),
+    takeFetchSaga(LOAD_TEMPLATE, loadTemplateSuccess, itemService.fetchTemplate),
     takeFetchSaga(EDIT_FIELD, addFieldSuccess, templateSevice.editTemplate),
+    takeFetchSaga(ADD_FIELD, addFieldSuccess, templateSevice.addField),
+    takeFetchSaga(GET_FIELDS, getFieldsSuccess, templateSevice.getFields),
   ])
 }

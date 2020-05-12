@@ -3,6 +3,7 @@ const { checkAdmin} = require('../middleware/checkToken')
 const { check, validationResult } = require('express-validator')
 const Fields = require('../models/Field')
 const Category = require('../models/Category')
+const { transformFields } = require('../utils/transformData')
 
 const router = new Router()
 
@@ -64,15 +65,14 @@ router.put('/editTemplate', async(req, res) => {
   }
 })
 
+
+//getFields action
 router.get('/fields', checkAdmin, async (req, res) => {
   try {
     const category = await Category.findOne({path: req.query.cat})
     const fields = await Fields.find({})
     
-    const changedFields = fields.map((field) => {
-      return {...field._doc, enable: category.fields.includes(field._id)}
-    })
-    res.json({fields: changedFields})
+    res.json(transformFields(fields, category))
 
   } catch(e) {
     console.log(e)

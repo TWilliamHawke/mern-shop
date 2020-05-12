@@ -2,12 +2,19 @@ const {Schema, model, Types} = require('mongoose')
 
 const ItemSchema = new Schema({
   name: {type: String, required: true},
-  category: {type: String, required: true},
+  category: {type: Types.ObjectId, ref: 'Categories', required: true},
   price: {type: Number, required: true},
-  discount: {type: Number, default: 0},
+  discountPrice: {type: Number},
   image: String,
   rating: Number,
-  other: Schema.Types.Mixed
+  other: [
+    {
+      field: String,
+      value: {
+        type: Types.ObjectId, ref: 'Field'
+      }
+    }
+  ]
 })
 
 module.exports = model('Item', ItemSchema)

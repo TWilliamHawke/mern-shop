@@ -2,7 +2,7 @@ import axios from "axios"
 
 class TemplateService {
 
-  addField = (data, token) => {
+  addField = (token, data) => {
     return axios.post('/api/template/addField', data, {headers: {authorization: token}})
   }
   getFields = (token, category) => {
