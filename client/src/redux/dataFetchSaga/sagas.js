@@ -7,7 +7,7 @@ import itemService from '../../services/itemService'
 import templateSevice from '../../services/editTemplateService'
 //actions
 import { fetchDataRequest, fetchDataFailure, fetchDataSuccess } from '../globalReducer/actions'
-import { saveTemplateSuccess, addFieldSuccess, loadImageSuccess, loadTemplateSuccess, getFieldsSuccess } from '../templateReducer/actions'
+import { saveTemplateSuccess, loadImageSuccess, loadTemplateSuccess, getFieldsSuccess, clearTemplateData } from '../templateReducer/actions'
 
 export const fetchSaga = (action, service) => {
   return function* ({payload}) {
@@ -39,8 +39,8 @@ export default function* () {
     takeFetchSaga(LOAD_IMAGE, loadImageSuccess, itemService.fetchImg),
     takeFetchSaga(SAVE_TEMPLATE, saveTemplateSuccess, templateSevice.saveTemplate),
     takeFetchSaga(LOAD_TEMPLATE, loadTemplateSuccess, itemService.fetchTemplate),
-    takeFetchSaga(EDIT_FIELD, addFieldSuccess, templateSevice.editTemplate),
-    takeFetchSaga(ADD_FIELD, addFieldSuccess, templateSevice.addField),
+    takeFetchSaga(EDIT_FIELD, clearTemplateData, templateSevice.editTemplate),
+    takeFetchSaga(ADD_FIELD, clearTemplateData, templateSevice.addField),
     takeFetchSaga(GET_FIELDS, getFieldsSuccess, templateSevice.getFields),
   ])
 }

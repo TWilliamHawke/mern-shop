@@ -9,7 +9,7 @@ const Category = () => {
   const {state} = useLocation()
   return (
 
-    <div>
+    <div className='full-page'>
       <PathLinks />
       <Rows
         left={<Filter />}

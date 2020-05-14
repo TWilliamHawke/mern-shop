@@ -11,7 +11,8 @@ router.post('/addField', checkAdmin, [
   check('fieldName', 'wrong FieldName').isString(),
   check('values', 'Wrong values').isArray(),
   check('measure', 'wrong Unit of measure').isString(),
-  check('type', 'wrong type').isString()
+  check('type', 'wrong type').isString(),
+  check('multiple', 'wrong multiple type').isBoolean()
   ], async (req, res) => {
 
   try {
@@ -24,15 +25,15 @@ router.post('/addField', checkAdmin, [
       })
     }
   
-    const {fieldName, values, measure, type} = req.body
-    const match = await Fields.findOne({ fieldName })
+    const {fieldName, values, measure, type, multiple} = req.body
+    const match = await Fields.findOne({ fieldName, measure })
   
     if(match) {
       return res.status(400).json({ message: 'Field already exist'})
     }
 
     const field = new Fields({
-      fieldName, type, measure, values
+      fieldName, type, measure, values, multiple
     })
 
     await field.save()
@@ -47,14 +48,14 @@ router.post('/addField', checkAdmin, [
 
 router.put('/editTemplate', async(req, res) => {
   try {
-    const {id, fieldName, measure, values, type} = req.body
+    const {id, fieldName, measure, values, type, multiple} = req.body
     let field = await Fields.findById(id)
 
     if(!field) {
       return res.status(400).json({ message: 'Field does not exists'})
     }
     
-    await Fields.updateOne({_id: id}, {fieldName, measure, type, values})
+    await Fields.updateOne({_id: id}, {fieldName, measure, type, values, multiple})
 
 
     res.json({message: 'ok'})
@@ -69,10 +70,13 @@ router.put('/editTemplate', async(req, res) => {
 //getFields action
 router.get('/fields', checkAdmin, async (req, res) => {
   try {
-    const category = await Category.findOne({path: req.query.cat})
-    const fields = await Fields.find({})
+
+    const fields = await Promise.all([
+      Category.findOne({path: req.query.cat}),
+      Fields.find({})
+    ])
     
-    res.json(transformFields(fields, category))
+    res.json(transformFields(fields))
 
   } catch(e) {
     console.log(e)

@@ -7,6 +7,7 @@ import Routes from '../Routes';
 import { Provider } from 'react-redux'
 import store from 'src/redux/store';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
+import TopErrorMessage from '../../components/TopErrorMessage/TopErrorMessage';
 
 const App = () => {
 
@@ -15,6 +16,7 @@ const App = () => {
       <ErrorBoundary>
         <Router>
           <Navbar />
+          <TopErrorMessage />
           <div className='container'>
             <Routes />
           </div>

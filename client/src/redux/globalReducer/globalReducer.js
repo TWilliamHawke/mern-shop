@@ -1,4 +1,4 @@
-import { FETCH_DATA_REQUEST, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE } from "./types"
+import { FETCH_DATA_REQUEST, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE, CLEAR_GLOBAL_ERRORS } from "./types"
 
 
 export const initialState = {
@@ -33,7 +33,10 @@ const handlers = {
     loading: false,
     errors: payload,
   }),
-
+  [CLEAR_GLOBAL_ERRORS]: state => ({
+    ...state,
+    errors: []
+  })
 }
 
 const globalReducer = (state = initialState, action) => {

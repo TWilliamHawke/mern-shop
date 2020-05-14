@@ -1,0 +1,25 @@
+.top-error {
+  font-size: 20px;
+  padding: 10px;
+  position: absolute;
+  top: 40px;
+  right: 10%;
+  background: rgb(228, 195, 195);
+  color: red;
+  width: 400px;
+  button {
+    margin: 10px auto;
+    cursor: pointer;
+    border-color: red;
+    border-width: 1px;
+    background: transparent;
+    color: red;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 8px 15px;
+  }
+  .button-wrapper {
+    display: flex;
+    justify-content: space-around;
+  }
+}

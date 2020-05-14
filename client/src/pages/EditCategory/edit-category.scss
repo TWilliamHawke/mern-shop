@@ -6,6 +6,7 @@ table {
     font-size: 20px;
     transform: scale(1.5);
     margin: 5px;
+    width: initial !important;
     cursor: pointer;
   }
   td {
@@ -16,11 +17,16 @@ table {
     p {
       font-size: 16px;
       margin: 5px 0;
+      max-width: 430px;
+      margin: 0 auto;
     }
     .form-wrapper, fieldset {
       justify-content: space-between;
       width: 80%;
       padding: 5px 10px;
+      .no-data {
+        width: 46%;
+      }
       input, select {
         flex-grow: initial;
         width: 60%;
@@ -46,4 +52,5 @@ table {
       margin-bottom: 10px;
     }
   }
+
 }

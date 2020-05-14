@@ -13,6 +13,7 @@ const fieldSchema = new Schema({
   measure: {
     type: String,
   },
+  multiple: Boolean,
   values: [
     {
       type: String,

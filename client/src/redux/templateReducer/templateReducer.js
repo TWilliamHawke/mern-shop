@@ -1,4 +1,4 @@
-import { ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_IMAGE_SUCCESS, LOAD_TEMPLATE_SUCCESS } from "./types"
+import { ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_IMAGE_SUCCESS, LOAD_TEMPLATE_SUCCESS, CLEAR_TEMPLATE_DATA } from "./types"
 
 
 export const initialState = {
@@ -27,7 +27,8 @@ const handlers = {
   }),
   [SAVE_TEMPLATE_REDIRRECT]: state => ({
     ...state,
-    saveSuccess: false
+    saveSuccess: false,
+    noContent: true
   }),
   [LOAD_IMAGE_SUCCESS]: (state, {id, img}) => ({
     ...state,
@@ -38,6 +39,14 @@ const handlers = {
     ...state,
     category: payload
   }),
+  [CLEAR_TEMPLATE_DATA]: state => ({
+    ...state,
+    noContent: true,
+    saveSuccess: false,
+    imageUrl: 'images/no-image.png',
+    imageId: null,
+    category: null
+  })
 }
 
 const templateReducer = (state = initialState, action) => {

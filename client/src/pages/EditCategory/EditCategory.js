@@ -5,14 +5,15 @@ import Spinner from '../../components/Spinner';
 import PathLinks from '../../components/PathLinks';
 import { withRouter } from 'react-router-dom';
 import { saveTemplate, getFields } from '../../redux/dataFetchSaga/actions'
-import { saveTemplateRedirrect } from '../../redux/templateReducer/actions';
+import { saveTemplateRedirrect, clearTemplateData } from '../../redux/templateReducer/actions';
+import Fields from './components/Fields'
 
 import './edit-category.scss'
 
 
 
-export const EditCategory = ({getFields, fields, saveTemplate, noContent, match,
-  location, saveSuccess, history, saveTemplateRedirrect}) => {
+export const EditCategory = ({ getFields, fields, saveTemplate, noContent, match,
+  location, saveSuccess, history, clearTemplateData }) => {
 
   const [addField, setAddField] = useState(false)
   const [selectedFields, setSelectedFields] = useState({})
@@ -22,9 +23,6 @@ export const EditCategory = ({getFields, fields, saveTemplate, noContent, match,
     const {name} = match.params
     history.push(`/catalog/${name}/addItem/`)
 
-    return () => {
-      saveTemplateRedirrect()
-    }
     // eslint-disable-next-line
   }, [saveSuccess])
 
@@ -37,34 +35,30 @@ export const EditCategory = ({getFields, fields, saveTemplate, noContent, match,
   }
 
   useEffect(() => {
-    if(noContent) return
-
-    //set checked inputs in table
-    const data = fields.reduce((obj, field) => {
-      return {
+    if(noContent) {
+      setAddField(false)
+      getFields(match.params.name)  
+    } else {
+      //set checked inputs in table
+      const data = fields.reduce((obj, field) => ({
         ...obj,
         [field._id]: field.enable
-      }}, {})
-
-    setSelectedFields(data)
+      }), {})
+  
+      setSelectedFields(data)
+    }
 
     // eslint-disable-next-line
   }, [noContent])
 
-  useEffect(() => {
-    if(!noContent) return
-    setAddField(false)
-    getFields(match.params.name)
+  useEffect(() => () => clearTemplateData(), [clearTemplateData])
 
-  }, [getFields, noContent, match.params.name])
-
-  if(noContent) return <Spinner />
-
+  
   const saveHandler = () => {
     const fields = Object.entries(selectedFields)
-      .filter(field => field[1])
-      .map(field => field[0])
-      
+    .filter(field => field[1])
+    .map(field => field[0])
+    
     saveTemplate({
       name: location.state,
       path: match.params.name,
@@ -72,26 +66,30 @@ export const EditCategory = ({getFields, fields, saveTemplate, noContent, match,
     })
   }
 
+
+  if(noContent) return <Spinner />
+  
   return (
-    <div>
+    <div className='full-page'>
       <PathLinks action='EditCategory' />
       EditCategory
       <h2>{location?.state}</h2>
       <table>
         <tbody>
-          {fields.map(({fieldName, _id: id, ...other}) => {
-            if(addField === id) return <tr key={id}><AddField data={{fieldName, id, ...other}} showForm={addField === id} setShowForm={setAddField} /></tr>
-            return (
-              <tr key={id}>
-                <td><label htmlFor={id}>{fieldName}</label></td>
-                <td><input value='1' onChange={checkHandle} checked={!!selectedFields[id]} type='checkbox' id={id} /></td>
-                <td><button className='config-btn' onClick={() => setAddField(id)}>Edit</button></td>
-              </tr>
-            )
-          })}
           <tr>
-            <AddField setShowForm={setAddField} showForm={addField === 'new'} />
+            <td colSpan={3}>
+              <p>Possible Companies:</p>
+              <div className='form-wrapper'>
+                <label htmlFor='add-comp'>Add company</label>
+                <div>
+                  <input id='add-comp' />
+                  <button>add</button>
+                </div>
+              </div>
+            </td>
           </tr>
+          <Fields data={fields} addFieldId={addField} setAddField={setAddField} checkHandle={checkHandle} selectedFields={selectedFields} />
+          <AddField setShowForm={setAddField} showForm={addField === 'new'} />
         </tbody>
       </table>
 
@@ -104,4 +102,4 @@ const mapStateToProps = ({template: {fields, noContent, saveSuccess}}) => ({
   fields, noContent, saveSuccess
 })
 
-export default connect(mapStateToProps, { getFields, saveTemplate, saveTemplateRedirrect })(withRouter(EditCategory));
+export default connect(mapStateToProps, { getFields, saveTemplate, saveTemplateRedirrect, clearTemplateData })(withRouter(EditCategory));

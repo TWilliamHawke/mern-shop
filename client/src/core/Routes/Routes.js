@@ -12,6 +12,7 @@ import { checkUserType } from '../../redux/authSaga/actions'
 import Category from '../../pages/Category/Category'
 import AddItem from '../../pages/AddItem'
 import EditCategory from '../../pages/EditCategory/EditCategory'
+import Spinner from '../../components/Spinner'
 
 export const Routes = ({userType, checkUserType}) => {
   const {isGuest, isUser, isAdmin} = useUserType(userType)
@@ -20,7 +21,7 @@ export const Routes = ({userType, checkUserType}) => {
     checkUserType()
   }, [checkUserType])
 
-  if(!userType) return <p>...Loading...</p>
+  if(!userType) return <Spinner />
 
   return (
     <Switch>

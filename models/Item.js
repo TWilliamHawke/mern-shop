@@ -9,9 +9,9 @@ const ItemSchema = new Schema({
   rating: Number,
   other: [
     {
-      field: String,
+      field: Types.ObjectId, ref: 'Field',
       value: {
-        type: Types.ObjectId, ref: 'Field'
+        type: String
       }
     }
   ]

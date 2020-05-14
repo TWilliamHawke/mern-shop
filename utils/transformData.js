@@ -1,4 +1,6 @@
-const transformFields = (fields, category) => {
+const transformFields = (data) => {
+  const [category, fields] = data
+
   return fields.map((field) => {
     return {...field._doc, enable: category.fields.includes(field._id)}
   }).sort((a, b) => {

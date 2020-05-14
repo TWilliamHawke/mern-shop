@@ -1,5 +1,5 @@
 import reducer, {initialState as reducerState} from './templateReducer'
-import { GET_FIELDS_SUCCESS, ADD_FIELD_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_IMAGE_SUCCESS, LOAD_TEMPLATE_SUCCESS } from './types'
+import { GET_FIELDS_SUCCESS, ADD_FIELD_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_IMAGE_SUCCESS, LOAD_TEMPLATE_SUCCESS, CLEAR_TEMPLATE_DATA } from './types'
 
 
 
@@ -100,6 +100,22 @@ describe('test LOAD_TEMPLATE_SUCCESS action', () => {
       {type: LOAD_TEMPLATE_SUCCESS, payload: 'templateData'})).toEqual({
         ...reducerState,
         category: 'templateData'
+      })
+  })
+})
+
+describe('test CLEAR_TEMPLATE_DATA action', () => {
+  it('should set set fields to default state', () => {
+    const initialState = {
+      ...reducerState,
+      noContent: false,
+      saveSuccess: true,
+    }
+    expect(reducer(initialState, 
+      {type: CLEAR_TEMPLATE_DATA})).toEqual({
+        ...reducerState,
+        noContent: true,
+        saveSuccess: false,
       })
   })
 })

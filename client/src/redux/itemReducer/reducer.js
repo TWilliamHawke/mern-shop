@@ -1,11 +1,8 @@
-import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, LOAD_IMAGE_SUCCESS, LOAD_TEMPLATE_SUCCESS } from "./types"
+import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, } from "./types"
 
 export const initialState = {
   loading: false,
   errors: [],
-  imageUrl: 'images/no-image.png',
-  imageId: null,
-  category: null
 }
 
 const handlers = {
@@ -20,17 +17,6 @@ const handlers = {
     loading: false,
     errors: payload
   }),
-  [LOAD_IMAGE_SUCCESS]: (state, payload) => ({
-    ...state,
-    loading: false,
-    imageUrl: payload.img,
-    imageId: payload.id
-  }),
-  [LOAD_TEMPLATE_SUCCESS]: (state, payload) => ({
-    ...state,
-    category: payload,
-    loading: false
-  })
 }
 
 const reducer = (state = initialState, action) => {

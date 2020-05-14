@@ -1,8 +1,18 @@
 .add-item-form {
   max-width: 600px;
   margin: 0 auto;
+  .custom-fields {
+    margin-top: 5px;
+    padding: 10px 0;
+    fieldset {
+      padding: 0;
+      padding-bottom: 5px;
+    }
+  }
   .default-field {
     display: flex;
+    margin-top: 10px;
+    padding-top: 5px;
     &-text {
       flex-grow: 1;
       font-size: 20px;
@@ -17,13 +27,21 @@
     margin: 0 10px;
   }
   .item-image {
-    max-width: 240px;
+    &-wrapper {
+      width: 240px;
+      height: 240px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    width: 200px;
+    margin: 5px;
     padding: 0;
     cursor: pointer;
     label {
       background: rgba(0, 0, 0, 0.295);
       display: block;
-      height: 240px;
+      height: 200px;
       cursor: pointer;
       &:hover img {
         opacity: .5;

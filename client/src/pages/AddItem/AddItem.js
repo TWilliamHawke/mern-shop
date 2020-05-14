@@ -4,12 +4,12 @@ import PathLinks from '../../components/PathLinks'
 import { connect } from 'react-redux'
 import { loadTemplate } from '../../redux/dataFetchSaga/actions'
 import Spinner from '../../components/Spinner'
-import ItemImage from './components/ItemImage'
 
 import './add-item.scss'
 import CustomFields from './components/CustomFields';
+import DefaultFields from './components/DefaultFields';
  
-export const AddItem = ({loadTemplate, match, category}) => {
+export const AddItem = ({loadTemplate, match, category, imageUrl, imageId}) => {
   const [customData, setCustomData] = useState({})
   const [itemData, setItemData] = useState({
     itemTitle: '',
@@ -32,50 +32,39 @@ export const AddItem = ({loadTemplate, match, category}) => {
 
   const saveItemHandler = e => {
     e.preventDefault()
-    console.log(itemData)
-    console.log(customData)
+    const data = {
+      ...itemData,
+      imageId,
+      imageUrl,
+      category: category._id,
+      other: customData
+    }
+    console.log(data)
   }
 
   if(!category) return <Spinner />
 
   return (
-    <div>
-      AddItem
+    <>
       <PathLinks action='Add Item' />
       <form className='add-item-form' onSubmit={saveItemHandler}>
-        <div className='default-field'>
-          <div className='default-field-text'>
-            <h3>Add new {category.name}</h3>
-            <div className='form-wrapper'>
-              <label htmlFor='itemTitle'>Title:</label>
-              <input onChange={inputHandler} value={itemData.itemTitle || ''} type='text' id='itemTitle' />
-            </div>
-            <div className='form-wrapper'>
-              <label htmlFor='itemPrice'>Price:</label>
-              <input onChange={inputHandler} value={itemData.itemPrice || ''}  type='number' min={0} step={0.01} id='itemPrice' />
-            </div>
-            <div className='form-wrapper'>
-              <label htmlFor='itemDiscount'>Discount Price:</label>
-              <input onChange={inputHandler} value={itemData.itemDiscount || ''}  type='number' min={0} step={0.01} id='itemDiscount' />
-            </div>
-          </div>
-          <ItemImage />
-        </div>
-
+        <DefaultFields title={category.name} setInputValues={inputHandler} inputValues={itemData} />
         <CustomFields imputValues={customData} setItemData={setCustomData} data={category} />
-      
-        <fieldset>
-          <label htmlFor='itemDescr'>Description</label>
-          <textarea onChange={inputHandler} value={itemData.itemDescr || ''}  rows={6} id='itemDescr'/>
-        </fieldset>
+        
+        <div className='custom-fields'>
+          <fieldset>
+            <label htmlFor='itemDescr'>Description</label>
+            <textarea onChange={inputHandler} value={itemData.itemDescr || ''}  rows={6} id='itemDescr'/>
+          </fieldset>
+        </div>
         <button type='submit' className='btn-submit'>Save Item</button>
       </form>
-    </div>
+    </>
   );
 };
 
-const mapStateToProps = ({item: {category}}) => ({
-  category
+const mapStateToProps = ({template: {category, imageUrl, imageId}}) => ({
+  category, imageUrl, imageId
 })
 
 export default connect(mapStateToProps, {loadTemplate})(withRouter(AddItem));

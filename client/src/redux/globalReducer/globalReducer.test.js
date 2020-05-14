@@ -1,5 +1,5 @@
 import reducer, {initialState as reducerState} from './globalReducer'
-import { FETCH_DATA_REQUEST, FETCH_DATA_FAILURE, FETCH_DATA_SUCCESS } from './types'
+import { FETCH_DATA_REQUEST, FETCH_DATA_FAILURE, FETCH_DATA_SUCCESS, CLEAR_GLOBAL_ERRORS } from './types'
 
 describe('test with rendom action', () => {
   it('should not change state', () => {
@@ -49,6 +49,20 @@ describe('test FETCH_DATA_SUCCESS action', () => {
       {type: FETCH_DATA_SUCCESS})).toEqual({
         ...reducerState,
         loading: false,
+      })
+  })
+})
+
+describe('test CLEAR_GLOBAL_ERRORS action', () => {
+  it('should clear errors array', () => {
+    const initialState = {
+      ...reducerState,
+      errors: 'array'
+    }
+    expect(reducer(initialState, 
+      {type: CLEAR_GLOBAL_ERRORS})).toEqual({
+        ...reducerState,
+        errors: []
       })
   })
 })

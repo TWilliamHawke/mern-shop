@@ -4,7 +4,9 @@ import Categories from './components/Categories/Categories';
 
 const MainPage = () => {
   return (
-    <Rows left={<Categories />} right='content' />
+    <div className='full-page'>
+      <Rows left={<Categories />} right='content' />
+    </div>
   );
 };
 

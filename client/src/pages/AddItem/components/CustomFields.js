@@ -34,14 +34,14 @@ const CustomFields = ({history, data, imputValues, setItemData}) => {
   }, [data])
 
   return (
-    <div>
+    <div className='custom-fields'>
       <span>Custom Fields</span>
       <button onClick={gotoEditTemplate} className='config-btn'>Edit template</button>
       {data.fields.map(({_id: id, fieldName, measure, type, values}) => {
         
         return(
           <div key={id} className='form-wrapper'>
-            <label htmlFor={id} >{`${fieldName}${tfMeasure(measure)}:`}</label>
+            <label htmlFor={id} >{`${fieldName} ${tfMeasure(measure)}:`}</label>
             {type === 'selector' ? 
               <select onChange={changeHandler} value={imputValues[id] || values[0]} id={id}>
                 {values.map((val, idx) => <option key={idx} value={val}>{val}</option>)}

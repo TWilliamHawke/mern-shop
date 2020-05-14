@@ -9,7 +9,7 @@ export const Categories = ({userType, categories}) => {
   const {isUser} = useUserType(userType)
 
   return (
-    <div>
+    <>
       <h3>Categories</h3>
       <ul className='categories'>
         {Object.entries(categories).map(cat => {
@@ -24,7 +24,7 @@ export const Categories = ({userType, categories}) => {
         })}
       </ul>
       {isUser && <button className='custom-config'>Custom Config</button>}
-    </div>
+    </>
   );
 };
 
