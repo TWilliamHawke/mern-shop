@@ -1,4 +1,4 @@
-import { ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_TEMPLATE_SUCCESS, LOAD_IMAGE_SUCCESS, CLEAR_TEMPLATE_DATA } from "./types"
+import { ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_TEMPLATE_SUCCESS, LOAD_IMAGE_SUCCESS, CLEAR_TEMPLATE_DATA, ADD_ITEM_SUCCESS } from "./types"
 
 
 export const addFieldSuccess = () => ({
@@ -27,4 +27,8 @@ export const loadTemplateSuccess = (payload) => ({
 
 export const clearTemplateData = () => ({
   type: CLEAR_TEMPLATE_DATA
+})
+
+export const addItemSuccess = () => ({
+  type: ADD_ITEM_SUCCESS
 })

@@ -1,7 +1,7 @@
-import { loadImage, saveTemplate, loadTemplate, editField, addField, getFields } from "./actions"
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD } from "./types"
+import { loadImage, saveTemplate, loadTemplate, editField, addField, getFields, addItem } from "./actions"
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM } from "./types"
 
-
+jest.mock('../../utils/actionHelpers.js', () => ({tfItemData: jest.fn(() => 'TransformedItemData')}))
 
 describe('test itemSaga actions', () => {
   it('should return LOAD_IMAGE type', () => {
@@ -30,6 +30,10 @@ describe('test itemSaga actions', () => {
   
   it('should return GET_FIELDS type', () => {
     expect(getFields('category')).toEqual({ type: GET_FIELDS, payload: 'category' })
+  })
+
+  it('should return ADD_ITEM type', () => {
+    expect(addItem('itemData')).toEqual({ type: ADD_ITEM, payload: 'TransformedItemData' })
   })
 
 })

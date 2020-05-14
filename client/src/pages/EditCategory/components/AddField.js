@@ -15,14 +15,15 @@ export const AddField = ({showForm, setShowForm, addField, data, editField}) => 
     return addFieldValidation(type, values, fieldName)
   }
 
-  //set input values on mount
-  useEffect(() => {
+  useEffect(() => {//set input values on mount
     if(!data) return
+
     setFieldName(data.fieldName)
     setValues(data.values)
     setMeasure(data.measure)
     setType(data.type)
     setMultiple(data.multiple || false)
+    
     // eslint-disable-next-line
   }, [])
 
@@ -37,8 +38,7 @@ export const AddField = ({showForm, setShowForm, addField, data, editField}) => 
     editField(fieldData)  
   }  
 
-  const cancelHandler = e => {
-    //hide form
+  const cancelHandler = e => {//hide form
     e.preventDefault()
     setShowForm(false)
   }  
@@ -46,12 +46,6 @@ export const AddField = ({showForm, setShowForm, addField, data, editField}) => 
   const selectorHandle = e => {
     setType(e.target.value)
     if(e.target.value !== 'selector') setValues([])
-  }
-
-  const addValueHandle = fieldValue => {
-    //only if type = selector or checkbox
-    const valsArray = [...values, fieldValue]
-    setValues(valsArray)
   }
 
   if(!showForm) return <tr><td colSpan={3}><button onClick={() => setShowForm('new')} className='config-btn'>Add field</button></td></tr>
@@ -85,7 +79,7 @@ export const AddField = ({showForm, setShowForm, addField, data, editField}) => 
               <input onChange={() => setMultiple(!multiple)} checked={!!multiple} value='1' id='add-multiple' type='checkbox' />
               <div className='no-data'></div>
             </div>
-            <Values name='values' values={values} addValue={addValueHandle} />
+            <Values name='values' values={values} setValues={setValues} />
           </>
         )}
 

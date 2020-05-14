@@ -1,4 +1,5 @@
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD } from "./types";
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM } from "./types";
+import { tfItemData } from "../../utils/actionHelpers";
 
 
 export const loadImage = (payload) => ({
@@ -24,3 +25,10 @@ export const addField = (payload) => ({
 export const getFields = (payload) => ({
   type: GET_FIELDS, payload
 })
+
+export const addItem = (data) => {
+  const payload = tfItemData(data)
+  return {
+    type: ADD_ITEM, payload
+  }
+}

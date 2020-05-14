@@ -1,13 +1,13 @@
 import {put, call, all, takeEvery} from 'redux-saga/effects'
 import { transformErrors } from '../../utils/actionHelpers'
 import { getTokenSaga } from '../authSaga/sagas'
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, ADD_FIELD, GET_FIELDS } from './types'
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, ADD_FIELD, GET_FIELDS, ADD_ITEM } from './types'
 //services
 import itemService from '../../services/itemService'
 import templateSevice from '../../services/editTemplateService'
 //actions
 import { fetchDataRequest, fetchDataFailure, fetchDataSuccess } from '../globalReducer/actions'
-import { saveTemplateSuccess, loadImageSuccess, loadTemplateSuccess, getFieldsSuccess, clearTemplateData } from '../templateReducer/actions'
+import { saveTemplateSuccess, loadImageSuccess, loadTemplateSuccess, getFieldsSuccess, clearTemplateData, addItemSuccess } from '../templateReducer/actions'
 
 export const fetchSaga = (action, service) => {
   return function* ({payload}) {
@@ -42,5 +42,6 @@ export default function* () {
     takeFetchSaga(EDIT_FIELD, clearTemplateData, templateSevice.editTemplate),
     takeFetchSaga(ADD_FIELD, clearTemplateData, templateSevice.addField),
     takeFetchSaga(GET_FIELDS, getFieldsSuccess, templateSevice.getFields),
+    takeFetchSaga(ADD_ITEM, addItemSuccess, itemService.addItem),
   ])
 }

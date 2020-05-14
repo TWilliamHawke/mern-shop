@@ -7,6 +7,11 @@ const categorySchema = new Schema({
     {
         type: Types.ObjectId, ref: 'Field'
     }
+  ],
+  brands: [
+    {
+      type: String,
+    }
   ]
 })
 

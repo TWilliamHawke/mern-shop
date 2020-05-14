@@ -1,7 +1,7 @@
 const transformFields = (data) => {
   const [category, fields] = data
 
-  return fields.map((field) => {
+  const sortedFields = fields.map((field) => {
     return {...field._doc, enable: category.fields.includes(field._id)}
   }).sort((a, b) => {
     if(a.fieldName > b.fieldName) return 1
@@ -12,6 +12,11 @@ const transformFields = (data) => {
     if(a.enable) return -1
     return 1
   })
+
+  return {
+    fields: sortedFields,
+    brands: category.brands || []
+  }
 }
 
 module.exports = {

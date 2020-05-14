@@ -21,7 +21,7 @@ describe('test connected component', () => {
   let wrapper
   beforeAll(() => {
     const mockStore = configMockStore()
-    const state = {template: {imageUrl: 'someUrl', category: 'someData', imageId: 'id'}}
+    const state = {template: {imageUrl: 'someUrl', category: 'someData', imageId: 'id', saveItemSuccess: 'savesucc'}}
     const store = mockStore(state)
     wrapper = shallow(<ConnectedAddItem store={store} />).find('withRouter(AddItem)')
   })
@@ -30,5 +30,8 @@ describe('test connected component', () => {
     expect(wrapper.prop('imageUrl')).toBe('someUrl')
     expect(wrapper.prop('imageId')).toBe('id')
     expect(wrapper.prop('loadTemplate')).toBeInstanceOf(Function)
+    expect(wrapper.prop('addItem')).toBeInstanceOf(Function)
+    expect(wrapper.prop('clearTemplateData')).toBeInstanceOf(Function)
+    expect(wrapper.prop('saveItemSuccess')).toBe('savesucc')
   })
 })

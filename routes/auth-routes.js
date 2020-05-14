@@ -30,7 +30,7 @@ router.post('/createUser', normalizePhone, [
     const errors = []
   
     if(!validationErrors.isEmpty()) {
-      errors.push(validationErrors.array)
+      errors.push(validationErrors.array())
     }
 
     const checkLogin = await User.findOne({login})

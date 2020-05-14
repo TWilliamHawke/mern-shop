@@ -9,16 +9,19 @@ import { saveTemplateRedirrect, clearTemplateData } from '../../redux/templateRe
 import Fields from './components/Fields'
 
 import './edit-category.scss'
+import Values from './components/Values';
 
 
 
 export const EditCategory = ({ getFields, fields, saveTemplate, noContent, match,
-  location, saveSuccess, history, clearTemplateData }) => {
+  location, saveSuccess, history, clearTemplateData, loadedBrands }) => {
 
   const [addField, setAddField] = useState(false)
   const [selectedFields, setSelectedFields] = useState({})
+  const [brands, setBrands] = useState([])
 
   useEffect(() => {
+    //after save template
     if(!saveSuccess) return
     const {name} = match.params
     history.push(`/catalog/${name}/addItem/`)
@@ -35,6 +38,7 @@ export const EditCategory = ({ getFields, fields, saveTemplate, noContent, match
   }
 
   useEffect(() => {
+    //if hasnt content - fetch content
     if(noContent) {
       setAddField(false)
       getFields(match.params.name)  
@@ -44,8 +48,9 @@ export const EditCategory = ({ getFields, fields, saveTemplate, noContent, match
         ...obj,
         [field._id]: field.enable
       }), {})
-  
+      
       setSelectedFields(data)
+      setBrands(loadedBrands)
     }
 
     // eslint-disable-next-line
@@ -62,7 +67,8 @@ export const EditCategory = ({ getFields, fields, saveTemplate, noContent, match
     saveTemplate({
       name: location.state,
       path: match.params.name,
-      fields
+      fields,
+      brands
     })
   }
 
@@ -78,14 +84,15 @@ export const EditCategory = ({ getFields, fields, saveTemplate, noContent, match
         <tbody>
           <tr>
             <td colSpan={3}>
-              <p>Possible Companies:</p>
+              <Values name='Brands' setValues={setBrands} values={brands} />
+              {/* <p>Possible Brands:</p>
               <div className='form-wrapper'>
-                <label htmlFor='add-comp'>Add company</label>
+                <label htmlFor='add-comp'>Add brand</label>
                 <div>
                   <input id='add-comp' />
                   <button>add</button>
                 </div>
-              </div>
+              </div> */}
             </td>
           </tr>
           <Fields data={fields} addFieldId={addField} setAddField={setAddField} checkHandle={checkHandle} selectedFields={selectedFields} />
@@ -98,8 +105,8 @@ export const EditCategory = ({ getFields, fields, saveTemplate, noContent, match
   );
 };
 
-const mapStateToProps = ({template: {fields, noContent, saveSuccess}}) => ({
-  fields, noContent, saveSuccess
+const mapStateToProps = ({template: {fields, noContent, saveSuccess, brands}}) => ({
+  fields, noContent, saveSuccess, loadedBrands: brands
 })
 
 export default connect(mapStateToProps, { getFields, saveTemplate, saveTemplateRedirrect, clearTemplateData })(withRouter(EditCategory));

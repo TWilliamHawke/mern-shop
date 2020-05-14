@@ -6,7 +6,7 @@ const ImageSchema = new Schema({
     required: true
   },
   linkedTo: {
-    type: Types.ObjectId, ref: 'User'
+    type: String
   }
 })
 

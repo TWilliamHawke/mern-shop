@@ -1,4 +1,4 @@
-import { ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_IMAGE_SUCCESS, LOAD_TEMPLATE_SUCCESS, CLEAR_TEMPLATE_DATA } from "./types"
+import { ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_IMAGE_SUCCESS, LOAD_TEMPLATE_SUCCESS, CLEAR_TEMPLATE_DATA, ADD_ITEM_SUCCESS } from "./types"
 
 
 export const initialState = {
@@ -7,7 +7,9 @@ export const initialState = {
   saveSuccess: false,
   imageUrl: 'images/no-image.png',
   imageId: null,
-  category: null
+  saveItemSuccess: false,
+  category: null,
+  brands: []
 }
 
 const handlers = {
@@ -16,10 +18,11 @@ const handlers = {
     ...state,
     noContent: true
   }),
-  [GET_FIELDS_SUCCESS]: (state, payload) => ({
+  [GET_FIELDS_SUCCESS]: (state, {fields, brands}) => ({
     ...state,
     noContent: false,
-    fields: payload
+    fields,
+    brands
   }),
   [SAVE_TEMPLATE_SUCCESS]: state => ({
     ...state,
@@ -39,10 +42,15 @@ const handlers = {
     ...state,
     category: payload
   }),
+  [ADD_ITEM_SUCCESS]: (state) => ({
+    ...state,
+    saveItemSuccess: true
+  }),
   [CLEAR_TEMPLATE_DATA]: state => ({
     ...state,
     noContent: true,
     saveSuccess: false,
+    saveItemSuccess: false,
     imageUrl: 'images/no-image.png',
     imageId: null,
     category: null

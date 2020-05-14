@@ -20,7 +20,7 @@ describe('test connected component', () => {
   let wrapper
   beforeAll(() => {
     const mockStore = configMockStore()
-    const state = { template: {fields: 'fieldsArray', noContent: 'mock', saveSuccess: true}}
+    const state = { template: {fields: 'fieldsArray', noContent: 'mock', saveSuccess: true, brands: 'BrandsArray'}}
     const store = mockStore(state)
     wrapper = shallow(<ConnectedEditCategory store={store} />).find('withRouter(EditCategory)')
   })
@@ -29,6 +29,7 @@ describe('test connected component', () => {
     expect(wrapper.prop('saveTemplate')).toBeInstanceOf(Function)
     expect(wrapper.prop('saveTemplateRedirrect')).toBeInstanceOf(Function)
     expect(wrapper.prop('fields')).toBe('fieldsArray')
+    expect(wrapper.prop('loadedBrands')).toBe('BrandsArray')
     expect(wrapper.prop('noContent')).toBe('mock')
     expect(wrapper.prop('saveSuccess')).toBe(true)
   })

@@ -17,7 +17,7 @@ export const ItemImage = ({imageUrl, loadImage}) => {
   return(
     // <div className='item-image-wrapper'>
     <div className='item-image'>
-      <input id='itemImg' type='file' accept=".png, .jpg, .jpeg" onChange={imageHandler} />
+      <input id='itemImg' type='file' accept=".png, .jpg, .jpeg .webp" onChange={imageHandler} />
       <label htmlFor='itemImg'>
         <img alt='item' src={imageUrl} />
       </label>

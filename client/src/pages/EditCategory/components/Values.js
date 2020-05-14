@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { newValueValidation } from 'src/utils/addFieldValidation';
 
 
-const Values = ({values, addValue, name}) => {
+const Values = ({values, setValues, name}) => {
 
   const [fieldValue, setFieldValue] = useState('')
 
   const addHandler = e => {
     e.preventDefault()
-    addValue(fieldValue)
+    const valArray = [...values, fieldValue]
+    setValues(valArray)
     setFieldValue('')
   }
 

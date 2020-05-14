@@ -1,5 +1,5 @@
-import { addFieldSuccess, getFieldsSuccess, saveTemplateSuccess, saveTemplateRedirrect, loadTemplateSuccess, loadImageSuccess, clearTemplateData } from "./actions"
-import { ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_TEMPLATE_SUCCESS, LOAD_IMAGE_SUCCESS, CLEAR_TEMPLATE_DATA} from './types'
+import { addFieldSuccess, getFieldsSuccess, saveTemplateSuccess, saveTemplateRedirrect, loadTemplateSuccess, loadImageSuccess, clearTemplateData, addItemSuccess } from "./actions"
+import { ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_TEMPLATE_SUCCESS, LOAD_IMAGE_SUCCESS, CLEAR_TEMPLATE_DATA, ADD_ITEM_SUCCESS} from './types'
 
 describe('Template reducres actions tests', () => {
   
@@ -30,6 +30,10 @@ describe('Template reducres actions tests', () => {
 
   it('should return CLEAR_TEMPLATE_DATA type', () => {
     expect(clearTemplateData()).toEqual({type: CLEAR_TEMPLATE_DATA})
+  })
+
+  it('should return ADD_ITEM_SUCCESS type', () => {
+    expect(addItemSuccess()).toEqual({type: ADD_ITEM_SUCCESS})
   })
 
 })

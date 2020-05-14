@@ -1,5 +1,5 @@
 import reducer, {initialState as reducerState} from './templateReducer'
-import { GET_FIELDS_SUCCESS, ADD_FIELD_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_IMAGE_SUCCESS, LOAD_TEMPLATE_SUCCESS, CLEAR_TEMPLATE_DATA } from './types'
+import { GET_FIELDS_SUCCESS, ADD_FIELD_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_IMAGE_SUCCESS, LOAD_TEMPLATE_SUCCESS, CLEAR_TEMPLATE_DATA, ADD_ITEM_SUCCESS } from './types'
 
 
 
@@ -13,16 +13,18 @@ describe('test with GET_FIELDS_SUCCESS action', () => {
   const initialState = {
     ...reducerState,
     noContent: true,
-    fields: []
+    fields: [],
+    brands: []
   }
 
-  it('should stop loading and set fields', () => {
+  it('should stop loading and set fields and brands', () => {
     expect(reducer(initialState, 
-      {type: GET_FIELDS_SUCCESS, payload: 'fields'}))
+      {type: GET_FIELDS_SUCCESS, payload: {fields: 'fields', brands: 'brands'}}))
       .toEqual({
         ...reducerState,
         noContent: false,
-        fields: 'fields'
+        fields: 'fields',
+        brands: 'brands'
       })
   })
 })
@@ -120,3 +122,16 @@ describe('test CLEAR_TEMPLATE_DATA action', () => {
   })
 })
 
+describe('test ADD_ITEM_SUCCESS action', () => {
+  it('should set saveItemSuccess to true', () => {
+    const initialState = {
+      ...reducerState,
+      saveItemSuccess: false
+    }
+    expect(reducer(initialState, 
+      {type: ADD_ITEM_SUCCESS})).toEqual({
+        ...reducerState,
+        saveItemSuccess: true,
+      })
+  })
+})
