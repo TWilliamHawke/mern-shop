@@ -1,5 +1,5 @@
 import reducer, {initialState as reducerState} from './itemReducer'
-import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, LOAD_CATEGORY_SUCCESS } from './types'
+import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, LOAD_CATEGORY_SUCCESS, LOAD_ITEM_SUCCESS } from './types'
 
 
 describe('test with random action', () => {
@@ -40,7 +40,7 @@ describe('test FETCH_ITEM_FAILURE action', () => {
 })
 
 describe('test LOAD_CATEGORY_SUCCESS action', () => {
-  it('should stop loading and set errors', () => {
+  it('should and set category data', () => {
     const initialState = {
       ...reducerState,
       categoryData: null,
@@ -49,6 +49,20 @@ describe('test LOAD_CATEGORY_SUCCESS action', () => {
       {type: LOAD_CATEGORY_SUCCESS, payload: 'catData'})).toEqual({
         ...reducerState,
         categoryData: 'catData',
+      })
+  })
+})
+
+describe('test LOAD_ITEM_SUCCESS action', () => {
+  it('should and set itemData', () => {
+    const initialState = {
+      ...reducerState,
+      itemData: null,
+    }
+    expect(reducer(initialState, 
+      {type: LOAD_ITEM_SUCCESS, payload: 'iData'})).toEqual({
+        ...reducerState,
+        itemData: 'iData',
       })
   })
 })

@@ -1,16 +1,22 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
-const ItemPreview = ({itemData}) => {
+const ItemPreview = ({itemData, history}) => {
+
+  const gotoItem = () => {
+    history.push({pathname: `${itemData._id}`, state: itemData.title})
+  }
+
   console.log(itemData)
   return (
-    <div className='preview-wrapper'>
+    <div onClick={gotoItem} className='preview-wrapper'>
       <div className='preview-img-wrapper'>
         <img alt='fro good' src={itemData.image}></img>
       </div>
-      {itemData.title}
-      {itemData.price}
+      <p>{itemData.title}</p>
+      <p>{itemData.price}</p>
     </div>
   );
 };
 
-export default ItemPreview;
+export default withRouter(ItemPreview);

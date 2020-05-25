@@ -3,9 +3,10 @@
 }
 
 .row-left {
-  width: 200px;
+  flex: 0 0 200px;
 }
 
 .row-right {
+  flex-basis: fill;
   flex-grow: 1;
 }

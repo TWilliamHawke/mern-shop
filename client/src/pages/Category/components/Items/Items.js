@@ -18,7 +18,7 @@ export const Items = ({header, history, getCategory, match, categoryData}) => {
   return (
     <>
       <h2>{header}</h2>
-      <div  className='catagory-wrapper'>
+      <div className='category-wrapper'>
         {categoryData.map(item => <ItemPreview key={item._id} itemData={item} />)}
         <div className='preview-wrapper plus-wrapper' onClick={() => history.push({pathname: 'addItem/', state: header})}>
           <div className='add-item-plus'></div>

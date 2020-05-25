@@ -1,24 +1,34 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PathLinks from '../../components/PathLinks/PathLinks';
 import Rows from '../../components/Rows'
 import Filter from './components/Filter/Filter';
 import Items from './components/Items/Items';
 
 import './category.scss'
+import { connect } from 'react-redux';
 
-const Category = () => {
-  const {state} = useLocation()
+const Category = ({categories}) => {
+  const {name} = useParams()
+  console.log(name)
+
+  const header = categories[name]
+
+
   return (
 
     <div className='full-page'>
       <PathLinks />
       <Rows
         left={<Filter />}
-        right={<Items header={state} />}
+        right={<Items header={header} />}
        />
     </div>
   );
 };
 
-export default Category;
+const mapStateToProps = ({global: {categories}}) => ({
+  categories
+})
+
+export default connect(mapStateToProps)(Category);
