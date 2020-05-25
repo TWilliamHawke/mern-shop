@@ -3,6 +3,7 @@ const {Schema, model, Types} = require('mongoose')
 const ItemSchema = new Schema({
   title: {type: String, required: true},
   category: {type: Types.ObjectId, ref: 'Categories', required: true},
+  catName: String,
   price: {type: Number, required: true},
   discountPrice: {type: Number},
   image: String,

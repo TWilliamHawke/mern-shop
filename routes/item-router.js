@@ -44,6 +44,17 @@ router.get('/template', checkAdmin, async(req, res) => {
   }
 })
 
+router.get('/items', async (req, res) => {
+  try {
+    const items = await Item.find({catName: req.query.cat})
+
+    res.json(items)
+  } catch(e) {
+    console.log(e)
+    res.status(500).json({message: 'Server error'})
+  }
+})
+
 router.post('/add', checkAdmin, [
     check('title', 'Title is too short').isLength({ min: 5 }),
     check('price', 'Wrong Price').isNumeric(),

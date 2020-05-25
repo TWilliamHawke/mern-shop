@@ -1,8 +1,9 @@
-import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, } from "./types"
+import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, LOAD_CATEGORY_SUCCESS, } from "./types"
 
 export const initialState = {
   loading: false,
   errors: [],
+  categoryData: null
 }
 
 const handlers = {
@@ -17,6 +18,10 @@ const handlers = {
     loading: false,
     errors: payload
   }),
+  [LOAD_CATEGORY_SUCCESS]: (state, payload) => ({
+    ...state,
+    categoryData: payload
+  })
 }
 
 const reducer = (state = initialState, action) => {

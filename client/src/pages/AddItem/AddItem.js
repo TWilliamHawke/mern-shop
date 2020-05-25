@@ -54,6 +54,7 @@ export const AddItem = ({loadTemplate, match, category, imageUrl, imageId, addIt
       ...itemData,
       imageId,
       imageUrl,
+      catName: match.params.name,
       category: category._id,
       other: customData
     }

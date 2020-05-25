@@ -9,6 +9,10 @@ class ItemService{
     return axios.get(`/api/items/template?cat=${category}`, {headers: {authorization: token}})
   }
 
+  fetchCategory = (category) => {
+    return axios.get(`/api/items/items?cat=${category}`)
+  }
+
   addItem = (token, data) => {
     return axios.post('/api/items/add', data, {headers: {authorization: token}})
   }

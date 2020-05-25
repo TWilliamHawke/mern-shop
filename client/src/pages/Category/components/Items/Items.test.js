@@ -1,20 +1,30 @@
-import Items from './Items';
 import React from 'react'
-import {mount} from 'enzyme'
-import { MemoryRouter} from 'react-router-dom'
+import { shallow } from 'enzyme'
+import ConnectedItems, { Items } from './Items';
+import configMockStore from 'redux-mock-store'
 
 
-describe('items componemt', () => {
+
+describe('test dumb component', () => {
   let wrapper
   beforeAll(() => {
-    wrapper = mount(
-      <MemoryRouter>
-        <Items header='test' />
-      </MemoryRouter>
-    )
+    wrapper = shallow(<Items header='test' categoryData={[]} />)
   })
-
-  it('should render headers', () => {
+  test('text', () => {
     expect(wrapper.find('h2').text()).toBe('test')
+  })
+})
+
+describe('test connected component', () => {
+  let wrapper
+  beforeAll(() => {
+    const mockStore = configMockStore()
+    const state = {items: {categoryData: 'data'}}
+    const store = mockStore(state)
+    wrapper = shallow(<ConnectedItems store={store} />).find('withRouter(Items)')
+  })
+  test('component should receive props from connect function', () => {
+    expect(wrapper.prop('categoryData')).toBe('data')
+    expect(wrapper.prop('getCategory')).toBeInstanceOf(Function)
   })
 })

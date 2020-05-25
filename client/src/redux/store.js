@@ -4,13 +4,13 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 
 import authReducer from './authReducer'
 import templateReducer from './templateReducer/templateReducer'
-//import itemReducer from './itemReducer/reducer'
+import itemReducer from './itemReducer/itemReducer'
 import globalReducer from './globalReducer/globalReducer'
 import rootSaga from './rootSaga'
 
 
 const reducer = combineReducers({
-  //item: itemReducer,
+  items: itemReducer,
   template: templateReducer,
   auth: authReducer,
   global: globalReducer

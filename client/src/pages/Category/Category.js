@@ -5,6 +5,8 @@ import Rows from '../../components/Rows'
 import Filter from './components/Filter/Filter';
 import Items from './components/Items/Items';
 
+import './category.scss'
+
 const Category = () => {
   const {state} = useLocation()
   return (
