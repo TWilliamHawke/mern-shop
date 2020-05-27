@@ -10,13 +10,9 @@ import { connect } from 'react-redux';
 
 const Category = ({categories}) => {
   const {name} = useParams()
-  console.log(name)
-
   const header = categories[name]
 
-
   return (
-
     <div className='full-page'>
       <PathLinks />
       <Rows

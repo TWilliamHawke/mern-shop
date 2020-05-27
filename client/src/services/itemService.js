@@ -5,8 +5,9 @@ class ItemService{
     return axios.post('/api/items/image', data, {headers: {authorization: token}})
   }
 
-  fetchTemplate = (token, category) => {
-    return axios.get(`/api/items/template?cat=${category}`, {headers: {authorization: token}})
+  fetchTemplate = (token, {cat, item}) => {
+    const itemUrl = item ? `&item=${item}` : ''
+    return axios.get(`/api/items/template?cat=${cat}${itemUrl}`, {headers: {authorization: token}})
   }
 
   fetchCategory = (category) => {
@@ -19,6 +20,10 @@ class ItemService{
 
   addItem = (token, data) => {
     return axios.post('/api/items/add', data, {headers: {authorization: token}})
+  }
+
+  editItem = (token, data) => {
+    return axios.put('/api/items/edit', data, {headers: {authorization: token}})
   }
 }
 

@@ -1,0 +1,44 @@
+.item-data {
+  display: flex;
+  margin-top: 20px;
+  &-image {
+    width: 50%;
+
+  }
+  img {
+    width: 50%;
+    max-width: 400px;
+  }
+  &-info {
+    text-align: left;
+    width: 50%;
+    height: 100%;
+    dl {
+      display: flex;
+    }
+    dt {
+      width: 48%;
+      position: relative;
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 3px;
+        border-bottom: 1px dotted #d6dbe0;
+        width: 100%;
+      }
+      span {
+        position: relative;
+        padding-right: 4px;
+        background: white;
+      }
+    }
+    dd {
+      margin-left: 10px;
+    }
+  }
+  &-price {
+    font-weight: 700;
+    font-size: 24px;
+  }
+}

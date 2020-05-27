@@ -32,8 +32,9 @@ export const Routes = ({userType, checkUserType}) => {
       <ProtectedRoute access={isUser} path='/cart' component = {CartPage} />
       <ProtectedRoute access={isAdmin} path='/catalog/:name/addItem/edit' component={EditCategory} />
       <ProtectedRoute access={isAdmin} path='/catalog/:name/addItem/' component={AddItem} />
+      <ProtectedRoute access={isAdmin} path='/catalog/:name/:item/edit' component={AddItem} />
       <Route exact path='/catalog/:name/' render={() => <Category />} />
-      <Route path='/catalog/:name/:item' component={ItemPage} />
+      <Route path='/catalog/:name/:item/' component={ItemPage} />
       <Redirect to='/' />
     </Switch>
   )

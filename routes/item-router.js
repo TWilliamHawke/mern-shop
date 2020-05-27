@@ -5,6 +5,7 @@ const { checkAdmin } = require('../middleware/checkToken')
 const Image = require('../models/Image')
 const Category = require('../models/Category')
 const Item = require('../models/Item')
+const Filter = require('../models/Filter.js')
 const fs = require('fs')
 
 const router = new Router()
@@ -35,9 +36,18 @@ router.post('/image', checkAdmin, upload.single('itemImg'), async(req, res) => {
 
 router.get('/template', checkAdmin, async(req, res) => {
   try {
-    const category = await (await Category.findOne({path: req.query.cat})).populate('fields').execPopulate()
 
-    res.json(category)
+    const [category, item] = await Promise.all([
+      Category.findOne({path: req.query.cat}),
+      Item.findById(req.query.item)
+    ])
+    const fullCat = await category.populate('fields').execPopulate()
+    
+    if(!item) return res.json({category: fullCat, itemData: null})
+
+    const itemData = await item.populate('other.field').execPopulate()
+
+    res.json({category: fullCat, itemData})
   } catch(e) {
     console.log(e)
     res.status(500).json({message: 'Server error'})
@@ -58,8 +68,9 @@ router.get('/items', async (req, res) => {
 router.get('/item', async (req, res) => {
   try {
     const item = await Item.findById(req.query.item)
+    const fullItem = await item.populate('other.field').execPopulate()
 
-    res.json(item)
+    res.json(fullItem)
   } catch(e) {
     console.log(e)
     res.status(500).json({message: 'Server error'})
@@ -67,50 +78,125 @@ router.get('/item', async (req, res) => {
 })
 
 router.post('/add', checkAdmin, [
-    check('title', 'Title is too short').isLength({ min: 5 }),
-    check('price', 'Wrong Price').isNumeric(),
-    check('discountPrice', 'Wrong Discount Price').isNumeric(),
-    check('brand', 'Wrong Brand Name').isString(),
-    check('other', 'Wrong other fields').isArray()
-  ], async(req, res) => {
-  try {
-    const errors = validationResult(req)
-  
-    if(!errors.isEmpty()) {
-      return res.status(422).json({
-        message: 'validation errors', 
-        errors: errors.array()
-      })
-    }
+  check('title', 'Title is too short').isLength({ min: 5 }),
+  check('price', 'Wrong Price').isNumeric(),
+  check('discountPrice', 'Wrong Discount Price').isNumeric(),
+  check('brand', 'Wrong Brand Name').isString(),
+  check('other', 'Wrong other fields').isArray()
+], async(req, res) => {
+try {
+  const errors = validationResult(req)
 
-    const {title, imageId, ...values} = req.body
-
-    const match = await Item.findOne({title})
-    if(match) {
-      return res.status(403).json({message: 'Item already exists'})
-    }
-
-    if(imageId) {
-      const image = await Image.findById(imageId)
-      if(!image) return res.status(500).json({message: 'Server error'})
-      image.linkedTo = title
-      await image.save()
-    }
-  
-
-    const item = new Item({
-      title,
-      ...values
+  if(!errors.isEmpty()) {
+    return res.status(422).json({
+      message: 'validation errors', 
+      errors: errors.array()
     })
-
-    await item.save()
- 
-
-    res.json('ok')
-  } catch(e) {
-    console.log(e)
-    res.status(500).json({message: 'Server error'})
   }
+
+  const {title, imageId, category, other, ...values} = req.body
+
+  const match = await Item.findOne({title})
+  if(match) {
+    return res.status(403).json({message: 'Item already exists'})
+  }
+
+  if(imageId) {
+    const image = await Image.findById(imageId)
+    if(!image) return res.status(500).json({message: 'Server error'})
+    image.linkedTo = title
+    await image.save()
+  }
+
+  other.forEach(async ({field, value}) => {
+    const match = await Filter.findOne({field, value, category})
+    if(match) return
+    const filter = new Filter({field, value, category})
+    await filter.save()
+  })
+
+
+  const item = new Item({
+    title,
+    other,
+    category,
+    ...values
+  })
+
+  await item.save()
+
+
+  res.json('ok')
+} catch(e) {
+  console.log(e)
+  res.status(500).json({message: 'Server error'})
+}
+})
+
+router.put('/edit', checkAdmin, [
+  check('title', 'Title is too short').isLength({ min: 5 }),
+  check('price', 'Wrong Price').isNumeric(),
+  check('discountPrice', 'Wrong Discount Price').isNumeric(),
+  check('brand', 'Wrong Brand Name').isString(),
+  check('other', 'Wrong other fields').isArray()
+], async(req, res) => {
+try {
+  const errors = validationResult(req)
+  if(!errors.isEmpty()) {
+    return res.status(422).json({
+      message: 'validation errors', 
+      errors: errors.array()
+    })
+  }
+
+  const {title, imageId, category, other, oldImg, id, ...values} = req.body
+
+  const item = await Item.findOne({title})
+  if(item._id != id) {
+    return res.status(403).json({message: 'Item with this title already exists'})
+  }
+
+  if(oldImg) {
+    const oldImage = await Image.findOne({linkedTo: title})
+    if(!oldImage) return res.status(403).json({message: 'Old image not found'})
+    const oldFile = oldImage.imageUrl.split('\\')[1]
+    await fs.unlink(`images/${oldFile}`, err => {
+      if(err) throw err
+    })
+    await Image.deleteOne({linkedTo: title})
+
+    const image = await Image.findById(imageId)
+    if(!image) return res.status(403).json({message: 'New image not found'})
+    image.linkedTo = title
+    await image.save()
+  }
+
+  other.forEach(async ({field, value}) => {
+    const match = await Filter.findOne({field, value, category})
+    if(match) return
+    const filter = new Filter({field, value, category})
+    await filter.save()
+  })
+
+  const newItemData = {
+    title,
+    other,
+    category,
+    ...values
+  }
+
+  for(let key in newItemData) {
+    item[key] = newItemData[key]
+  }
+
+  await item.save()
+
+
+  res.json('ok')
+} catch(e) {
+  console.log(e)
+  res.status(500).json({message: 'Server error'})
+}
 })
 
 module.exports = router

@@ -1,20 +1,24 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import convertPrice from '../../../utils/convertPrice';
 
 const ItemPreview = ({itemData, history}) => {
 
   const gotoItem = () => {
-    history.push({pathname: `${itemData._id}`, state: itemData.title})
+    history.push({pathname: `${itemData._id}/`, state: itemData.title})
   }
 
-  console.log(itemData)
+  const {image, price, title} = itemData
+
+  const convPrice = convertPrice(price)
+
   return (
     <div onClick={gotoItem} className='preview-wrapper'>
       <div className='preview-img-wrapper'>
-        <img alt='fro good' src={itemData.image}></img>
+        <img alt='fro good' src={image}></img>
       </div>
-      <p>{itemData.title}</p>
-      <p>{itemData.price}</p>
+      <p className='preview-title'>{title}</p>
+      <p className='preview-price'>{convPrice}</p>
     </div>
   );
 };

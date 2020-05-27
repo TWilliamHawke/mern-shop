@@ -23,7 +23,6 @@ body {
 
 h1 {
   font-family: sans-serif;
-  color: $headerColor;
 }
 
 fieldset {
@@ -55,3 +54,6 @@ textarea {
   min-height: 100vh;
 }
 
+li {
+  list-style-type: none;
+}

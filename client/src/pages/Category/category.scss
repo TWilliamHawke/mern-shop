@@ -39,6 +39,17 @@ $plus-color: rgb(40, 37, 75);
   }
 }
 
+.preview-price {
+  font-weight: 700;
+}
+
+.preview-title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 190px;
+}
+
 .add-item-plus {
   width: 100px;
   height: 100px;

@@ -96,12 +96,15 @@ describe('test LOAD_TEMPLATE_SUCCESS action', () => {
   it('should set category data', () => {
     const initialState = {
       ...reducerState,
-      category: null
+      category: null,
+      itemData: null
     }
     expect(reducer(initialState, 
-      {type: LOAD_TEMPLATE_SUCCESS, payload: 'templateData'})).toEqual({
+      {type: LOAD_TEMPLATE_SUCCESS, payload: {category: 'templateData', itemData: {image: 'url'}}})).toEqual({
         ...reducerState,
-        category: 'templateData'
+        category: 'templateData',
+        itemData: {image: 'url'},
+        imageUrl: 'url'
       })
   })
 })

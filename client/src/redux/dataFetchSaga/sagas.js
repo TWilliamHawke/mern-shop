@@ -1,7 +1,7 @@
 import {put, call, all, takeEvery} from 'redux-saga/effects'
 import { transformErrors } from '../../utils/actionHelpers'
 import { getTokenSaga } from '../authSaga/sagas'
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, ADD_FIELD, GET_FIELDS, ADD_ITEM, GET_CATEGORY, GET_ITEM } from './types'
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, ADD_FIELD, GET_FIELDS, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM } from './types'
 //services
 import itemService from '../../services/itemService'
 import templateSevice from '../../services/editTemplateService'
@@ -69,6 +69,7 @@ export default function* () {
     takeFetchSaga(ADD_FIELD, clearTemplateData, templateSevice.addField),
     takeFetchSaga(GET_FIELDS, getFieldsSuccess, templateSevice.getFields),
     takeFetchSaga(ADD_ITEM, addItemSuccess, itemService.addItem),
+    takeFetchSaga(EDIT_ITEM, addItemSuccess, itemService.editItem),
     takeFetchForAllSaga(GET_CATEGORY, loadCategorySuccess, itemService.fetchCategory),
     takeFetchForAllSaga(GET_ITEM, loadItemSuccess, itemService.fetchItem)
   ])

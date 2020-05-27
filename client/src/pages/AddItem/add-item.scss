@@ -39,10 +39,12 @@
     padding: 0;
     cursor: pointer;
     label {
-      background: rgba(0, 0, 0, 0.295);
       display: block;
       height: 200px;
       cursor: pointer;
+      &:hover {
+        background: rgba(0, 0, 0, 0.295);      
+      }
       &:hover img {
         opacity: .5;
         z-index: -1;

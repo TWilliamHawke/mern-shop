@@ -9,7 +9,8 @@ export const initialState = {
   imageId: null,
   saveItemSuccess: false,
   category: null,
-  brands: []
+  brands: [],
+  itemData: null
 }
 
 const handlers = {
@@ -38,9 +39,11 @@ const handlers = {
     imageId: id,
     imageUrl: img
   }),
-  [LOAD_TEMPLATE_SUCCESS]: (state, payload) => ({
+  [LOAD_TEMPLATE_SUCCESS]: (state, {category, itemData}) => ({
     ...state,
-    category: payload
+    category,
+    itemData,
+    imageUrl: itemData?.image || 'images/no-image.png'
   }),
   [ADD_ITEM_SUCCESS]: (state) => ({
     ...state,
@@ -53,7 +56,8 @@ const handlers = {
     saveItemSuccess: false,
     imageUrl: 'images/no-image.png',
     imageId: null,
-    category: null
+    category: null,
+    itemData: null,
   })
 }
 

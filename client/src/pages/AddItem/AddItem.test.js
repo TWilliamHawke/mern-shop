@@ -31,6 +31,7 @@ describe('test connected component', () => {
     expect(wrapper.prop('imageId')).toBe('id')
     expect(wrapper.prop('loadTemplate')).toBeInstanceOf(Function)
     expect(wrapper.prop('addItem')).toBeInstanceOf(Function)
+    expect(wrapper.prop('editItem')).toBeInstanceOf(Function)
     expect(wrapper.prop('clearTemplateData')).toBeInstanceOf(Function)
     expect(wrapper.prop('saveItemSuccess')).toBe('savesucc')
   })

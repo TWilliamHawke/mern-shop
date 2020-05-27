@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { tfMeasure } from '../../../utils/textTransforms';
 
-const CustomFields = ({history, data, imputValues, setItemData}) => {
+const CustomFields = ({history, data, imputValues, setItemData, oldItemData}) => {
 
   const gotoEditTemplate = (e) => {
     e.preventDefault()
@@ -21,11 +21,16 @@ const CustomFields = ({history, data, imputValues, setItemData}) => {
   }
 
 
-
   useEffect(() => {
     const selectors = data.fields
     const vals = {}
-    selectors.forEach(({_id: id, values}) => vals[id] = values[0] || '')
+    const oldData = {}
+    if(Array.isArray(oldItemData)) {
+      oldItemData.forEach(({field, value}) => {
+        oldData[field._id] = value
+      })
+    }
+    selectors.forEach(({_id: id, values}) => vals[id] = oldData[id] || values[0] || '')
     setItemData({
       ...imputValues,
       ...vals

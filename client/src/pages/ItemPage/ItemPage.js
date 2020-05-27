@@ -4,29 +4,57 @@ import PathLinks from '../../components/PathLinks';
 import { connect } from 'react-redux';
 import {getItem} from '../../redux/dataFetchSaga/actions'
 import Spinner from '../../components/Spinner'
+import useUserType from '../../hooks/useUserType'
+import ItemInfo from './components/ItemInfo'
+import './item-page.scss'
+import convertPrice from '../../utils/convertPrice';
 
-const ItemPage = ({match, getItem, itemData}) => {
+export const ItemPage = ({match, getItem, itemData, history, userType}) => {
+
+  // const catName = categories[match?.params.name]
+  const {isAdmin} = useUserType(userType)
+  
 
   useEffect(() => {
-    getItem(match.params.item)
+    getItem(match?.params.item)
     // eslint-disable-next-line
-  }, [match.params.item])
+  }, [match?.params.item])
+
+  const gotoEditItem = () => {
+    history.push({
+      pathname: 'edit',
+      state: itemData
+    })
+  }
 
   if(!itemData) return <Spinner />
 
-  console.log(itemData)
+  const {title, image, price, other} = itemData
+  const convPrice = convertPrice(price)
+
   return (
     <div className='full-page'>
-      <PathLinks action={itemData.title} />
-      <h1>{itemData.title}</h1>
-      <img src={itemData.image} alt='' />
-      ItemPage
+      <PathLinks itemTitle={title} />
+      
+      <div className='item-data'>
+        <div className='item-data-image'>
+          <img src={image} alt='' />
+        </div>
+        <div className='item-data-info'>
+          <h1>{title}</h1>
+          <ItemInfo data={other} />
+          <p className='item-data-price'>{convPrice}</p>
+          {isAdmin ?
+          <button onClick={gotoEditItem} className='config-btn'>Edit</button> :
+          <button className='config-btn'>Add to Cart</button>}
+        </div>
+      </div>
     </div>
   );
 };
 
-const mapStateToProps = ({items: {itemData}}) => ({
-  itemData
+const mapStateToProps = ({items: {itemData}, auth: {userType}}) => ({
+  itemData, userType
 })
 
 export default connect(mapStateToProps, {getItem})(withRouter(ItemPage));
