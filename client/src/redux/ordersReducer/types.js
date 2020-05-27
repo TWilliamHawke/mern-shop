@@ -1,0 +1,1 @@
+export const NEW_ITEM_IN_CART = 'NEW_ITEM_IN_CART'

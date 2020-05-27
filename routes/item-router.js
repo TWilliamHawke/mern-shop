@@ -157,13 +157,15 @@ try {
   }
 
   if(oldImg) {
-    const oldImage = await Image.findOne({linkedTo: title})
-    if(!oldImage) return res.status(403).json({message: 'Old image not found'})
-    const oldFile = oldImage.imageUrl.split('\\')[1]
-    await fs.unlink(`images/${oldFile}`, err => {
-      if(err) throw err
-    })
-    await Image.deleteOne({linkedTo: title})
+    if(oldImg !== 'images/no-image.png') {
+      const oldImage = await Image.findOne({linkedTo: title})
+      if(!oldImage) return res.status(403).json({message: 'Old image not found'})
+      const oldFile = oldImage.imageUrl.split('\\')[1]
+      await fs.unlink(`images/${oldFile}`, err => {
+        if(err) throw err
+      })
+      await Image.deleteOne({linkedTo: title})
+    }
 
     const image = await Image.findById(imageId)
     if(!image) return res.status(403).json({message: 'New image not found'})

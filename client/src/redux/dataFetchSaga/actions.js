@@ -1,4 +1,4 @@
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM } from "./types";
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART } from "./types";
 import { tfItemData } from "../../utils/actionHelpers";
 
 
@@ -47,3 +47,7 @@ export const editItem = (data) => {
     type: EDIT_ITEM, payload
   }
 }
+
+export const addToCart = (payload) => ({
+  type: ADD_TO_CART, payload
+})

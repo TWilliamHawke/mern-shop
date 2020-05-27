@@ -1,5 +1,5 @@
-import { loadImage, saveTemplate, loadTemplate, editField, addField, getFields, addItem, getCategory, getItem, editItem } from "./actions"
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM } from "./types"
+import { loadImage, saveTemplate, loadTemplate, editField, addField, getFields, addItem, getCategory, getItem, editItem, addToCart } from "./actions"
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART } from "./types"
 
 jest.mock('../../utils/actionHelpers.js', () => ({tfItemData: jest.fn(() => 'TransformedItemData')}))
 
@@ -46,6 +46,10 @@ describe('test itemSaga actions', () => {
 
   it('should return EDIT_ITEM type', () => {
     expect(editItem('itemData')).toEqual({ type: EDIT_ITEM, payload: 'TransformedItemData' })
+  })
+
+  it('should return ADD_TO_CART type', () => {
+    expect(addToCart('itemid')).toEqual({ type: ADD_TO_CART, payload: 'itemid' })
   })
 
 

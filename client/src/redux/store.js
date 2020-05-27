@@ -7,13 +7,15 @@ import templateReducer from './templateReducer/templateReducer'
 import itemReducer from './itemReducer/itemReducer'
 import globalReducer from './globalReducer/globalReducer'
 import rootSaga from './rootSaga'
+import ordersReducer from './ordersReducer/ordersReducer'
 
 
 const reducer = combineReducers({
   items: itemReducer,
   template: templateReducer,
   auth: authReducer,
-  global: globalReducer
+  global: globalReducer,
+  orders: ordersReducer
 })
 
 const sagasMiddleware = createSagas()

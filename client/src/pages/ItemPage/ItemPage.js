@@ -2,17 +2,17 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import PathLinks from '../../components/PathLinks';
 import { connect } from 'react-redux';
-import {getItem} from '../../redux/dataFetchSaga/actions'
+import {getItem, addToCart} from '../../redux/dataFetchSaga/actions'
 import Spinner from '../../components/Spinner'
 import useUserType from '../../hooks/useUserType'
 import ItemInfo from './components/ItemInfo'
 import './item-page.scss'
 import convertPrice from '../../utils/convertPrice';
 
-export const ItemPage = ({match, getItem, itemData, history, userType}) => {
+export const ItemPage = ({match, getItem, itemData, history, userType, addToCart, loading}) => {
 
   // const catName = categories[match?.params.name]
-  const {isAdmin} = useUserType(userType)
+  const {isAdmin, isGuest} = useUserType(userType)
   
 
   useEffect(() => {
@@ -25,6 +25,12 @@ export const ItemPage = ({match, getItem, itemData, history, userType}) => {
       pathname: 'edit',
       state: itemData
     })
+  }
+
+  const addToCartHandler = () => {
+    if(isGuest) return history.push('/login')
+    if(loading) return
+    addToCart(itemData._id)
   }
 
   if(!itemData) return <Spinner />
@@ -46,15 +52,15 @@ export const ItemPage = ({match, getItem, itemData, history, userType}) => {
           <p className='item-data-price'>{convPrice}</p>
           {isAdmin ?
           <button onClick={gotoEditItem} className='config-btn'>Edit</button> :
-          <button className='config-btn'>Add to Cart</button>}
+          <button onClick={addToCartHandler} disabled={loading} className='config-btn'>Add to Cart</button>}
         </div>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = ({items: {itemData}, auth: {userType}}) => ({
-  itemData, userType
+const mapStateToProps = ({items: {itemData}, auth: {userType}, global: {loading}}) => ({
+  itemData, userType, loading
 })
 
-export default connect(mapStateToProps, {getItem})(withRouter(ItemPage));
+export default connect(mapStateToProps, {getItem, addToCart})(withRouter(ItemPage));
