@@ -1,17 +1,16 @@
-import { NEW_ITEM_IN_CART } from "./types"
+import { FETCH_CART_SUCCESS } from "./types"
 
 
 export const initialState = {
-  cart: [],
+  cart: null,
   orders: [],
-  newItemsCount: 0,
 }
 
 const handlers = {
   default: state => state,
-  [NEW_ITEM_IN_CART]: state => ({
+  [FETCH_CART_SUCCESS]: (state, payload) => ({
     ...state,
-    newItemsCount: ++state.newItemsCount
+    cart: payload,
   })
 }
 

@@ -13,7 +13,7 @@ const getTokensById = (userType, id) => {
 const getTokensByRef = (userType, refToken) => {
   const {id} = jwt.verify(refToken, config.get(`${userType}secretRef`))
   const tokens = getTokensById(userType, id)
-  return tokens
+  return {tokens, id}
 }
 
 module.exports = {

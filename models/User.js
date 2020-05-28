@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
   ]
 });
 
-userSchema.methods.addToCart = function(id) {
+userSchema.methods.addToCart = async function(id) {
   const cart = [...this.cart]
   const idx = cart.findIndex(({item}) => item == id)
   
@@ -25,8 +25,30 @@ userSchema.methods.addToCart = function(id) {
     })
   }
   this.cart = cart
-  return this.save()
+  await this.save()
+  return cart
 
+}
+
+userSchema.methods.removeOne = async function(id) {
+  const cart = [...this.cart]
+  const idx = cart.findIndex(({item}) => item == id)
+  
+  cart[idx].count--
+
+  this.cart = cart
+  await this.save()
+  return cart
+}
+
+userSchema.methods.removeAll = async function(id) {
+  const cart = [...this.cart]
+  
+  this.cart = cart.filter(({item}) => {
+    return item.toString() !== id.toString()
+  })
+  await this.save()
+  return cart
 }
 
 const userModel = new mongoose.model('User', userSchema);

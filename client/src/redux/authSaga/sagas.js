@@ -4,6 +4,7 @@ import { CREATE_USER, LOGIN_USER, CHECK_USERTYPE, LOGOUT } from './types';
 import { authRequest, createUserSuccess, authFailure, loginSuccess, setUserType } from '../authReducer/actions';
 import { logout } from './actions'
 import storage from '../../services/storageServices'
+import { fetchCartSuccess } from '../ordersReducer/actions';
 
 export function* createUserRequest({payload}) {
   yield put(authRequest())
@@ -28,6 +29,7 @@ export function* loginUserSaga({payload}) {
     const {data} = yield call(authService.login, payload)
     yield call(storage.setItem, 'userData', data)
     yield put(loginSuccess(data.userType))
+    yield put(fetchCartSuccess(data.cart))
 
   } catch(e) {
     yield put(authFailure(e.response))
@@ -62,6 +64,7 @@ export function* checkUserTypeSaga() {
     const {userType, tokens: {refToken}} = tokens
     const data = yield call(refreshTokenSaga, userType, refToken)
     yield put(setUserType(data.userType))
+    yield put(fetchCartSuccess(data.cart))
   } catch(e) {
     yield put(logout())
   }

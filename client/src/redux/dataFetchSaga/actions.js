@@ -1,4 +1,4 @@
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART } from "./types";
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL } from "./types";
 import { tfItemData } from "../../utils/actionHelpers";
 
 
@@ -50,4 +50,16 @@ export const editItem = (data) => {
 
 export const addToCart = (payload) => ({
   type: ADD_TO_CART, payload
+})
+
+export const getCart = () => ({
+  type: GET_CART
+})
+
+export const removeOne = (payload) => ({
+  type: REMOVE_ONE, payload
+})
+
+export const removeAll = payload => ({
+  type: REMOVE_ALL, payload
 })

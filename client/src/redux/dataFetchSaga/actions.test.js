@@ -1,5 +1,5 @@
-import { loadImage, saveTemplate, loadTemplate, editField, addField, getFields, addItem, getCategory, getItem, editItem, addToCart } from "./actions"
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART } from "./types"
+import { loadImage, saveTemplate, loadTemplate, editField, addField, getFields, addItem, getCategory, getItem, editItem, addToCart, getCart, removeAll, removeOne } from "./actions"
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL } from "./types"
 
 jest.mock('../../utils/actionHelpers.js', () => ({tfItemData: jest.fn(() => 'TransformedItemData')}))
 
@@ -50,6 +50,18 @@ describe('test itemSaga actions', () => {
 
   it('should return ADD_TO_CART type', () => {
     expect(addToCart('itemid')).toEqual({ type: ADD_TO_CART, payload: 'itemid' })
+  })
+
+  it('should return GET_CART type', () => {
+    expect(getCart()).toEqual({ type: GET_CART })
+  })
+
+  it('should return REMOVE_ONE type', () => {
+    expect(removeOne('itemid')).toEqual({ type: REMOVE_ONE, payload: 'itemid' })
+  })
+
+  it('should return REMOVE_ALL type', () => {
+    expect(removeAll('itemid')).toEqual({ type: REMOVE_ALL, payload: 'itemid' })
   })
 
 

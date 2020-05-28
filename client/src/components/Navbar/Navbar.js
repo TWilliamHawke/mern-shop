@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import useUserType from '../../hooks/useUserType';
 import { logout } from '../../redux/authSaga/actions'
 
-export const Navbar = ({userType, logout, newItemsCount}) => {
+export const Navbar = ({userType, logout, cart}) => {
 
   const {isGuest, isUser, isAuthorise} = useUserType(userType)
 
   const links = [
-    {link: '/cart', text: newItemsCount ? `Cart(+${newItemsCount})` : 'Cart', show: isUser},
+    {link: '/cart', text: cart?.length ? `Cart(${cart.length})` : 'Cart', show: isUser},
     {link: '/login', text: 'Log in', show: isGuest},
     {link: '/signin', text: 'Sign in', show: isGuest}
   ]
@@ -35,8 +35,8 @@ const mapDispathtoProps = {
   logout
 }
 
-const mapStatetoProps = ({auth: {userType}, orders: {newItemsCount}}) => ({
-  userType, newItemsCount
+const mapStatetoProps = ({auth: {userType}, orders: {cart}}) => ({
+  userType, cart
 })
 
 export default connect(mapStatetoProps, mapDispathtoProps)(Navbar);

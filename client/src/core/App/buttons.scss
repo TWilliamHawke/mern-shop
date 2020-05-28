@@ -9,11 +9,16 @@
   border-radius: 3px;
   margin-top: 10px;
   &:hover {
-    cursor: pointer;
     background: rgb(24, 100, 241);
   }
   &:disabled {
     background: rgb(101, 121, 155);
+  }
+}
+
+button {
+  cursor: pointer;
+  &:disabled {
     cursor: default;
   }
 }
@@ -25,30 +30,25 @@
   padding: 8px 25px;
   color: #fff;
   font-size: 16px;
-  cursor: pointer;
   margin: 5px auto;
 }
 
 .btn-blue {
   background: rgb(17, 67, 160);
   &:hover {
-    cursor: pointer;
     background: rgb(24, 100, 241);
   }
   &:disabled {
     background: rgb(101, 121, 155);
-    cursor: default;
   }
 }
 
 .btn-red {
   background: rgb(187, 33, 33);
   &:hover {
-    cursor: pointer;
     background: rgb(201, 4, 4);
   }
   &:disabled {
     background: rgb(163, 76, 76);
-    cursor: default;
   }
 }

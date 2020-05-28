@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategory } from '../../../../redux/dataFetchSaga/actions'
-import Spinner from '../../../../components/Spinner';
+import { getCategory } from 'src/redux/dataFetchSaga/actions'
+import Spinner from 'src/components/Spinner';
 import ItemPreview from '../ItemPreview';
 import useUserType from 'src/hooks/useUserType'
 
 export const Items = ({header, history, getCategory, match, categoryData, userType}) => {
 
-  console.log(userType)
   const {isAdmin} = useUserType(userType)
 
   useEffect(() => {

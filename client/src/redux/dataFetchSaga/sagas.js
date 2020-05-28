@@ -1,16 +1,16 @@
 import {put, call, all, takeEvery} from 'redux-saga/effects'
 import { transformErrors } from '../../utils/actionHelpers'
 import { getTokenSaga } from '../authSaga/sagas'
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, ADD_FIELD, GET_FIELDS, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART } from './types'
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, ADD_FIELD, GET_FIELDS, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL } from './types'
 //services
 import itemService from '../../services/itemService'
 import templateSevice from '../../services/editTemplateService'
+import ordersService from '../../services/ordersService'
 //actions
 import { fetchDataRequest, fetchDataFailure, fetchDataSuccess } from '../globalReducer/actions'
 import { saveTemplateSuccess, loadImageSuccess, loadTemplateSuccess, getFieldsSuccess, clearTemplateData, addItemSuccess } from '../templateReducer/actions'
 import { loadCategorySuccess, loadItemSuccess } from '../itemReducer/actions'
-import { newItemInCart } from '../ordersReducer/actions'
-import ordersService from '../../services/ordersService'
+import { fetchCartSuccess } from '../ordersReducer/actions'
 
 export const fetchSaga = (action, service) => {
   return function* ({payload}) {
@@ -74,6 +74,9 @@ export default function* () {
     takeFetchSaga(EDIT_ITEM, addItemSuccess, itemService.editItem),
     takeFetchForAllSaga(GET_CATEGORY, loadCategorySuccess, itemService.fetchCategory),
     takeFetchForAllSaga(GET_ITEM, loadItemSuccess, itemService.fetchItem),
-    takeFetchSaga(ADD_TO_CART, newItemInCart, ordersService.addToCart)
+    takeFetchSaga(ADD_TO_CART, fetchCartSuccess, ordersService.addToCart),
+    takeFetchSaga(GET_CART, fetchCartSuccess, ordersService.fetchCart),
+    takeFetchSaga(REMOVE_ONE, fetchCartSuccess, ordersService.removeOne),
+    takeFetchSaga(REMOVE_ALL, fetchCartSuccess, ordersService.removeAll),
   ])
 }

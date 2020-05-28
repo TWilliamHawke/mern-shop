@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getCart } from '../../redux/dataFetchSaga/actions'
+import Spinner from '../../components/Spinner'
+import CartTable from './components/CartTable';
 
-const CartPage = () => {
+import './cart-page.scss'
+
+export const CartPage = ({getCart, cart}) => {
+
+  useEffect(() => {
+    getCart()
+    // eslint-disable-next-line
+  }, [])
+
+  if(!cart) return <Spinner />
+
   return (
-    <div>
-      CartPage
+    <div className='full-page'>
+      <h2>CartPage</h2>
+      {cart.length ? <CartTable cart={cart} /> : <p>Cart is Empty</p>}
     </div>
   );
 };
 
-export default CartPage;
+const mapStateToProps = ({orders: {cart}}) => ({
+  cart
+})
+
+export default connect(mapStateToProps, {getCart})(CartPage);

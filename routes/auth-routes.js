@@ -71,8 +71,10 @@ router.post('/loginUser', setLogin, async(req, res) => {
 
     const userType = login === 'admin@admin.com' ? 'admin' : 'user'
     const tokens = getTokensById(userType, user._id)
+
+    const {cart} = await user.populate('cart.item').execPopulate()
     
-    res.json({userType, tokens})
+    res.json({userType, tokens, cart})
 
   } catch(e) {
     console.log(e)
@@ -80,12 +82,15 @@ router.post('/loginUser', setLogin, async(req, res) => {
   }
 })
 
-router.post('/refresh', (req, res) => {
+router.post('/refresh', async (req, res) => {
   try {
     const {refToken, userType} = req.body
-    const tokens = getTokensByRef(userType, refToken)
+    const {tokens, id} = getTokensByRef(userType, refToken)
+    const user = await User.findById(id)
+
+    const {cart} = await user.populate('cart.item').execPopulate()
     
-    res.json({userType, tokens})
+    res.json({userType, tokens, cart})
   } catch(e) {
     console.log(e)
     res.status(500).json({message: 'Some server error'})
