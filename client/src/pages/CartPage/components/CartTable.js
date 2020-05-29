@@ -2,8 +2,9 @@ import React from 'react';
 import convertPrice from 'src/utils/convertPrice'
 import CartRow from './CartRow'
 import { connect } from 'react-redux';
+import { makeOrder } from '../../../redux/dataFetchSaga/actions'
 
-const CartTable = ({cart, loading}) => {
+const CartTable = ({cart, loading, makeOrder}) => {
   const cost = cart.reduce((sum, {item, count}) => sum + item.price*count, 0)
   
   return (
@@ -22,7 +23,7 @@ const CartTable = ({cart, loading}) => {
       </tbody>
     </table>
     <p>Total: {convertPrice(cost)}</p>
-    <button disabled={loading} className='btn-submit btn-blue'>Make order</button>
+    <button disabled={loading} onClick={() => makeOrder(cost)} className='btn-submit btn-blue'>Make order</button>
     </div>
   );
 };
@@ -31,4 +32,4 @@ const mapStateToProps = ({global: {loading}}) => ({
   loading
 })
 
-export default connect(mapStateToProps)(CartTable);
+export default connect(mapStateToProps, {makeOrder})(CartTable);

@@ -1,63 +1,34 @@
 const { Router } = require('express')
 const { checkUser } = require('../middleware/checkToken')
 const User = require('../models/User')
-
+const Order = require('../models/Order.js')
 
 const router = new Router()
 
-router.post('/add', checkUser, async(req, res) => {
-  try {
-    if(!req.body.id) return res.status(422).json({message: 'Wrong data'})
-    const user = await User.findById(req.user.id)
-    if(!user) res.status(422).json({message: 'User not found'})
-    await user.addToCart(req.body.id)
-    const {cart} = await user.populate('cart.item').execPopulate()
 
-    res.json(cart)
-  } catch(e) {
-    console.log(e)
-    res.status(500).json({message: 'Server error'})
-  }
-})
-
-router.get('/cart', checkUser, async(req, res) => {
+router.post('/', checkUser, async(req, res) => {
   try {
     const user = await User.findById(req.user.id)
-    if(!user) res.status(422).json({message: 'User not found'})
+    const {cart, login} = await user.populate('cart.item').execPopulate()
+    const items = cart.map(({item, count}) => ({
+      title: item.title,
+      id: item._id,
+      count
+    }))
 
-    const {cart} = await user.populate('cart.item').execPopulate()
+    const order = new Order({
+      userId: user._id,
+      login,
+      items,
+      cost: req.body.cost
+    })
 
-    res.json(cart)
-  } catch(e) {
-    console.log(e)
-    res.status(500).json({message: 'Server error'})
-  }
-})
+    user.cart = []
+    await user.save()
+    await order.save()
 
-router.put('/cart', checkUser, async(req, res) => {
-  try {
-    if(!req.body.id) return res.status(422).json({message: 'Wrong data'})
-    const user = await User.findById(req.user.id)
-    if(!user) res.status(422).json({message: 'User not found'})
-    await user.removeOne(req.body.id)
-    const {cart} = await user.populate('cart.item').execPopulate()
+    res.json({message: 'ok'})
 
-    res.json(cart)
-  } catch(e) {
-    console.log(e)
-    res.status(500).json({message: 'Server error'})
-  }
-})
-
-router.delete('/cart', checkUser, async(req, res) => {
-  try {
-    if(!req.body.id) return res.status(422).json({message: 'Wrong data'})
-    const user = await User.findById(req.user.id)
-    if(!user) res.status(422).json({message: 'User not found'})
-    await user.removeAll(req.body.id)
-    const {cart} = await user.populate('cart.item').execPopulate()
-
-    res.json(cart)
   } catch(e) {
     console.log(e)
     res.status(500).json({message: 'Server error'})

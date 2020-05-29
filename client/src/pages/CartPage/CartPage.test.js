@@ -10,7 +10,7 @@ describe('test connected component', () => {
     const mockStore = configMockStore()
     const state = {orders: {cart: 'cartArray', cartIsEmpty: 'cartData'}}
     const store = mockStore(state)
-    wrapper = shallow(<ConnectedCartPage store={store} />).find('CartPage')
+    wrapper = shallow(<ConnectedCartPage store={store} />).find('withRouter(CartPage)')
   })
   test('component should receive props from connect function', () => {
     expect(wrapper.prop('getCart')).toBeInstanceOf(Function)

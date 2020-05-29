@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getCart } from '../../redux/dataFetchSaga/actions'
 import Spinner from '../../components/Spinner'
 import CartTable from './components/CartTable';
-
+import { withRouter } from 'react-router-dom'
 import './cart-page.scss'
 
 export const CartPage = ({getCart, cart}) => {
@@ -27,4 +27,4 @@ const mapStateToProps = ({orders: {cart}}) => ({
   cart
 })
 
-export default connect(mapStateToProps, {getCart})(CartPage);
+export default connect(mapStateToProps, {getCart})(withRouter(CartPage));

@@ -1,4 +1,4 @@
-import { FETCH_CART_SUCCESS } from "./types"
+import { FETCH_CART_SUCCESS, MADE_ORDER_SUCCESS } from "./types"
 
 
 export const initialState = {
@@ -11,6 +11,10 @@ const handlers = {
   [FETCH_CART_SUCCESS]: (state, payload) => ({
     ...state,
     cart: payload,
+  }),
+  [MADE_ORDER_SUCCESS]: (state) => ({
+    ...state,
+    cart: []
   })
 }
 

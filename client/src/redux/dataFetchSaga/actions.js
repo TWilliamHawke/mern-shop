@@ -1,4 +1,4 @@
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL } from "./types";
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL, MAKE_ORDER } from "./types";
 import { tfItemData } from "../../utils/actionHelpers";
 
 
@@ -62,4 +62,8 @@ export const removeOne = (payload) => ({
 
 export const removeAll = payload => ({
   type: REMOVE_ALL, payload
+})
+
+export const makeOrder = payload => ({
+  type: MAKE_ORDER, payload
 })

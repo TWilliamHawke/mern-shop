@@ -1,5 +1,5 @@
-import { loadImage, saveTemplate, loadTemplate, editField, addField, getFields, addItem, getCategory, getItem, editItem, addToCart, getCart, removeAll, removeOne } from "./actions"
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL } from "./types"
+import { loadImage, saveTemplate, loadTemplate, editField, addField, getFields, addItem, getCategory, getItem, editItem, addToCart, getCart, removeAll, removeOne, makeOrder } from "./actions"
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL, MAKE_ORDER } from "./types"
 
 jest.mock('../../utils/actionHelpers.js', () => ({tfItemData: jest.fn(() => 'TransformedItemData')}))
 
@@ -62,6 +62,10 @@ describe('test itemSaga actions', () => {
 
   it('should return REMOVE_ALL type', () => {
     expect(removeAll('itemid')).toEqual({ type: REMOVE_ALL, payload: 'itemid' })
+  })
+
+  it('should return MAKE_ORDER type', () => {
+    expect(makeOrder('cost')).toEqual({ type: MAKE_ORDER, payload: 'cost' })
   })
 
 

@@ -2,16 +2,19 @@ import axios from "axios"
 
 class OrdersService {
   addToCart = (token, data) => {
-    return axios.post('/api/orders/add', {id: data}, {headers: {authorization: token}})
+    return axios.post('/api/cart', {id: data}, {headers: {authorization: token}})
   }
   fetchCart = (token) => {
-    return axios.get('/api/orders/cart', {headers: {authorization: token}})
+    return axios.get('/api/cart', {headers: {authorization: token}})
   }
   removeOne = (token, data) => {
-    return axios.put('/api/orders/cart', {id: data}, {headers: {authorization: token}})
+    return axios.put('/api/cart', {id: data}, {headers: {authorization: token}})
   }
   removeAll = (token, data) => {
-    return axios.delete('/api/orders/cart', {data: {id: data}, headers: {authorization: token}}, )
+    return axios.delete('/api/cart', {data: {id: data}, headers: {authorization: token}}, )
+  }
+  makeOrder = (token, data) => {
+    return axios.post('/api/orders', {cost: data}, {headers: {authorization: token}})
   }
 }
 
