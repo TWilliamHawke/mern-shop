@@ -1,7 +1,7 @@
 import {put, call, all, takeEvery} from 'redux-saga/effects'
 import { transformErrors } from '../../utils/actionHelpers'
 import { getTokenSaga } from '../authSaga/sagas'
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, ADD_FIELD, GET_FIELDS, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL, MAKE_ORDER } from './types'
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, ADD_FIELD, GET_FIELDS, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL, MAKE_ORDER, GET_MY_ORDERS, GET_ALL_ORDERS, CANCEL_ORDER } from './types'
 //services
 import itemService from '../../services/itemService'
 import templateSevice from '../../services/editTemplateService'
@@ -10,7 +10,7 @@ import ordersService from '../../services/ordersService'
 import { fetchDataRequest, fetchDataFailure, fetchDataSuccess } from '../globalReducer/actions'
 import { saveTemplateSuccess, loadImageSuccess, loadTemplateSuccess, getFieldsSuccess, clearTemplateData, addItemSuccess } from '../templateReducer/actions'
 import { loadCategorySuccess, loadItemSuccess } from '../itemReducer/actions'
-import { fetchCartSuccess, madeOrderSuccess } from '../ordersReducer/actions'
+import { fetchCartSuccess, madeOrderSuccess, fetchOrdersSuccess } from '../ordersReducer/actions'
 
 export const fetchSaga = (action, service) => {
   return function* ({payload}) {
@@ -26,6 +26,7 @@ export const fetchSaga = (action, service) => {
       yield put(fetchDataSuccess())
 
     } catch(e) {
+//      console.log(e)
       const errorsArray = yield call(transformErrors, e.response)
       yield put(fetchDataFailure(errorsArray))
     }
@@ -45,6 +46,7 @@ export const fetchForAllSaga = (action, service) => {
       yield put(fetchDataSuccess())
 
     } catch(e) {
+//      console.log(e)
       const errorsArray = yield call(transformErrors, e.response)
       yield put(fetchDataFailure(errorsArray))
     }
@@ -79,5 +81,8 @@ export default function* () {
     takeFetchSaga(REMOVE_ONE, fetchCartSuccess, ordersService.removeOne),
     takeFetchSaga(REMOVE_ALL, fetchCartSuccess, ordersService.removeAll),
     takeFetchSaga(MAKE_ORDER, madeOrderSuccess, ordersService.makeOrder),
+    takeFetchSaga(GET_MY_ORDERS, fetchOrdersSuccess, ordersService.fetchMyOrders),
+    takeFetchSaga(GET_ALL_ORDERS, fetchOrdersSuccess, ordersService.fetchAllOrders),
+    takeFetchSaga(CANCEL_ORDER, fetchOrdersSuccess, ordersService.cancelOrder),
   ])
 }

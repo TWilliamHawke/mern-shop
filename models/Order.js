@@ -10,6 +10,11 @@ const orderSchema = new Schema({
       id: {type: Types.ObjectId, ref: 'Item', required: true}
     }
   ],
+  date: {
+    type: Date,
+    default: Date.now
+  },
+
   cost: {type: Number, required: true}
 })
 

@@ -14,6 +14,7 @@ import AddItem from '../../pages/AddItem'
 import EditCategory from '../../pages/EditCategory/EditCategory'
 import Spinner from '../../components/Spinner'
 import ItemPage from '../../pages/ItemPage'
+import OrderPage from '../../pages/OrderPage'
 
 export const Routes = ({userType, checkUserType}) => {
   const {isGuest, isUser, isAdmin} = useUserType(userType)
@@ -30,6 +31,8 @@ export const Routes = ({userType, checkUserType}) => {
       <ProtectedRoute access={isGuest} path='/login' component={LoginPage} />
       <ProtectedRoute access={isGuest} path='/signin' component={SignInPage} />
       <ProtectedRoute access={isUser} path='/cart' component = {CartPage} />
+      <ProtectedRoute access={isUser} path='/myorders' component={OrderPage} />
+      <ProtectedRoute access={isAdmin} path='/orders'component={OrderPage} data={{all: true}} />
       <ProtectedRoute access={isAdmin} path='/catalog/:name/addItem/edit' component={EditCategory} />
       <ProtectedRoute access={isAdmin} path='/catalog/:name/addItem/' component={AddItem} />
       <ProtectedRoute access={isAdmin} path='/catalog/:name/:item/edit' component={AddItem} />

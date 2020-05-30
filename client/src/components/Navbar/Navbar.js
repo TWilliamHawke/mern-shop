@@ -7,12 +7,16 @@ import { logout } from '../../redux/authSaga/actions'
 
 export const Navbar = ({userType, logout, cart}) => {
 
-  const {isGuest, isUser, isAuthorise} = useUserType(userType)
+  const {isGuest, isUser, isAuthorise, isAdmin} = useUserType(userType)
+
+  const cartSize = cart ? cart.reduce((sum, {count}) => sum + count, 0) : 0
 
   const links = [
-    {link: '/cart', text: cart?.length ? `Cart(${cart.length})` : 'Cart', show: isUser},
+    {link: '/cart', text: cartSize ? `Cart(${cartSize})` : 'Cart', show: isUser},
     {link: '/login', text: 'Log in', show: isGuest},
-    {link: '/signin', text: 'Sign in', show: isGuest}
+    {link: '/signin', text: 'Sign in', show: isGuest},
+    {link: '/myorders', text: 'Orders', show: isUser},
+    {link: '/orders', text: 'Orders', show: isAdmin},
   ]
 
   return (

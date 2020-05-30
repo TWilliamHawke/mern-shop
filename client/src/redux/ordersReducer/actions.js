@@ -1,4 +1,4 @@
-import { NEW_ITEM_IN_CART, FETCH_CART_SUCCESS, MADE_ORDER_SUCCESS } from "./types"
+import { NEW_ITEM_IN_CART, FETCH_CART_SUCCESS, MADE_ORDER_SUCCESS, FETCH_ORDERS_SUCCESS } from "./types"
 
 export const newItemInCart = () => ({
   type: NEW_ITEM_IN_CART
@@ -10,4 +10,8 @@ export const fetchCartSuccess = (payload) => ({
 
 export const madeOrderSuccess = (payload) => ({
   type: MADE_ORDER_SUCCESS, payload
+})
+
+export const fetchOrdersSuccess = (payload) => ({
+  type: FETCH_ORDERS_SUCCESS, payload
 })
