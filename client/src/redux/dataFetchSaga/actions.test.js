@@ -1,5 +1,5 @@
-import { loadImage, saveTemplate, loadTemplate, editField, addField, getFields, addItem, getCategory, getItem, editItem, addToCart, getCart, removeAll, removeOne, makeOrder, getAllOrders, getMyOrders } from "./actions"
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL, MAKE_ORDER, GET_ALL_ORDERS, GET_MY_ORDERS } from "./types"
+import { loadImage, saveTemplate, loadTemplate, editField, addField, getFields, addItem, getCategory, getItem, editItem, addToCart, getCart, removeAll, removeOne, makeOrder, getAllOrders, getMyOrders, getFilters, cancelOrder } from "./actions"
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL, MAKE_ORDER, GET_ALL_ORDERS, GET_MY_ORDERS, CANCEL_ORDER, GET_FILTERS } from "./types"
 
 jest.mock('../../utils/actionHelpers.js', () => ({tfItemData: jest.fn(() => 'TransformedItemData')}))
 
@@ -74,6 +74,14 @@ describe('test itemSaga actions', () => {
 
   it('should return GET_MY_ORDERS type', () => {
     expect(getMyOrders()).toEqual({ type: GET_MY_ORDERS })
+  })
+
+  it('should return CANCEL_ORDER type', () => {
+    expect(cancelOrder('orderId')).toEqual({ type: CANCEL_ORDER, payload: 'orderId' })
+  })
+
+  it('should return GET_FILTERS type', () => {
+    expect(getFilters('category')).toEqual({ type: GET_FILTERS, payload: 'category' })
   })
 
 

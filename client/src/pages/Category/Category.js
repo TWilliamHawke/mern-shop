@@ -16,7 +16,7 @@ const Category = ({categories}) => {
     <div className='full-page'>
       <PathLinks />
       <Rows
-        left={<Filter />}
+        left={<Filter category={name} />}
         right={<Items header={header} />}
        />
     </div>

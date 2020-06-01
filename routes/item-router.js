@@ -78,59 +78,59 @@ router.get('/item', async (req, res) => {
 })
 
 router.post('/add', checkAdmin, [
-  check('title', 'Title is too short').isLength({ min: 5 }),
-  check('price', 'Wrong Price').isNumeric(),
-  check('discountPrice', 'Wrong Discount Price').isNumeric(),
-  check('brand', 'Wrong Brand Name').isString(),
-  check('other', 'Wrong other fields').isArray()
-], async(req, res) => {
-try {
-  const errors = validationResult(req)
+    check('title', 'Title is too short').isLength({ min: 5 }),
+    check('price', 'Wrong Price').isNumeric(),
+    check('discountPrice', 'Wrong Discount Price').isNumeric(),
+    check('brand', 'Wrong Brand Name').isString(),
+    check('other', 'Wrong other fields').isArray()
+  ], async(req, res) => {
+  try {
+    const errors = validationResult(req)
 
-  if(!errors.isEmpty()) {
-    return res.status(422).json({
-      message: 'validation errors', 
-      errors: errors.array()
+    if(!errors.isEmpty()) {
+      return res.status(422).json({
+        message: 'validation errors', 
+        errors: errors.array()
+      })
+    }
+
+    const {title, imageId, other, catName, ...values} = req.body
+
+    const match = await Item.findOne({title})
+    if(match) {
+      return res.status(403).json({message: 'Item already exists'})
+    }
+
+    // if(imageId) {
+    //   const image = await Image.findById(imageId)
+    //   if(!image) return res.status(500).json({message: 'Server error: Image not found'})
+    //   image.linkedTo = title
+    //   await image.save()
+    // }
+
+    const [filters, imageErr] = await Promise.all([
+      Filter.createFilters(other, catName),
+      Image.setLink(imageId),
+      Category.setMinMax(catName, req.body.price),
+    ])
+    
+    if(imageErr) return res.status(500).json({message: 'Server error: Image not found'})
+
+    const item = new Item({
+      title,
+      other,
+      catName,
+      filters,
+      ...values
     })
+
+    await item.save()
+
+    res.json('ok')
+  } catch(e) {
+    console.log(e)
+    res.status(500).json({message: 'Server error'})
   }
-
-  const {title, imageId, category, other, ...values} = req.body
-
-  const match = await Item.findOne({title})
-  if(match) {
-    return res.status(403).json({message: 'Item already exists'})
-  }
-
-  if(imageId) {
-    const image = await Image.findById(imageId)
-    if(!image) return res.status(500).json({message: 'Server error'})
-    image.linkedTo = title
-    await image.save()
-  }
-
-  other.forEach(async ({field, value}) => {
-    const match = await Filter.findOne({field, value, category})
-    if(match) return
-    const filter = new Filter({field, value, category})
-    await filter.save()
-  })
-
-
-  const item = new Item({
-    title,
-    other,
-    category,
-    ...values
-  })
-
-  await item.save()
-
-
-  res.json('ok')
-} catch(e) {
-  console.log(e)
-  res.status(500).json({message: 'Server error'})
-}
 })
 
 router.put('/edit', checkAdmin, [
@@ -149,41 +149,48 @@ try {
     })
   }
 
-  const {title, imageId, category, other, oldImg, id, ...values} = req.body
+  const {title, imageId, other, oldImg, id, catName, ...values} = req.body
 
   const item = await Item.findOne({title})
   if(item._id != id) {
     return res.status(403).json({message: 'Item with this title already exists'})
   }
 
-  if(oldImg) {
-    if(oldImg !== 'images/no-image.png') {
-      const oldImage = await Image.findOne({linkedTo: title})
-      if(!oldImage) return res.status(403).json({message: 'Old image not found'})
-      const oldFile = oldImage.imageUrl.split('\\')[1]
-      await fs.unlink(`images/${oldFile}`, err => {
-        if(err) throw err
-      })
-      await Image.deleteOne({linkedTo: title})
-    }
+  // if(oldImg) { //delete old image if exist, set new image
+  //   if(oldImg !== 'images/no-image.png') {
+  //     const oldImage = await Image.findOne({linkedTo: title})
+  //     if(!oldImage) return res.status(403).json({message: 'Old image not found'})
+  //     const oldFile = oldImage.imageUrl.split('\\')[1]
+  //     await fs.unlink(`images/${oldFile}`, err => {
+  //       if(err) throw err
+  //     })
+  //     await Image.deleteOne({linkedTo: title})
+  //   }
 
-    const image = await Image.findById(imageId)
-    if(!image) return res.status(403).json({message: 'New image not found'})
-    image.linkedTo = title
-    await image.save()
-  }
+  //   const image = await Image.findById(imageId)
+  //   if(!image) return res.status(403).json({message: 'New image not found'})
+  //   image.linkedTo = title
+  //   await image.save()
+  // }
 
-  other.forEach(async ({field, value}) => {
-    const match = await Filter.findOne({field, value, category})
-    if(match) return
-    const filter = new Filter({field, value, category})
-    await filter.save()
-  })
+
+  // const filters = await Filter.createFilters(other, catName)
+
+  const [filters, imageErr] = await Promise.all([
+    Filter.createFilters(other, catName),
+    Image.changeLink(oldImg, imageId, title),
+    Category.setMinMax(catName, req.body.price),
+  ])
+  
+  if(imageErr) return res.status(500).json({message: 'Server error: Image not found'})
+
+
 
   const newItemData = {
     title,
     other,
-    category,
+    catName,
+    filters,
     ...values
   }
 
@@ -199,6 +206,28 @@ try {
   console.log(e)
   res.status(500).json({message: 'Server error'})
 }
+})
+
+router.get('/filters', async(req, res) => {
+  try {
+    const [filters, category] = await Promise.all([
+      Filter.find({catName: req.query.cat}),
+      Category.findOne({path: req.query.cat}).then(cat => cat.populate('fields').execPopulate())
+    ])
+
+    const fields = category.fields.map(field => ({
+      ...field._doc,
+      values: filters.filter(f => f.field == field._id.toString()).map(f => ({value: f.value, id: f._id}))
+    }))
+
+    category._doc.fields = fields
+
+    res.json(category)
+    
+  } catch(e) {
+    console.log(e)
+    res.status(500).json({message: 'Server error'})
+  }
 })
 
 module.exports = router

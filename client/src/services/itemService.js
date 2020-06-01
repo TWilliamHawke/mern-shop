@@ -25,6 +25,10 @@ class ItemService{
   editItem = (token, data) => {
     return axios.put('/api/items/edit', data, {headers: {authorization: token}})
   }
+
+  fetchFilters = (category) => {
+    return axios.get(`/api/items/filters?cat=${category}`)
+  }
 }
 
 const itemService = new ItemService()

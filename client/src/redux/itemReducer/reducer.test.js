@@ -1,5 +1,5 @@
 import reducer, {initialState as reducerState} from './itemReducer'
-import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, LOAD_CATEGORY_SUCCESS, LOAD_ITEM_SUCCESS } from './types'
+import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, LOAD_CATEGORY_SUCCESS, LOAD_ITEM_SUCCESS, FETCH_FILTERS_SUCCESS } from './types'
 
 
 describe('test with random action', () => {
@@ -63,6 +63,20 @@ describe('test LOAD_ITEM_SUCCESS action', () => {
       {type: LOAD_ITEM_SUCCESS, payload: 'iData'})).toEqual({
         ...reducerState,
         itemData: 'iData',
+      })
+  })
+})
+
+describe('test FETCH_FILTERS_SUCCESS action', () => {
+  it('should set filters', () => {
+    const initialState = {
+      ...reducerState,
+      filters: [],
+    }
+    expect(reducer(initialState, 
+      {type: FETCH_FILTERS_SUCCESS, payload: 'fields'})).toEqual({
+        ...reducerState,
+        filters: 'fields',
       })
   })
 })
