@@ -19,13 +19,11 @@ describe('test connected component', () => {
   let wrapper
   beforeAll(() => {
     const mockStore = configMockStore()
-    const state = {items: {categoryData: 'data'}, auth: {userType: 'testType'}}
+    const state = {auth: {userType: 'testType'}}
     const store = mockStore(state)
     wrapper = shallow(<ConnectedItems store={store} />).find('withRouter(Items)')
   })
   test('component should receive props from connect function', () => {
-    expect(wrapper.prop('categoryData')).toBe('data')
     expect(wrapper.prop('userType')).toBe('testType')
-    expect(wrapper.prop('getCategory')).toBeInstanceOf(Function)
   })
 })

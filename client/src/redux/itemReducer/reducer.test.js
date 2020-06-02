@@ -68,15 +68,16 @@ describe('test LOAD_ITEM_SUCCESS action', () => {
 })
 
 describe('test FETCH_FILTERS_SUCCESS action', () => {
-  it('should set filters', () => {
+  it('should set filters and category data', () => {
     const initialState = {
       ...reducerState,
       filters: [],
     }
     expect(reducer(initialState, 
-      {type: FETCH_FILTERS_SUCCESS, payload: 'fields'})).toEqual({
+      {type: FETCH_FILTERS_SUCCESS, payload: {filters: 'filters', categoryData: 'itemsArray'}})).toEqual({
         ...reducerState,
-        filters: 'fields',
+        filters: 'filters',
+        categoryData: 'itemsArray'
       })
   })
 })

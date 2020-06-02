@@ -1,22 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategory } from 'src/redux/dataFetchSaga/actions'
-import Spinner from 'src/components/Spinner';
+//import Spinner from 'src/components/Spinner';
 import ItemPreview from '../ItemPreview';
 import useUserType from 'src/hooks/useUserType'
 
-export const Items = ({header, history, getCategory, match, categoryData, userType}) => {
+export const Items = ({header, history, categoryData, userType}) => {
 
   const {isAdmin} = useUserType(userType)
-
-  useEffect(() => {
-    getCategory(match.params.name)
-
-    // eslint-disable-next-line
-  }, [])
-
-  if(!categoryData) return <Spinner />
 
   return (
     <>
@@ -33,8 +24,8 @@ export const Items = ({header, history, getCategory, match, categoryData, userTy
   );
 };
 
-const mapStateToProps = ({items: {categoryData}, auth: {userType}}) => ({
-  categoryData, userType
+const mapStateToProps = ({auth: {userType}}) => ({
+  userType
 })
 
-export default connect(mapStateToProps, {getCategory})(withRouter(Items));
+export default connect(mapStateToProps)(withRouter(Items));

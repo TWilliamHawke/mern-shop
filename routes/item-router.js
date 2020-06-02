@@ -56,7 +56,24 @@ router.get('/template', checkAdmin, async(req, res) => {
 
 router.get('/items', async (req, res) => {
   try {
-    const items = await Item.find({catName: req.query.cat})
+    const {cat, min, max, brands, filters} = req.query
+
+    const querry = {
+      category: cat,
+      price: {$lte: max, $gte: min},
+    }
+    if(brands) {
+      querry.brand = {$in: brands.split(',')}
+    }
+    if(filters) {
+      const splitFilters = filters.split(';')
+        .map(f => f.split(',').map(f => ({filters: f})))
+        .map(fArray => ({$or: fArray}))
+
+        querry.$and = splitFilters
+    }
+    
+    const items = await Item.find(querry)
 
     res.json(items)
   } catch(e) {
@@ -210,9 +227,10 @@ try {
 
 router.get('/filters', async(req, res) => {
   try {
-    const [filters, category] = await Promise.all([
+    const [filters, category, categoryData] = await Promise.all([
       Filter.find({catName: req.query.cat}),
-      Category.findOne({path: req.query.cat}).then(cat => cat.populate('fields').execPopulate())
+      Category.findOne({path: req.query.cat}).then(cat => cat.populate('fields').execPopulate()),
+      Item.find({catName: req.query.cat}),
     ])
 
     const fields = category.fields.map(field => ({
@@ -222,7 +240,7 @@ router.get('/filters', async(req, res) => {
 
     category._doc.fields = fields
 
-    res.json(category)
+    res.json({filters: category, categoryData})
     
   } catch(e) {
     console.log(e)

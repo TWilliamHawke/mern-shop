@@ -13,7 +13,6 @@ describe('test connected component', () => {
     wrapper = shallow(<ConnectedFilter store={store} />).find('Filter')
   })
   test('component should receive props from connect function', () => {
-    expect(wrapper.prop('getFilters')).toBeInstanceOf(Function)
-    expect(wrapper.prop('filters')).toBe('filtersData')
+    expect(wrapper.prop('getCategory')).toBeInstanceOf(Function)
   })
 })

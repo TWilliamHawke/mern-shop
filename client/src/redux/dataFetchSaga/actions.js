@@ -1,5 +1,5 @@
 import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL, MAKE_ORDER, GET_ALL_ORDERS, GET_MY_ORDERS, CANCEL_ORDER, GET_FILTERS } from "./types";
-import { tfItemData } from "../../utils/actionHelpers";
+import { tfItemData, tfFilterToString } from "../../utils/actionHelpers";
 
 
 export const loadImage = (payload) => ({
@@ -33,9 +33,12 @@ export const addItem = (data) => {
   }
 }
 
-export const getCategory = (payload) => ({
-  type: GET_CATEGORY, payload
-})
+export const getCategory = (data) => {
+  const payload = tfFilterToString(data)
+  return {
+    type: GET_CATEGORY, payload
+  }
+}
 
 export const getItem = (payload) => ({
   type: GET_ITEM, payload

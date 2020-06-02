@@ -1,7 +1,10 @@
 import { loadImage, saveTemplate, loadTemplate, editField, addField, getFields, addItem, getCategory, getItem, editItem, addToCart, getCart, removeAll, removeOne, makeOrder, getAllOrders, getMyOrders, getFilters, cancelOrder } from "./actions"
 import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL, MAKE_ORDER, GET_ALL_ORDERS, GET_MY_ORDERS, CANCEL_ORDER, GET_FILTERS } from "./types"
 
-jest.mock('../../utils/actionHelpers.js', () => ({tfItemData: jest.fn(() => 'TransformedItemData')}))
+jest.mock('../../utils/actionHelpers.js', () => ({
+  tfItemData: jest.fn(() => 'TransformedItemData'),
+  tfFilterToString: jest.fn(() => 'TransformedString')
+}))
 
 describe('test itemSaga actions', () => {
   it('should return LOAD_IMAGE type', () => {
@@ -37,7 +40,7 @@ describe('test itemSaga actions', () => {
   })
 
   it('should return GET_CATEGORY type', () => {
-    expect(getCategory('name')).toEqual({ type: GET_CATEGORY, payload: 'name' })
+    expect(getCategory('name')).toEqual({ type: GET_CATEGORY, payload: 'TransformedString' })
   })
 
   it('should return GET_ITEM type', () => {

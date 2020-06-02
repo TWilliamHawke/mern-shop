@@ -28,9 +28,10 @@ const handlers = {
     ...state,
     itemData: payload
   }),
-  [FETCH_FILTERS_SUCCESS]: (state, payload) => ({
+  [FETCH_FILTERS_SUCCESS]: (state, {filters, categoryData}) => ({
     ...state,
-    filters: payload
+    filters,
+    categoryData,
   })
 }
 

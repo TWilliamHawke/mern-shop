@@ -10,8 +10,8 @@ class ItemService{
     return axios.get(`/api/items/template?cat=${cat}${itemUrl}`, {headers: {authorization: token}})
   }
 
-  fetchCategory = (category) => {
-    return axios.get(`/api/items/items?cat=${category}`)
+  fetchCategory = (string) => {
+    return axios.get(`/api/items/items?${string}`)
   }
 
   fetchItem = (id) => {
