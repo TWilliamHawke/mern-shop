@@ -1,4 +1,4 @@
-import { FETCH_DATA_REQUEST, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE, CLEAR_GLOBAL_ERRORS } from "./types"
+import { FETCH_DATA_REQUEST, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE, CLEAR_GLOBAL_ERRORS, FETCH_POPULAR_SUCCESS } from "./types"
 
 
 export const initialState = {
@@ -8,13 +8,14 @@ export const initialState = {
     cpu: 'CPU',
     motherboards: 'Motherboards',
     graphic: 'Graphic Cards',
-    coolings: 'CPU Cooling',
+    // coolings: 'CPU Cooling',
     memory: 'Memory',
     storage: 'Storage',
     cases: 'Cases',
-    fans: 'Case Fans',
+    // fans: 'Case Fans',
     power: 'Power Supplies',
-  }
+  },
+  popular: []
 }
 
 const handlers = {
@@ -36,6 +37,10 @@ const handlers = {
   [CLEAR_GLOBAL_ERRORS]: state => ({
     ...state,
     errors: []
+  }),
+  [FETCH_POPULAR_SUCCESS]: (state, payload) => ({
+    ...state,
+    popular: payload
   })
 }
 

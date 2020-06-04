@@ -1,4 +1,4 @@
-import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL, MAKE_ORDER, GET_ALL_ORDERS, GET_MY_ORDERS, CANCEL_ORDER, GET_FILTERS } from "./types";
+import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, GET_FIELDS, ADD_FIELD, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL, MAKE_ORDER, GET_ALL_ORDERS, GET_MY_ORDERS, CANCEL_ORDER, GET_FILTERS, ADD_POPULAR, REMOVE_POPULAR, GET_POPULAR } from "./types";
 import { tfItemData, tfFilterToString } from "../../utils/actionHelpers";
 
 
@@ -85,4 +85,16 @@ export const cancelOrder = payload => ({
 
 export const getFilters = payload => ({
   type: GET_FILTERS, payload
+})
+
+export const addPopular = payload => ({
+  type: ADD_POPULAR, payload
+})
+
+export const removePoupular = payload => ({
+  type: REMOVE_POPULAR, payload
+})
+
+export const getPopular = () => ({
+  type: GET_POPULAR
 })

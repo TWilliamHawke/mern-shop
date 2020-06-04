@@ -11,7 +11,7 @@ const ImageSchema = new Schema({
   }
 })
 
-ImageSchema.statics.setLink = async function(id) {
+ImageSchema.statics.setLink = async function(id, title) {
   if(!id) return false      
   const image = await this.findById(id)
   if(!image) return true
@@ -33,7 +33,7 @@ ImageSchema.statics.changeLink = async function(oldImg, newImg, title) {
     await this.deleteOne({linkedTo: title})
   }
 
-  return this.setLink(newImg)
+  return this.setLink(newImg, title)
 
   // const image = await Image.findById(newImg)
   // if(!image) return true

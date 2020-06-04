@@ -127,7 +127,7 @@ router.post('/add', checkAdmin, [
 
     const [filters, imageErr] = await Promise.all([
       Filter.createFilters(other, catName),
-      Image.setLink(imageId),
+      Image.setLink(imageId, title),
       Category.setMinMax(catName, req.body.price),
     ])
     
@@ -168,30 +168,10 @@ try {
 
   const {title, imageId, other, oldImg, id, catName, ...values} = req.body
 
-  const item = await Item.findOne({title})
+  const item = await Item.findById(id)
   if(item._id != id) {
     return res.status(403).json({message: 'Item with this title already exists'})
   }
-
-  // if(oldImg) { //delete old image if exist, set new image
-  //   if(oldImg !== 'images/no-image.png') {
-  //     const oldImage = await Image.findOne({linkedTo: title})
-  //     if(!oldImage) return res.status(403).json({message: 'Old image not found'})
-  //     const oldFile = oldImage.imageUrl.split('\\')[1]
-  //     await fs.unlink(`images/${oldFile}`, err => {
-  //       if(err) throw err
-  //     })
-  //     await Image.deleteOne({linkedTo: title})
-  //   }
-
-  //   const image = await Image.findById(imageId)
-  //   if(!image) return res.status(403).json({message: 'New image not found'})
-  //   image.linkedTo = title
-  //   await image.save()
-  // }
-
-
-  // const filters = await Filter.createFilters(other, catName)
 
   const [filters, imageErr] = await Promise.all([
     Filter.createFilters(other, catName),
@@ -200,8 +180,6 @@ try {
   ])
   
   if(imageErr) return res.status(500).json({message: 'Server error: Image not found'})
-
-
 
   const newItemData = {
     title,
@@ -216,7 +194,6 @@ try {
   }
 
   await item.save()
-
 
   res.json('ok')
 } catch(e) {
@@ -242,6 +219,48 @@ router.get('/filters', async(req, res) => {
 
     res.json({filters: category, categoryData})
     
+  } catch(e) {
+    console.log(e)
+    res.status(500).json({message: 'Server error'})
+  }
+})
+
+router.put('/addpopular', checkAdmin, async(req, res) => {
+  try {
+    const item = await Item.findById(req.body.id)
+    if(!item) return res.status(500).json({message: 'Server error: Item not found'})
+
+    item.popular = true
+    await item.save()
+
+    const fullItem = await item.populate('other.field').execPopulate()
+    res.json(fullItem)
+  } catch(e) {
+    console.log(e)
+    res.status(500).json({message: 'Server error'})
+  }
+})
+
+router.put('/removepopular', checkAdmin, async(req, res) => {
+  try {
+    const item = await Item.findById(req.body.id)
+    if(!item) return res.status(500).json({message: 'Server error: Item not found'})
+
+    item.popular = false
+    await item.save()
+
+    const fullItem = await item.populate('other.field').execPopulate()
+    res.json(fullItem)
+  } catch(e) {
+    console.log(e)
+    res.status(500).json({message: 'Server error'})
+  }
+})
+
+router.get('/popular', async(req, res) => {
+  try {
+    const popular = await Item.find({popular: true})
+    res.json(popular)
   } catch(e) {
     console.log(e)
     res.status(500).json({message: 'Server error'})

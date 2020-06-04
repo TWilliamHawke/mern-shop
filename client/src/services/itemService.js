@@ -29,6 +29,16 @@ class ItemService{
   fetchFilters = (category) => {
     return axios.get(`/api/items/filters?cat=${category}`)
   }
+
+  addPopular = (token, data) => {
+    return axios.put('/api/items/addpopular', {id: data}, {headers: {authorization: token}})
+  }
+  removePoupular = (token, data) => {
+    return axios.put('/api/items/removepopular', {id: data}, {headers: {authorization: token}})   
+  }
+  getPopular = () => {
+    return axios.get('/api/items/popular')
+  }
 }
 
 const itemService = new ItemService()

@@ -3,11 +3,14 @@
   margin-top: 20px;
   &-image {
     width: 50%;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
   }
   img {
-    width: 50%;
     max-width: 400px;
+    max-height: 400px;
   }
   &-info {
     text-align: left;
@@ -40,5 +43,8 @@
   &-price {
     font-weight: 700;
     font-size: 24px;
+  }
+  &-btn {
+    margin-left: 30px;
   }
 }

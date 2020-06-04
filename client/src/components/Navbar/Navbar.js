@@ -21,7 +21,7 @@ export const Navbar = ({userType, logout, cart}) => {
 
   return (
     <div className="navbar">
-      <ul>
+      <ul className='container'>
         <li><NavLink exact to='/'>Home</NavLink></li>
         {links.map(({show, link, text}) => {
           if(!show) return null

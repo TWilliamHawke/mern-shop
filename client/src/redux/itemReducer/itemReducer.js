@@ -1,4 +1,4 @@
-import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, LOAD_CATEGORY_SUCCESS, LOAD_ITEM_SUCCESS, FETCH_FILTERS_SUCCESS, } from "./types"
+import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, LOAD_CATEGORY_SUCCESS, LOAD_ITEM_SUCCESS, FETCH_FILTERS_SUCCESS, CLEAR_FILTERS, CLEAR_ITEMDATA, } from "./types"
 
 export const initialState = {
   loading: false,
@@ -32,6 +32,15 @@ const handlers = {
     ...state,
     filters,
     categoryData,
+  }),
+  [CLEAR_FILTERS]: (state) => ({
+    ...state,
+    categoryData: null,
+    filters: null
+  }),
+  [CLEAR_ITEMDATA]: state => ({
+    ...state,
+    itemData: null
   })
 }
 

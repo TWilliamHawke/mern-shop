@@ -9,6 +9,7 @@ const ItemSchema = new Schema({
   image: String,
   brand: String,
   rating: Number,
+  popular: {type: Boolean, default: false},
   filters: [
     { type: Types.ObjectId, ref: 'Filter' }
   ],

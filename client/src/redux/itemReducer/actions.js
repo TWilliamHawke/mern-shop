@@ -1,4 +1,4 @@
-import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, LOAD_CATEGORY_SUCCESS, LOAD_ITEM_SUCCESS, SET_FILTERS, FETCH_FILTERS_SUCCESS } from "./types"
+import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, LOAD_CATEGORY_SUCCESS, LOAD_ITEM_SUCCESS, SET_FILTERS, FETCH_FILTERS_SUCCESS, CLEAR_FILTERS, CLEAR_ITEMDATA } from "./types"
 
 export const fetchItemRequest = () => ({
   type: FETCH_ITEM_REQUEST
@@ -23,4 +23,12 @@ export const fetchFiltersSuccess = payload => ({
 
 export const setFilters = payload => ({
   type: SET_FILTERS, payload
+})
+
+export const clearFilters = () => ({
+  type: CLEAR_FILTERS
+})
+
+export const clearItemData = () => ({
+  type: CLEAR_ITEMDATA
 })
