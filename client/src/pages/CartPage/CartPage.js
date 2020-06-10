@@ -16,8 +16,8 @@ export const CartPage = ({getCart, cart}) => {
   if(!cart) return <Spinner />
 
   return (
-    <div className='full-page'>
-      <h2>CartPage</h2>
+    <div className='full-page cart-page'>
+      <h2>Your Cart</h2>
       {cart.length ? <CartTable cart={cart} /> : <p>Cart is Empty</p>}
     </div>
   );

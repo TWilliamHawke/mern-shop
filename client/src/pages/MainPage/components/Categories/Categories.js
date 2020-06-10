@@ -1,11 +1,11 @@
 import React from 'react';
 import './categories.scss'
-import useUserType from 'src/hooks/useUserType'
+// import useUserType from 'src/hooks/useUserType'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export const Categories = ({userType, categories}) => {
-  const {isUser} = useUserType(userType)
+  // const {isUser} = useUserType(userType)
 
   return (
     <>
@@ -21,7 +21,7 @@ export const Categories = ({userType, categories}) => {
           )
         })}
       </ul>
-      {isUser && <button className='custom-config'>Custom Config</button>}
+      {/* {isUser && <button className='custom-config'>Custom Config</button>} */}
     </>
   );
 };

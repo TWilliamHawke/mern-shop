@@ -13,8 +13,8 @@ describe('test Categories component', () => {
       </MemoryRouter>
     )
   })
-  it('should render button', () => {
-    expect(wrapper.find('button').text()).toBe('Custom Config')
+  it('should render header', () => {
+    expect(wrapper.find('h3').text()).toBe('Categories')
   })
 })
 

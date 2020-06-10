@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 export const LoginPage = ({loginUser}) => {
   return (
-    <div>
+    <div className='auth-page'>
       <h2>Login</h2>
       <AuthForm buttonName='Login' fetchForm={loginUser} />
     </div>

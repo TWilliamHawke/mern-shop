@@ -79,7 +79,9 @@ export const AddItem = ({loadTemplate, match, category, imageUrl, editItem,
 
   return (
     <>
+    <div className='add-item-wrapper'>
       <PathLinks itemTitle={oldItemData?.title} action={oldItemData ? 'Edit' : 'Add Item'} />
+    </div>
       <form className='add-item-form' onSubmit={saveItemHandler}>
         <DefaultFields title={category.name} brands={category.brands} setInputValues={inputHandler} inputValues={itemData} />
         <CustomFields oldItemData={oldItemData?.other} imputValues={customData} setItemData={setCustomData} data={category} />

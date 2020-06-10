@@ -1,10 +1,16 @@
 $success-bg: rgba(93, 158, 102, 0.247);
 $success-font: rgb(6, 121, 25);
 
+.auth-page {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
 .auth-form {
   width: 400px;
   margin: 0 auto;
   text-align: left;
+  padding-bottom: 50px;
   &__radio {
     margin: 10px auto;
     text-align: center;
