@@ -10,10 +10,10 @@ import ItemInfo from './components/ItemInfo'
 import './item-page.scss'
 import convertPrice from '../../utils/convertPrice';
 
-export const ItemPage = ({match, getItem, itemData, history, userType, addToCart, loading, addPopular, removePoupular, clearItemData}) => {
+export const ItemPage = ({match, getItem, itemData, history, addToCart, loading, addPopular, removePoupular, clearItemData}) => {
 
   // const catName = categories[match?.params.name]
-  const {isAdmin, isGuest} = useUserType(userType)
+  const {isAdmin, isGuest} = useUserType()
   
 
   useEffect(() => {
@@ -72,8 +72,8 @@ export const ItemPage = ({match, getItem, itemData, history, userType, addToCart
   );
 };
 
-const mapStateToProps = ({items: {itemData}, auth: {userType}, global: {loading}}) => ({
-  itemData, userType, loading
+const mapStateToProps = ({items: {itemData}, global: {loading}}) => ({
+  itemData, loading
 })
 
 export default connect(mapStateToProps, {getItem, addToCart, addPopular, removePoupular, clearItemData})(withRouter(ItemPage));

@@ -3,6 +3,7 @@ import configMockStore from 'redux-mock-store'
 import { shallow } from 'enzyme'
 import ConnectedItemPage, { ItemPage } from './ItemPage';
 
+jest.mock('src/hooks/useUserType.js')
 
 describe('test dumb component', () => {
   let wrapper
@@ -18,7 +19,7 @@ describe('test connected component', () => {
   let wrapper
   beforeAll(() => {
     const mockStore = configMockStore()
-    const state = {items: {itemData: 'testData'}, auth: {userType: 'random'}, global: {loading: 'load'}}
+    const state = {items: {itemData: 'testData'}, global: {loading: 'load'}}
     const store = mockStore(state)
     wrapper = shallow(<ConnectedItemPage store={store} />).find('withRouter(ItemPage)')
   })
@@ -27,6 +28,5 @@ describe('test connected component', () => {
     expect(wrapper.prop('addToCart')).toBeInstanceOf(Function)
     expect(wrapper.prop('itemData')).toBe('testData')
     expect(wrapper.prop('loading')).toBe('load')
-    expect(wrapper.prop('userType')).toBe('random')
   })
 })

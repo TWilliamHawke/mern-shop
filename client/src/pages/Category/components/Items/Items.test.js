@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import ConnectedItems, { Items } from './Items';
-import configMockStore from 'redux-mock-store'
+import { Items } from './Items';
 
+jest.mock('src/hooks/useUserType.js')
 
 
 describe('test dumb component', () => {
@@ -12,18 +12,5 @@ describe('test dumb component', () => {
   })
   test('text', () => {
     expect(wrapper.find('h2').text()).toBe('test')
-  })
-})
-
-describe('test connected component', () => {
-  let wrapper
-  beforeAll(() => {
-    const mockStore = configMockStore()
-    const state = {auth: {userType: 'testType'}}
-    const store = mockStore(state)
-    wrapper = shallow(<ConnectedItems store={store} />).find('withRouter(Items)')
-  })
-  test('component should receive props from connect function', () => {
-    expect(wrapper.prop('userType')).toBe('testType')
   })
 })

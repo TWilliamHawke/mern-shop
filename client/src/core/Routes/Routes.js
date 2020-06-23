@@ -1,27 +1,25 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { connect } from 'react-redux'
 
 import ProtectedRoute from 'src/components/ProtectedRoute'
 import MainPage from 'src/pages/MainPage'
 import LoginPage from 'src/pages/LoginPage'
 import SignInPage from 'src/pages/SignInPage'
 import CartPage from 'src/pages/CartPage'
-import useUserType from '../../hooks/useUserType'
-import { checkUserType } from '../../redux/authSaga/actions'
-import Category from '../../pages/Category/Category'
-import AddItem from '../../pages/AddItem'
-import EditCategory from '../../pages/EditCategory/EditCategory'
-import Spinner from '../../components/Spinner'
-import ItemPage from '../../pages/ItemPage'
-import OrderPage from '../../pages/OrderPage'
+import useUserType from 'src/hooks/useUserType'
+import Category from 'src/pages/Category/Category'
+import AddItem from 'src/pages/AddItem'
+import EditCategory from 'src/pages/EditCategory/EditCategory'
+import Spinner from 'src/components/Spinner'
+import ItemPage from 'src/pages/ItemPage'
+import OrderPage from 'src/pages/OrderPage'
+import { useUserTypeChecker } from 'src/hooks/useUserTypeChecker'
 
-export const Routes = ({userType, checkUserType}) => {
-  const {isGuest, isUser, isAdmin} = useUserType(userType)
+
+export const Routes = () => {
+  const {isGuest, isUser, isAdmin} = useUserType()
   
-  useEffect(() => {
-    checkUserType()
-  }, [checkUserType])
+  const userType = useUserTypeChecker()
 
   if(!userType) return <Spinner />
 
@@ -43,12 +41,5 @@ export const Routes = ({userType, checkUserType}) => {
   )
 }
 
-const mapStatetoProps = ({auth: {userType}}) => ({
-  userType
-})
 
-const mapDispathtoProps = {
-  checkUserType
-}
-
-export default connect(mapStatetoProps, mapDispathtoProps)(Routes)
+export default Routes

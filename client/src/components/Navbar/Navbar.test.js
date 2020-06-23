@@ -3,6 +3,7 @@ import ConnectedNavbar, { Navbar } from './Navbar';
 import {shallow} from 'enzyme'
 import configMockStore from 'redux-mock-store'
 
+jest.mock('src/hooks/useUserType.js')
 
 describe('test dumb component', () => {
   let wrapper
@@ -23,7 +24,6 @@ describe('test connected component', () => {
     wrapper = shallow(<ConnectedNavbar store={store} />).find('Navbar')
   })
   test('component should receive props from connect function', () => {
-    expect(wrapper.prop('userType')).toBe('testType')
     expect(wrapper.prop('cart')).toBe('count')
     expect(wrapper.prop('logout')).toBeInstanceOf(Function)
   })

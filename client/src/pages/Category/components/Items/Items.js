@@ -1,13 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 //import Spinner from 'src/components/Spinner';
 import ItemPreview from '../ItemPreview';
 import useUserType from 'src/hooks/useUserType'
 
-export const Items = ({header, history, categoryData, userType}) => {
+export const Items = ({ header, history, categoryData }) => {
 
-  const {isAdmin} = useUserType(userType)
+  const {isAdmin} = useUserType()
 
   return (
     <>
@@ -24,8 +23,4 @@ export const Items = ({header, history, categoryData, userType}) => {
   );
 };
 
-const mapStateToProps = ({auth: {userType}}) => ({
-  userType
-})
-
-export default connect(mapStateToProps)(withRouter(Items));
+export default withRouter(Items);

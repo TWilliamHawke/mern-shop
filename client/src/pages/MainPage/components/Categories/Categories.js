@@ -4,8 +4,8 @@ import './categories.scss'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-export const Categories = ({userType, categories}) => {
-  // const {isUser} = useUserType(userType)
+export const Categories = ({categories}) => {
+  // const {isUser} = useUserType()
 
   return (
     <>
@@ -26,8 +26,8 @@ export const Categories = ({userType, categories}) => {
   );
 };
 
-const mapStateToProps = ({auth: {userType}, global: {categories}}) => ({
-  userType, categories
+const mapStateToProps = ({global: {categories}}) => ({
+  categories
 })
 
 export default connect(mapStateToProps)(Categories);
