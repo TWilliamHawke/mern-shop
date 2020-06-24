@@ -1,16 +1,14 @@
 import React from 'react';
-import './navbar.scss'
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
+
 import useUserType from '../../hooks/useUserType';
-import { logout } from '../../redux/authSaga/actions'
+import { useNavbarData } from './useNavbarData';
 
+import './navbar.scss'
 
-export const Navbar = ({logout, cart}) => {
-
+export const Navbar = () => {
+  const {logout, cartSize} = useNavbarData()
   const {isGuest, isUser, isAuthorise, isAdmin} = useUserType()
-
-  const cartSize = cart ? cart.reduce((sum, {count}) => sum + count, 0) : 0
 
   const links = [
     {link: '/cart', text: cartSize ? `Cart(${cartSize})` : 'Cart', show: isUser},
@@ -36,12 +34,4 @@ export const Navbar = ({logout, cart}) => {
   );
 };
 
-const mapDispathtoProps = {
-  logout
-}
-
-const mapStatetoProps = ({orders: {cart}}) => ({
-  cart
-})
-
-export default connect(mapStatetoProps, mapDispathtoProps)(Navbar);
+export default Navbar;

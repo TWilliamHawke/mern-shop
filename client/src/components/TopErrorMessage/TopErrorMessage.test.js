@@ -1,29 +1,22 @@
 import React from 'react'
-import ConnectedTopErrorMessage, { TopErrorMessage } from './TopErrorMessage';
+import { TopErrorMessage } from './TopErrorMessage';
 import { shallow } from 'enzyme'
-import configMockStore from 'redux-mock-store'
+
+jest.mock('src/hooks/useErrorsData')
+
+jest.mock('react-router-dom', () => ({
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
+  useLocation: () => 'loc'
+}));
 
 describe('test dumb component', () => {
   let wrapper
   beforeAll(() => {
-    wrapper = shallow(<TopErrorMessage errors={['test']} />)
+    wrapper = shallow(<TopErrorMessage />)
   })
   test('text', () => {
-    expect(wrapper.find('.top-error')).toBeTruthy()
-  })
-})
-
-describe('test connected component', () => {
-  let wrapper
-  beforeAll(() => {
-    const mockStore = configMockStore()
-    const state = {global: {errors: 'array'}}
-    const store = mockStore(state)
-    wrapper = shallow(<ConnectedTopErrorMessage store={store} />).find('withRouter(TopErrorMessage)')
-  })
-  test('component should receive props from connect function', () => {
-    expect(wrapper.prop('errors')).toBe('array')
-    expect(wrapper.prop('clearGlobalErrors')).toBeInstanceOf(Function)
-    
+    expect(wrapper.find('.top-error').exists()).toBeTruthy()
   })
 })
