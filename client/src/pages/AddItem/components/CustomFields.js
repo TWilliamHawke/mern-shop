@@ -20,7 +20,7 @@ const CustomFields = ({history, data, imputValues, setItemData, oldItemData}) =>
     })
   }
 
-
+  console.log(oldItemData)
   useEffect(() => {
     const selectors = data.fields
     const vals = {}
