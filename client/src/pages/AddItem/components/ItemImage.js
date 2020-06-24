@@ -1,18 +1,11 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { loadImage } from 'src/redux/itemSaga/actions'
+import { useItemImage } from '../hooks/useItemImage'
 
 
 
-export const ItemImage = ({imageUrl, loadImage}) => {
+export const ItemImage = () => {
 
-  const imageHandler = e => {
-    const file = e.target.files[0]
-    if(!file) return
-    const formData = new FormData();
-    formData.append('itemImg', file)
-    loadImage(formData)
-  }
+  const {imageHandler, imageUrl} = useItemImage()
 
   return(
     // <div className='item-image-wrapper'>
@@ -26,9 +19,6 @@ export const ItemImage = ({imageUrl, loadImage}) => {
   )
 }
 
-const mapStateToProps = ({template: {imageUrl}}) => ({
-  imageUrl,
-})
 
 
-export default connect(mapStateToProps, {loadImage})(ItemImage)
+export default ItemImage

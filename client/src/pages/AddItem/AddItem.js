@@ -84,7 +84,11 @@ export const AddItem = ({loadTemplate, match, category, imageUrl, editItem,
     </div>
       <form className='add-item-form' onSubmit={saveItemHandler}>
         <DefaultFields title={category.name} brands={category.brands} setInputValues={inputHandler} inputValues={itemData} />
-        <CustomFields oldItemData={oldItemData?.other} imputValues={customData} setItemData={setCustomData} data={category} />
+        <CustomFields
+          oldItemData={oldItemData?.other}
+          imputValues={customData}
+          setItemData={setCustomData}
+          data={category} />
         <button type='submit' className='btn-submit'>Save Item</button>
       </form>
     </>
