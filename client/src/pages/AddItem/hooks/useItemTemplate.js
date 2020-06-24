@@ -52,10 +52,10 @@ export const useItemTemplate = () => {
 
   const inputHandler = e => {
     const {id, value} = e.target
-    setItemData({
-      ...itemData,
+    setItemData(oldData => ({
+      ...oldData,
       [id]: value
-    })
+    }))
   }
 
 

@@ -1,23 +1,19 @@
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { useItemTemplate } from "./useItemTemplate"
 import { addItem, editItem } from 'src/redux/dataFetchSaga/actions'
 
-import { useCustomData } from './useCustomData'
 import { useEffect } from "react"
 
-export const useSaveItemHandler = () => {
+export const useSaveItemHandler = ({customData, itemData, oldItemData}) => {
 
   const params = useParams()
   const dispatch = useDispatch()
-  const { itemData, oldItemData } = useItemTemplate()
-  const { customData } = useCustomData()
   const { category, imageId, imageUrl } = useSelector(store => store.template)
 
+
   useEffect(() => {
-    console.log(customData)
-    console.log(itemData)
-  }, [customData, itemData])
+    // eslint-disable-next-line
+  }, [])
 
   const saveItemHandler = e => {
     e.preventDefault()
@@ -29,12 +25,12 @@ export const useSaveItemHandler = () => {
       category: category._id,
       other: customData
     }
-    // if(!params.item) return dispatch(addItem(data))
-    // data.id = params.item
-    // if(oldItemData.image !== imageUrl) {
-    //   data.oldImg = oldItemData.image
-    // }
-    // dispatch(editItem(data))
+    if(!params.item) return dispatch(addItem(data))
+    data.id = params.item
+    if(oldItemData.image !== imageUrl) {
+      data.oldImg = oldItemData.image
+    }
+    dispatch(editItem(data))
   }
 
   return {saveItemHandler}
