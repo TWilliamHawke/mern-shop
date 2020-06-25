@@ -1,9 +1,10 @@
 import { AUTH_REQUEST, CREATE_USER_SUCCESS, LOGIN_SUCCESS, AUTH_FAILURE, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS, SET_USERTYPE, AuthFetchActionTypes, CREATE_USER_REQUEST } from "./types"
+import { ErrorOutputType, UsertypeType } from "src/types/authDataTypes"
 
 export type AuthState = {
   loading: boolean
-  errors: string[] | string
-  userType: string | null
+  errors: ErrorOutputType
+  userType: UsertypeType
   successMessage: boolean
   allowRedirect: boolean
 }

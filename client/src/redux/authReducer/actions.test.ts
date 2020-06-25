@@ -13,7 +13,7 @@ describe('auth reducer actions test', () => {
   })
 
   it('should return LOGIN_SUCCESS type', () => {
-    expect(loginSuccess('data')).toEqual({type: LOGIN_SUCCESS, payload: 'data'})
+    expect(loginSuccess('guest')).toEqual({type: LOGIN_SUCCESS, payload: 'guest'})
   })
 
   it('should return CREATE_USER_SUCCESS type', () => {
@@ -35,7 +35,7 @@ describe('auth reducer actions test', () => {
   })
 
   it('should return SET_USERTYPE type', () => {
-    expect(setUserType('testType')).toEqual({type: SET_USERTYPE, payload: 'testType'})
+    expect(setUserType('guest')).toEqual({type: SET_USERTYPE, payload: 'guest'})
   })
 
 })

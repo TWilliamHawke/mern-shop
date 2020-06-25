@@ -16,6 +16,8 @@ router.post('/', checkUser, async(req, res) => {
       count
     }))
 
+    console.log(items[0])
+
     const cost = cart.reduce((sum, {item, count}) => sum + item.price * count, 0)
 
     const order = new Order({

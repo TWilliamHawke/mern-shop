@@ -1,6 +1,6 @@
 import React from 'react';
-import convertPrice from '../../../utils/convertPrice';
-import { convertDate } from '../../../utils/convertDate';
+import convertPrice from 'src/utils/convertPrice';
+import { convertDate } from 'src/utils/convertDate';
 
 export const OrderCard = ({data, num, cancelOrder, isAdmin}) => {
 

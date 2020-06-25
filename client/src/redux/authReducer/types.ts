@@ -1,3 +1,5 @@
+import { ErrorOutputType, UsertypeType } from "src/types/authDataTypes"
+
 export const AUTH_REQUEST = 'AUTH_REQUEST'
 export type AuthRequestType = {
   type: typeof AUTH_REQUEST
@@ -17,7 +19,7 @@ export type AuthFailureType = {
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export type LoginSuccessType = {
   type: typeof LOGIN_SUCCESS,
-  payload: string
+  payload: UsertypeType
 }
 
 export const HIDE_SUCCESS_MESSAGE = 'HIDE_SUCCESS_MESSAGE'
@@ -37,18 +39,8 @@ export type CreateUserSuccessType = {
 export const SET_USERTYPE = 'SET_USERTYPE'
 export type SetUsertypeType = {
   type: typeof SET_USERTYPE,
-  payload: string
+  payload: UsertypeType
 }
-
-
-export type ErrorInputType = {
-  data: {
-    errors?: {msg: string}[]
-    message?: string
-  }
-}
-
-export type ErrorOutputType = string[] | string
 
 export type AuthFetchActionTypes = 
   | AuthRequestType

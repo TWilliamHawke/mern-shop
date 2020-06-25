@@ -8,8 +8,8 @@ export const fetchCartSuccess = (payload) => ({
   type: FETCH_CART_SUCCESS, payload
 })
 
-export const madeOrderSuccess = (payload) => ({
-  type: MADE_ORDER_SUCCESS, payload
+export const madeOrderSuccess = () => ({
+  type: MADE_ORDER_SUCCESS
 })
 
 export const fetchOrdersSuccess = (payload) => ({

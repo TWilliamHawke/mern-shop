@@ -13,8 +13,8 @@ class OrdersService {
   removeAll = (token, data) => {
     return axios.delete('/api/cart', {data: {id: data}, headers: {authorization: token}}, )
   }
-  makeOrder = (token, data) => {
-    return axios.post('/api/orders', {cost: data}, {headers: {authorization: token}})
+  makeOrder = (token) => {
+    return axios.post('/api/orders', {cost: ''}, {headers: {authorization: token}})
   }
   fetchAllOrders = (token) => {
     return axios.get('/api/orders/all', {headers: {authorization: token}})

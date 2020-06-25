@@ -3,7 +3,7 @@ import authService from '../../services/authService';
 import { CREATE_USER, LOGIN_USER, CHECK_USERTYPE, LOGOUT } from './types';
 import { authRequest, createUserSuccess, authFailure, loginSuccess, setUserType } from '../authReducer/actions';
 import { logout } from './actions'
-import storage from '../../services/storageServices'
+import storage from 'src/services/storageServices'
 import { fetchCartSuccess } from '../ordersReducer/actions';
 
 export function* createUserRequest({payload}) {

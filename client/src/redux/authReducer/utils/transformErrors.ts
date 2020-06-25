@@ -1,4 +1,4 @@
-import { ErrorInputType, ErrorOutputType } from "../types"
+import { ErrorInputType, ErrorOutputType } from "src/types/authDataTypes"
 
 export const transformErrors = (response: ErrorInputType): ErrorOutputType => {
   let payload = ['Server is not aviable']

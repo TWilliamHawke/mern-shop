@@ -20,5 +20,5 @@ describe('checkUserType action', () => {
 })
 
 it('should return LOGOUT type', () => {
-  expect(logout('testType')).toEqual({type: LOGOUT})
+  expect(logout()).toEqual({type: LOGOUT})
 })

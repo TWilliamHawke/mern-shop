@@ -1,11 +1,12 @@
-import { AUTH_REQUEST, LOGIN_SUCCESS, AUTH_FAILURE, CREATE_USER_SUCCESS, CREATE_USER_REQUEST, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS, SET_USERTYPE, AuthFetchActionTypes, ErrorInputType } from "./types"
+import { AUTH_REQUEST, LOGIN_SUCCESS, AUTH_FAILURE, CREATE_USER_SUCCESS, CREATE_USER_REQUEST, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS, SET_USERTYPE, AuthFetchActionTypes,  } from "./types"
 import { transformErrors } from './utils/transformErrors'
+import { ErrorInputType, UsertypeType } from "src/types/authDataTypes"
 
 export const authRequest = (): AuthFetchActionTypes => {
   return {type: AUTH_REQUEST}
 }
 
-export const loginSuccess = (data: string): AuthFetchActionTypes => {
+export const loginSuccess = (data: UsertypeType): AuthFetchActionTypes => {
   return {type: LOGIN_SUCCESS, payload: data}
 }
 
@@ -30,7 +31,7 @@ export const redirectSuccess = (): AuthFetchActionTypes => {
   return {type: REDIRECT_SUCCESS}
 }
 
-export const setUserType = (payload: string): AuthFetchActionTypes => {
+export const setUserType = (payload: UsertypeType): AuthFetchActionTypes => {
   return {type: SET_USERTYPE, payload}
 }
 
