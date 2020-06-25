@@ -1,12 +1,12 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 //import Spinner from 'src/components/Spinner';
 import ItemPreview from '../ItemPreview';
 import useUserType from 'src/hooks/useUserType'
 
-export const Items = ({ header, history, categoryData }) => {
-
-  const {isAdmin} = useUserType()
+export const Items = ({ header, categoryData }) => {
+  const history = useHistory()
+  const { isAdmin } = useUserType()
 
   return (
     <>
@@ -23,4 +23,4 @@ export const Items = ({ header, history, categoryData }) => {
   );
 };
 
-export default withRouter(Items);
+export default Items;

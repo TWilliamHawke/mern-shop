@@ -5,7 +5,7 @@ import { useCategories } from 'src/hooks/useCategories';
 
 
 const PathLinks = ({action, itemTitle}) => {
-  const {categories, params} = useCategories()
+  const {params, catName} = useCategories()
   const {name, item} = params
 
   return (
@@ -13,11 +13,11 @@ const PathLinks = ({action, itemTitle}) => {
       <NavLink to='/' >Main</NavLink>
       {name && (<>
         <span> &gt; </span>
-        <NavLink to={{pathname:`/catalog/${name}/`, state: categories[name]}} >{categories[name]}</NavLink>
+        <NavLink to={{pathname:`/catalog/${name}/`, state: catName}} >{catName}</NavLink>
       </>)}
       {itemTitle && (<>
         <span> &gt; </span>
-        <NavLink to={{pathname:`/catalog/${name}/${item}/`, state: categories[name]}} >{itemTitle}</NavLink>
+        <NavLink to={{pathname:`/catalog/${name}/${item}/`, state: catName}} >{itemTitle}</NavLink>
       </>)}
       {action && <span> &gt; {action}</span>}
     </div>

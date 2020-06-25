@@ -1,18 +1,23 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import ConnectedOrderCard, { OrderCard } from './OrderCard';
-import configMockStore from 'redux-mock-store'
+import { OrderCard } from './OrderCard';
 
-
-describe('test connected component', () => {
+describe('Order card tests', () => {
   let wrapper
+  const mockAction = jest.fn()
   beforeAll(() => {
-    const mockStore = configMockStore()
-    const state = {}
-    const store = mockStore(state)
-    wrapper = shallow(<ConnectedOrderCard store={store} />).find('OrderCard')
+    wrapper = shallow(<OrderCard data={{items: []}} cancelOrder={mockAction} />)
   })
-  test('component should receive props from connect function', () => {
-    expect(wrapper.prop('cancelOrder')).toBeInstanceOf(Function)
+  
+  it('should render correctly', () => {
+    expect(wrapper.find('.order-card').exists()).toBe(true)
   })
+
+  it('should call action on click', () => {
+    const button = wrapper.find('button')
+    button.simulate('click')
+    expect(button.text()).toBe('Cancel Order')
+    expect(mockAction).toBeCalled()
+  })
+
 })

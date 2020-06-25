@@ -1,7 +1,5 @@
 import React from 'react';
 import convertPrice from '../../../utils/convertPrice';
-import { cancelOrder } from '../../../redux/dataFetchSaga/actions'
-import { connect } from 'react-redux';
 import { convertDate } from '../../../utils/convertDate';
 
 export const OrderCard = ({data, num, cancelOrder, isAdmin}) => {
@@ -9,8 +7,6 @@ export const OrderCard = ({data, num, cancelOrder, isAdmin}) => {
   const cost = convertPrice(data.cost)
   const date = convertDate(data.date)
   
-  console.log(data)
-
   return (
     <div className='order-card'>
       <div className='order-card-list'>
@@ -28,4 +24,4 @@ export const OrderCard = ({data, num, cancelOrder, isAdmin}) => {
   );
 };
 
-export default connect(null, {cancelOrder})(OrderCard);
+export default OrderCard;

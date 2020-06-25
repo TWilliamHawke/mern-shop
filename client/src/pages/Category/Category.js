@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import PathLinks from '../../components/PathLinks/PathLinks';
 import Rows from '../../components/Rows'
 import Filter from './components/Filter/Filter';
@@ -10,10 +9,11 @@ import Spinner from '../../components/Spinner'
 
 import './category.scss'
 import { connect } from 'react-redux';
+import { useCategories } from 'src/hooks/useCategories';
 
-const Category = ({categories, categoryData, filters, getFilters, clearFilters}) => {
-  const {name} = useParams()
-  const header = categories[name]
+const Category = ({ categoryData, filters, getFilters, clearFilters }) => {
+  const { catName, params } = useCategories()
+  const { name } = params
 
   useEffect(() => {
     getFilters(name)
@@ -28,14 +28,14 @@ const Category = ({categories, categoryData, filters, getFilters, clearFilters})
       <PathLinks />
       <Rows
         left={<Filter filters={filters} />}
-        right={<Items header={header} categoryData={categoryData} />}
+        right={<Items header={catName} categoryData={categoryData} />}
        />
     </div>
   );
 };
 
-const mapStateToProps = ({global: {categories}, items: {categoryData, filters}}) => ({
-  categories, categoryData, filters
+const mapStateToProps = ({items: {categoryData, filters}}) => ({
+  categoryData, filters
 })
 
 export default connect(mapStateToProps, {getFilters, clearFilters})(Category);
