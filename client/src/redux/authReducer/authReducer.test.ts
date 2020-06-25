@@ -1,10 +1,10 @@
 import authReducer, {initialState as reducerState} from './authReducer';
 import { authRequest, createUserSuccess, loginSuccess } from './actions';
-import { AUTH_FAILURE, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS, SET_USERTYPE } from './types';
+import { AUTH_FAILURE, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS, SET_USERTYPE, CREATE_USER_REQUEST } from './types';
 
 describe('test with random action', () => {
   it('should return initial state', () => {
-    expect(authReducer(reducerState, {type: 'testType'})).toEqual(reducerState)
+    expect(authReducer(reducerState, {type: CREATE_USER_REQUEST})).toEqual(reducerState)
   })
 })
 

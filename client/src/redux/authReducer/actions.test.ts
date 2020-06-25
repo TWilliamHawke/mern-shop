@@ -1,6 +1,9 @@
 import { authRequest, loginSuccess, authFailure, createUserSuccess, redirectSuccess, hideSuccessMessage, setUserType } from "./actions"
 import { AUTH_REQUEST, LOGIN_SUCCESS, AUTH_FAILURE, CREATE_USER_SUCCESS, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS, SET_USERTYPE } from "./types"
 import { transformErrors } from './utils/transformErrors'
+import { mocked } from 'ts-jest/utils'
+
+const tfMock = mocked(transformErrors, true)
 
 jest.mock('./utils/transformErrors')
 
@@ -18,9 +21,9 @@ describe('auth reducer actions test', () => {
   })
 
   it('should return AUTH_FAILURE type', () => {
-    transformErrors.mockImplementation(() => 'errorsArray')
-    expect(authFailure('errors')).toEqual({type: AUTH_FAILURE, payload: 'errorsArray'})
-    expect(transformErrors).toBeCalledWith('errors')
+    tfMock.mockImplementation(() => 'errorsArray')
+    expect(authFailure({data: {message: 'errors'}})).toEqual({type: AUTH_FAILURE, payload: 'errorsArray'})
+    expect(transformErrors).toBeCalled()
   })
 
   it('should return HIDE_SUCCESS_MESSAGE type', () => {

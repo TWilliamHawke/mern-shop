@@ -69,10 +69,10 @@ module.exports = (env = {}) => {
 
     if(loader) loaders.push(loader)
 
-    return(loaders)
+    return loaders
   }
 
-  const getBabel = () => {
+  const getBabel = (preset) => {
     const settings = [
       {
         loader: 'babel-loader',
@@ -82,59 +82,62 @@ module.exports = (env = {}) => {
         }
       }
     ]
+
     if(isDev) settings.push('eslint-loader')
-    
+    if(preset) settings[0].options.presets.push(preset)
+
     return settings
   }
 
   return {
-    mode: isProd ? "production" : "development",
+    mode: isProd ? 'production' : 'development',
     stats: "errors-warnings",
-    devtool: isDev ? "cheap-module-source-map" : "",
+    devtool: isDev ? 'cheap-module-source-map' : "",
     entry: ["@babel/polyfill", "./src/index.js"],
 
     plugins: getPlugins(),
     optimization: getOptimization(),
 
     output: {
-      filename: setFilename("js"),
-      path: path.resolve(__dirname, "dist"),
+      filename: setFilename('js'),
+      path: path.resolve(__dirname, "dist")
+
     },
 
     resolve: {
+      extensions: [".ts", ".tsx", ".js" ],
       alias: {
         src: path.resolve(__dirname, 'src/')
       }
     },
 
-
     module: {
       rules: [
-        {
-          //styles
+        {//styles
           test: /\.css$/,
-          use: getCssLoader(),
+          use: getCssLoader()
         },
-        {
-          //sacc/cscc
+        {//sacc/cscc
           test: /\.s[ca]ss$/,
-          use: getCssLoader("sass-loader"),
+          use: getCssLoader('sass-loader')
         },
-        {
-          //images
+        {//images
           test: /\.(jpg|png|swg|jpeg|gif|ico)$/,
-          use: getFileLoader("images"),
+          use: getFileLoader('images')
         },
-        {
-          //fonts
+        {//fonts
           test: /\.(ttf|otf|eof|woff|woff2)$/,
-          use: getFileLoader("fonts"),
+          use: getFileLoader("fonts")
         },
-        {
-          //javascript
-          test: /\.js$/,
+        {//javascript
+          test: /\.(js|jsx)$/,
           exclude: /node_modules/,
-          use: getBabel(),
+          use: getBabel()
+        },
+        {//typescript
+          test: /\.(ts|tsx)$/,
+          exclude: /node_modules/,
+          use: getBabel('@babel/preset-typescript')
         },
       ],
     },
@@ -144,9 +147,9 @@ module.exports = (env = {}) => {
       open: true,
       hot: true,
       overlay: true,
-      clientLogLevel: "warn",
+      clientLogLevel: 'warn',
       historyApiFallback: true,
-      proxy: { 
+      proxy: {
         "/api": { target: "http://localhost:5000", secure: false },
         '/images': { target: 'http://localhost:5000', secure: false }
       },

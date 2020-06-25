@@ -1,4 +1,6 @@
-export const transformErrors = (response) => {
+import { ErrorInputType, ErrorOutputType } from "../types"
+
+export const transformErrors = (response: ErrorInputType): ErrorOutputType => {
   let payload = ['Server is not aviable']
   if(!response) return payload
 
