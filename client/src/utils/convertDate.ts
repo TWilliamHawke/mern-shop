@@ -1,6 +1,6 @@
-export const convertDate = date => {
+export const convertDate = (date: Date): string => {
   const d = new Date(date)
-  var options = {
+  const options = {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
