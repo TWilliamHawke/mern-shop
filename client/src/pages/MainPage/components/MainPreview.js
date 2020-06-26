@@ -8,7 +8,7 @@ const MainPreview = ({data, history}) => {
 
   const price = convertPrice(data.price)
   return (
-    <Link to={`catalog/${data.catName}/${data._id}`}>
+    <Link to={`catalog/${data.catName}/${data._id}/`}>
       <div className='main-preview'>
         <div className='main-preview-img'>
           <img src={data.image} alt={data.title} />

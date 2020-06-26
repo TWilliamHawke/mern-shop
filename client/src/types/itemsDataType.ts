@@ -19,7 +19,7 @@ export type CategoryDataType = ItemDataType[]
 export type FiltersType = {
   minValue: number
   maxValue: number
-  fields: FieldType[]
+  fields: FieldType<{value: string, _id: string }>[]
   brands: string[]
   _id: string
   name: string
