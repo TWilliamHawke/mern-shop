@@ -1,3 +1,5 @@
+import { ItemDataType } from "./itemsDataType"
+
 type OrderType = {
   _id: string
   userId: string
@@ -16,10 +18,7 @@ export type OrdersDataType = OrderType[]
 
 type CartItem = {
   id: string
-  item: {
-    title: string
-    price: number
-  }
+  item: ItemDataType
   count: number
 }
 

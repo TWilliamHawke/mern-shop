@@ -1,4 +1,4 @@
-import { FETCH_ITEM_REQUEST, FETCH_ITEM_FAILURE, LOAD_CATEGORY_SUCCESS, LOAD_ITEM_SUCCESS, FETCH_FILTERS_SUCCESS, CLEAR_FILTERS, CLEAR_ITEMDATA, } from "./types"
+import { LOAD_CATEGORY_SUCCESS, LOAD_ITEM_SUCCESS, FETCH_FILTERS_SUCCESS, CLEAR_FILTERS, CLEAR_ITEMDATA, } from "./types"
 
 export const initialState = {
   loading: false,
@@ -10,16 +10,6 @@ export const initialState = {
 
 const handlers = {
   default: state => state,
-  [FETCH_ITEM_REQUEST]: state => ({
-    ...state,
-    loading: true,
-    errors: []
-  }),
-  [FETCH_ITEM_FAILURE]: (state, payload) => ({
-    ...state,
-    loading: false,
-    errors: payload
-  }),
   [LOAD_CATEGORY_SUCCESS]: (state, payload) => ({
     ...state,
     categoryData: payload
