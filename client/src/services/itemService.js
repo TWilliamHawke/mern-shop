@@ -5,7 +5,8 @@ class ItemService{
     return axios.post('/api/items/image', data, {headers: {authorization: token}})
   }
 
-  fetchTemplate = (token, {cat, item}) => {
+  fetchTemplate = (token, data) => {
+    const {cat, item} = data
     const itemUrl = item ? `&item=${item}` : ''
     return axios.get(`/api/items/template?cat=${cat}${itemUrl}`, {headers: {authorization: token}})
   }

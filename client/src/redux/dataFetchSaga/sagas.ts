@@ -11,13 +11,17 @@ import { fetchDataRequest, fetchDataFailure, fetchDataSuccess, fetchPopularSucce
 import { saveTemplateSuccess, loadImageSuccess, loadTemplateSuccess, getFieldsSuccess, clearTemplateData, addItemSuccess } from '../templateReducer/actions'
 import { loadCategorySuccess, loadItemSuccess, fetchFiltersSuccess } from '../itemReducer/actions'
 import { fetchCartSuccess, madeOrderSuccess, fetchOrdersSuccess } from '../ordersReducer/actions'
+import { AnyAction, ActionCreator } from 'redux'
+import { SagaIterator } from 'redux-saga'
 
-export const fetchSaga = (action, service) => {
-  return function* ({payload}) {
+export type Service = (...args: unknown[] ) => Promise<unknown> 
+
+export const fetchSaga = (action: ActionCreator<AnyAction>, service: Service) => {
+  return function* ({payload}: AnyAction): SagaIterator {
     try {
       //set global loading to true
       yield put(fetchDataRequest())
-      const token = yield call(getTokenSaga)
+      const token: string = yield call(getTokenSaga)
       //fetch data from server
       const { data } = yield call(service, token, payload)
       //send data to reducer
@@ -33,8 +37,8 @@ export const fetchSaga = (action, service) => {
   }
 }
 
-export const fetchForAllSaga = (action, service) => {
-  return function* ({payload}) {
+export const fetchForAllSaga = (action: ActionCreator<AnyAction>, service: Service) => {
+  return function* ({payload}: AnyAction): SagaIterator {
     try {
       //set global loading to true
       yield put(fetchDataRequest())
@@ -55,16 +59,18 @@ export const fetchForAllSaga = (action, service) => {
 
 
 
-const takeFetchSaga = (actionType, actionCreator, service) => {
+const takeFetchSaga = (
+  actionType:string, actionCreator:ActionCreator<AnyAction>, service:Service) => {
   return takeEvery(actionType, fetchSaga(actionCreator, service))
 }
 
-const takeFetchForAllSaga = (actionType, actionCreator, service) => {
+const takeFetchForAllSaga = (
+  actionType:string, actionCreator:ActionCreator<AnyAction>, service:Service) => {
   return takeEvery(actionType, fetchForAllSaga(actionCreator, service))
 }
 
 
-export default function* () {
+export default function* (): Generator {
   yield all([
     takeFetchSaga(LOAD_IMAGE, loadImageSuccess, itemService.fetchImg),
     takeFetchSaga(SAVE_TEMPLATE, saveTemplateSuccess, templateSevice.saveTemplate),

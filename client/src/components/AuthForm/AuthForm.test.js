@@ -2,14 +2,14 @@ import React from 'react';
 import { shallow } from 'enzyme'
 import ConnectedAuthForm, { AuthForm } from './AuthForm';
 import configMockStore from 'redux-mock-store'
-import authValidator from '../../utils/authValidation.js';
+import authValidator from '../../utils/authValidation.ts';
 
 jest.mock('react-router-dom', () => ({
   useRouteMatch: jest.fn(() => ({path: '/login'})),
   useHistory: jest.fn(() => ({push: () => {}}))
 }))
 
-jest.mock('../../utils/authValidation.js')
+jest.mock('../../utils/authValidation.ts')
 authValidator.mockImplementation(() => false)
 
 

@@ -6,9 +6,9 @@ import authReducer from './authReducer'
 import templateReducer from './templateReducer/templateReducer'
 import itemReducer from './itemReducer/itemReducer'
 import globalReducer from './globalReducer/globalReducer'
-import rootSaga from './rootSaga'
 import ordersReducer from './ordersReducer/ordersReducer'
 
+import rootSaga from './rootSaga'
 
 const reducer = combineReducers({
   items: itemReducer,
@@ -19,6 +19,9 @@ const reducer = combineReducers({
 })
 
 const sagasMiddleware = createSagas()
+
+export type AppState = ReturnType<typeof reducer>;
+
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(sagasMiddleware)))
 sagasMiddleware.run(rootSaga)

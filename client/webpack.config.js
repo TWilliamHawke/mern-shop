@@ -83,8 +83,8 @@ module.exports = (env = {}) => {
       }
     ]
 
-    if(isDev) settings.push('eslint-loader')
     if(preset) settings[0].options.presets.push(preset)
+    if(isDev) settings.push('eslint-loader')
 
     return settings
   }

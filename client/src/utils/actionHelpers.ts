@@ -1,4 +1,7 @@
-export const transformErrors = (response) => {
+import { ErrorInputType, ErrorOutputType } from "src/types/authDataTypes"
+import { TfItemDataInput, TfItemDataOutput, TfFilterToStringInput } from "src/types/actionHelpersTypes"
+
+export const transformErrors = (response: ErrorInputType): ErrorOutputType => {
   let payload = ['Server is not aviable']
   if(!response) return payload
 
@@ -11,7 +14,11 @@ export const transformErrors = (response) => {
   return payload
 }
 
-export const tfItemData = ({itemTitle, itemPrice, itemDiscount, imageUrl, other, ...values}) => ({
+
+export const tfItemData = ({
+  itemTitle, itemPrice, itemDiscount, imageUrl, other, ...values
+}: TfItemDataInput): TfItemDataOutput => ({
+
   title: itemTitle,
   price: +itemPrice || 0,
   discountPrice: +itemDiscount || 0,
@@ -26,7 +33,7 @@ export const tfFilterToString = ({
   max,
   checkedBrands,
   checkedFilters
-}) => {
+}: TfFilterToStringInput): string => {
   const brands = Object.entries(checkedBrands)
     .filter(brand => brand[1])
     .map(brand => brand[0])

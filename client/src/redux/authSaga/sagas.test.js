@@ -4,6 +4,7 @@ import { authRequest, createUserSuccess, authFailure, setUserType, loginSuccess 
 import authService from '../../services/authService'
 import storage from '../../services/storageServices'
 import { logout } from './actions'
+import { api } from 'src/api'
 
 describe('test user createUserRequest acion', () => {
   const iterator = createUserRequest({payload: 'someData'})
@@ -50,7 +51,7 @@ describe('test loginuser saga', () => {
   })
 
   it('should call servise function', () => {
-    expect(iterator.next().value).toMatchObject(call(authService.login, 'userData'))
+    expect(iterator.next().value).toMatchObject(call(api.auth.login, 'userData'))
   })
 
   it('should set tokens to localstorage', () => {
