@@ -14,9 +14,9 @@ export type ItemDataType = {
   category: string
 }
 
-export type CategoryData = ItemDataType[]
+export type CategoryDataType = ItemDataType[]
 
-export type filtersType = {
+export type FiltersType = {
   minValue: number
   maxValue: number
   fields: FieldType[]
@@ -24,4 +24,9 @@ export type filtersType = {
   _id: string
   name: string
   path: string
+}
+
+export type FetchFiltersType = {
+  filters: FiltersType
+  categoryData: CategoryDataType
 }

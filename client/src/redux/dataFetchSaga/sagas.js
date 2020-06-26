@@ -1,5 +1,5 @@
 import {put, call, all, takeEvery} from 'redux-saga/effects'
-import { transformErrors } from '../../utils/actionHelpers'
+import { transformErrors } from 'src/utils/actionHelpers'
 import { getTokenSaga } from '../authSaga/sagas'
 import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, ADD_FIELD, GET_FIELDS, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL, MAKE_ORDER, GET_MY_ORDERS, GET_ALL_ORDERS, CANCEL_ORDER, GET_FILTERS, ADD_POPULAR, REMOVE_POPULAR, GET_POPULAR } from './types'
 //services
@@ -74,9 +74,11 @@ export default function* () {
     takeFetchSaga(GET_FIELDS, getFieldsSuccess, templateSevice.getFields),
     takeFetchSaga(ADD_ITEM, addItemSuccess, itemService.addItem),
     takeFetchSaga(EDIT_ITEM, addItemSuccess, itemService.editItem),
+
     takeFetchForAllSaga(GET_CATEGORY, loadCategorySuccess, itemService.fetchCategory),
     takeFetchForAllSaga(GET_ITEM, loadItemSuccess, itemService.fetchItem),
     takeFetchForAllSaga(GET_FILTERS, fetchFiltersSuccess, itemService.fetchFilters),
+
     takeFetchSaga(ADD_TO_CART, fetchCartSuccess, ordersService.addToCart),
     takeFetchSaga(GET_CART, fetchCartSuccess, ordersService.fetchCart),
     takeFetchSaga(REMOVE_ONE, fetchCartSuccess, ordersService.removeOne),

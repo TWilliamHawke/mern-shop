@@ -20,7 +20,13 @@ export const tfItemData = ({itemTitle, itemPrice, itemDiscount, imageUrl, other,
   ...values
 })
 
-export const tfFilterToString = ({cat, min, max, checkedBrands, checkedFilters}) => {
+export const tfFilterToString = ({
+  cat,
+  min,
+  max,
+  checkedBrands,
+  checkedFilters
+}) => {
   const brands = Object.entries(checkedBrands)
     .filter(brand => brand[1])
     .map(brand => brand[0])
