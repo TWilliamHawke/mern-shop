@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { ReactNode, FC } from 'react';
 import ErrorBoundary from '../ErrorBoundary'
 import './rows.scss'
 
-const Rows = ({left, right}) => {
+type PropType = {
+  left: ReactNode
+  right: ReactNode
+}
+
+const Rows: FC<PropType> = ({left, right}) => {
   return (
     <div className='row-wrapper'>
       <div className='row-left'>

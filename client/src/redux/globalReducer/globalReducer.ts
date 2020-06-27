@@ -2,7 +2,7 @@ import { FETCH_DATA_REQUEST, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE, CLEAR_GLOBA
 import { ErrorOutputType } from "src/types/authDataTypes"
 import { CategoryDataType } from "src/types/itemsDataType"
 
-const categories = {
+export const categories = {
   cpu: 'CPU',
   motherboards: 'Motherboards',
   graphic: 'Graphic Cards',
@@ -14,10 +14,12 @@ const categories = {
   power: 'Power Supplies',
 }
 
-type GlobalStore = {
+export type CategoriesType = typeof categories
+
+export type GlobalStore = {
   loading: boolean
   errors: ErrorOutputType
-  categories: typeof categories
+  categories: CategoriesType
   popular: CategoryDataType
 }
 

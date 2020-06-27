@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './error-message.scss'
+import { ErrorOutputType } from 'src/types/authDataTypes';
 
+type PropType = {
+  errors: ErrorOutputType
+}
 
-const ErrorMessages = ({errors = []}) => {
+const ErrorMessages: FC<PropType> = ({errors = []}) => {
 
   if(!errors.length) return null
   

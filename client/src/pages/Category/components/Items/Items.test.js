@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Items } from './Items';
 
-jest.mock('src/hooks/useUserType.js')
+jest.mock('src/hooks/useUserType.ts')
 jest.mock('react-router-dom', () => ({
   useHistory: jest.fn()
 }))

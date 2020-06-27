@@ -3,7 +3,7 @@ import configMockStore from 'redux-mock-store'
 import { shallow } from 'enzyme'
 import ConnectedItemPage, { ItemPage } from './ItemPage';
 
-jest.mock('src/hooks/useUserType.js')
+jest.mock('src/hooks/useUserType.ts')
 
 describe('test dumb component', () => {
   let wrapper

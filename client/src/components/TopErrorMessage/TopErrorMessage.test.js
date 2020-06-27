@@ -2,7 +2,7 @@ import React from 'react'
 import { TopErrorMessage } from './TopErrorMessage';
 import { shallow } from 'enzyme'
 
-jest.mock('src/hooks/useErrorsData')
+jest.mock('src/hooks/useErrorsData.ts')
 
 jest.mock('react-router-dom', () => ({
   useHistory: () => ({

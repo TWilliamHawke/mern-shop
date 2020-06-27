@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './top-error-meeesge.scss'
 import ErrorMessages from '../ErrorMessages/ErrorMessages';
 import { useHistory, useLocation } from 'react-router-dom'
 import { useErrorsData } from 'src/hooks/useErrorsData';
 
- export const TopErrorMessage = () => {
+ export const TopErrorMessage: FC = () => {
    const history = useHistory()
    const {errors, clearErrors} = useErrorsData()
    const location = useLocation()

@@ -3,8 +3,8 @@ import { Navbar } from './Navbar';
 import {shallow} from 'enzyme'
 import { mockLogout } from './useNavbarData'
 
-jest.mock('./useNavbarData.js')
-jest.mock('src/hooks/useUserType.js')
+jest.mock('./useNavbarData.ts')
+jest.mock('src/hooks/useUserType.ts')
 
 describe('test dumb component', () => {
   let wrapper

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import useUserType from '../../hooks/useUserType';
@@ -6,7 +6,7 @@ import { useNavbarData } from './useNavbarData';
 
 import './navbar.scss'
 
-export const Navbar = () => {
+export const Navbar: FC = () => {
   const {logout, cartSize} = useNavbarData()
   const {isGuest, isUser, isAuthorise, isAdmin} = useUserType()
 

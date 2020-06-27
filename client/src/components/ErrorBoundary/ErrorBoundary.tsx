@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 
 class ErrorBoundary extends Component {
 
@@ -6,13 +6,13 @@ class ErrorBoundary extends Component {
     hasError: false
   }
 
-  componentDidCatch() {
+  componentDidCatch(): void {
     this.setState({
       hasError: true
     })
   }
 
-  render() {
+  render(): ReactNode {
     const { hasError } = this.state
 
     if(!hasError) return this.props.children

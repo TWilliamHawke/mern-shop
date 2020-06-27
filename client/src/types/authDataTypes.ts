@@ -7,7 +7,7 @@ export type ErrorInputType = {
   }
 }
 
-export type ErrorOutputType = string[] | string
+export type ErrorOutputType = string[]
 
 export type UserDataType = {
   phone: string,

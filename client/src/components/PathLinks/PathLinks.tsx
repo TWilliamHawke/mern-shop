@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { NavLink, } from 'react-router-dom';
 import './path-links.scss'
 import { useCategories } from 'src/hooks/useCategories';
 
+type PropType = {
+  action?: string
+  itemTitle?: string
+}
 
-const PathLinks = ({action, itemTitle}) => {
+
+const PathLinks: FC<PropType> = ({action, itemTitle}) => {
   const {params, catName} = useCategories()
   const {name, item} = params
 
