@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { FieldData } from 'src/types/templateDataType';
 
-const ItemInfo = ({data}) => {
+type PropType = {
+  data: FieldData[]
+}
+
+const ItemInfo: FC<PropType> = ({data}) => {
   return (
     <>
       <h2>Stats</h2>

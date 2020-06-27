@@ -1,9 +1,9 @@
 import { FieldData, FieldType } from "./templateDataType";
 
 export type ItemDataType = {
-  favorite: boolean
+  popular: boolean
   filters: string[]
-  id: string
+  _id: string
   title: string
   other: FieldData[]
   catName: string

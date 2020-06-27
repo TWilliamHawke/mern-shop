@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { FC, MouseEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 import { SingleField } from './SingleField'
+import { CategoryTemplateType } from 'src/types/templateDataType';
 
-const CustomFields = ({ data, inputValues, setItemData }) => {
+type PropTypes = {
+  data: CategoryTemplateType
+  inputValues: Record<string, string>
+  setItemData: React.Dispatch<React.SetStateAction<Record<string, string>>>
+}
+
+const CustomFields: FC<PropTypes> = ({ data, inputValues, setItemData }) => {
   const history = useHistory()
 
-  const gotoEditTemplate = (e) => {
+  const gotoEditTemplate = (e: MouseEvent) => {
     e.preventDefault()
     history.push({
       pathname: 'edit',

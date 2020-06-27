@@ -3,9 +3,9 @@ import { shallow } from 'enzyme'
 import { AddItem } from './AddItem';
 import { saveMock } from './hooks/useSaveItemHandler'
 
-jest.mock('./hooks/useCustomData.js')
-jest.mock('./hooks/useItemTemplate.js')
-jest.mock('./hooks/useSaveItemHandler.js')
+jest.mock('./hooks/useCustomData.ts')
+jest.mock('./hooks/useItemTemplate.ts')
+jest.mock('./hooks/useSaveItemHandler.ts')
 
 
 

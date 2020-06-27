@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { useItemImage } from '../hooks/useItemImage'
 
 
 
-export const ItemImage = () => {
+export const ItemImage: FC = () => {
 
   const {imageHandler, imageUrl} = useItemImage()
 

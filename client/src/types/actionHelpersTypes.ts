@@ -11,12 +11,17 @@ export type TfItemDataOutput = {
 
 export type TfItemDataInput = {
   itemTitle: string;
-  itemPrice: number;
-  itemDiscount: number;
+  itemPrice: string | number;
+  itemDiscount: string | number;
   imageUrl: string;
   other: {
     [key: string]: string
   };
+  oldImg?: string
+  imageId: string | null
+  id?: string
+  category: string
+  catName: string
 }
 
 export type TfFilterToStringInput = {

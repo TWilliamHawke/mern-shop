@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import PathLinks from '../../components/PathLinks'
 import Spinner from '../../components/Spinner'
 import CustomFields from './components/CustomFields';
@@ -10,7 +10,7 @@ import { useSaveItemHandler } from './hooks/useSaveItemHandler';
 
 import './add-item.scss'
  
-export const AddItem = () => {
+export const AddItem: FC = () => {
   const { inputHandler, itemData, oldItemData, category } = useItemTemplate()
   const { customData, setCustomData } = useCustomData(oldItemData?.other)
   const { saveItemHandler } = useSaveItemHandler({customData, itemData, oldItemData})

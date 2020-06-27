@@ -3,11 +3,11 @@ import { Route, Redirect } from 'react-router-dom';
 
 type PropType = {
   access: boolean
-  Component: ComponentType<Record<string, unknown>>
+  component: ComponentType<Record<string, unknown>>
   data: Record<string, unknown>
 }
 
-const ProtectedRoute: FC<PropType> = ({access, Component, data={}, ...rest}) => {
+const ProtectedRoute: FC<PropType> = ({access, component: Component, data={}, ...rest}) => {
 
   return (
     <Route {...rest} render={props => access ?

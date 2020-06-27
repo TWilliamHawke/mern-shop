@@ -1,13 +1,14 @@
 import { ItemDataType } from "./itemsDataType"
 
-export type FieldType<T> = {
+export type FieldCutType<T> = {
   values: T[]
-  _id: string
   fieldName: string
   type: string
   measure: string
   enable?: boolean
 }
+
+export type FieldType<T> = FieldCutType<T> & {_id: string}
 
 export type FieldData = {
   _id: string
