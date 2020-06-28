@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { FC } from 'react';
 import convertPrice from 'src/utils/convertPrice';
-import {addToCart, removeOne, removeAll} from '../../../redux/dataFetchSaga/actions'
-import { connect } from 'react-redux';
+import { useCartActions } from '../hooks/useCartActions';
+import { ItemDataType } from 'src/types/itemsDataType';
 
-const CartRow = ({item, count, addToCart, loading, removeOne, removeAll}) => {
+type PropTypes = {
+  item: ItemDataType,
+  count: number
+  loading: boolean
+}
+
+const CartRow: FC<PropTypes> = ({ item, count, loading }) => {
   const price = convertPrice(item.price * count)
+  const { addToCart, removeAll, removeOne } = useCartActions()
 
   return (
     <tr >
@@ -22,8 +29,4 @@ const CartRow = ({item, count, addToCart, loading, removeOne, removeAll}) => {
   )
 }
 
-const mapDispatchToProps = ({global: {loading}}) => ({
-  loading
-})
-
-export default connect(mapDispatchToProps, {addToCart, removeOne, removeAll})(CartRow);
+export default CartRow;

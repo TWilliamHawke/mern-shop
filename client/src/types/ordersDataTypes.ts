@@ -16,10 +16,10 @@ type OrderType = {
 
 export type OrdersDataType = OrderType[]
 
-type CartItem = {
+export type CartItemType = {
   id: string
   item: ItemDataType
   count: number
 }
 
-export type CartDataType = CartItem[]
+export type CartDataType = CartItemType[]

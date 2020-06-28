@@ -4,12 +4,13 @@ import { addItem, editItem } from 'src/redux/dataFetchSaga/actions'
 import { LocalItemData } from './useItemTemplate'
 import { FormEvent } from 'react'
 
-import { useEffect } from "react"
 import { ItemDataType } from "src/types/itemsDataType"
 import { ParamsType } from "src/types/hookTypes"
 import { AppState } from "src/redux/store"
 import { TemplateStore } from "src/redux/templateReducer/templateReducer"
 import { TfItemDataInput } from "src/types/actionHelpersTypes"
+
+export const saveMock = jest.fn() // for tests
 
 type UseSaveItemHandlerType = (a: {customData: Record<string, string>
   itemData: LocalItemData
@@ -23,11 +24,6 @@ export const useSaveItemHandler: UseSaveItemHandlerType = ({customData, itemData
   const params = useParams<ParamsType>()
   const dispatch = useDispatch()
   const { category, imageId, imageUrl } = useSelector<AppState, TemplateStore>(store => store.template)
-
-
-  useEffect(() => {
-    // eslint-disable-next-line
-  }, [])
 
   const saveItemHandler = (e: FormEvent) => {
     if(!category || !oldItemData) return

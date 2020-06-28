@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, ShallowWrapper } from 'enzyme'
 import { AddItem } from './AddItem';
 import { saveMock } from './hooks/useSaveItemHandler'
 
@@ -10,7 +10,7 @@ jest.mock('./hooks/useSaveItemHandler.ts')
 
 
 describe('test dumb component', () => {
-  let wrapper
+  let wrapper: ShallowWrapper
   beforeAll(() => {
     wrapper = shallow(
       <AddItem />)
