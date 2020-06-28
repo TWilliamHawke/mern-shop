@@ -35,7 +35,7 @@ describe('test AuthInput componnt', () => {
 
     it('should render props correctly', () => {
       const input = wrapper.find('InputElement')
-      expect(input.props().mask).toBeUndefined()
+      expect(input.props().mask).toBe('')
       expect(input.props().value).toBe('testValNoPhone')
     })
   

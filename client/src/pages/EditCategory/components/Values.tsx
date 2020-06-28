@@ -2,7 +2,7 @@ import React, { useState, MouseEvent, FC } from 'react'
 import { newValueValidation } from 'src/utils/addFieldValidation';
 
 type PropTypes = {
-  setValues: React.Dispatch<React.SetStateAction<string[]>>
+  setValues: (t: string[]) => void
   values: string[]
   name: string
 }

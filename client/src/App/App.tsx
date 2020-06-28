@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import "./style.scss";
 import './buttons.scss'
 import Navbar from 'src/components/Navbar/Navbar';
-import {BrowserRouter as Router} from 'react-router-dom'
-import Routes from '../Routes';
+import { BrowserRouter as Router } from 'react-router-dom'
+import { Routes } from '../Routes';
 import { Provider } from 'react-redux'
 import store from 'src/redux/store';
-import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
-import TopErrorMessage from '../../components/TopErrorMessage/TopErrorMessage';
+import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
+import TopErrorMessage from '../components/TopErrorMessage/TopErrorMessage';
 
-const App = () => {
+export const App: FC = () => {
 
   return (
     <Provider store={store}>
@@ -25,5 +25,3 @@ const App = () => {
     </Provider>
   );
 };
-
-export default App;

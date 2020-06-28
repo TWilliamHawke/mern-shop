@@ -93,7 +93,7 @@ module.exports = (env = {}) => {
     mode: isProd ? 'production' : 'development',
     stats: "errors-warnings",
     devtool: isDev ? 'cheap-module-source-map' : "",
-    entry: ["@babel/polyfill", "./src/index.js"],
+    entry: ["@babel/polyfill", "./src/index.tsx"],
 
     plugins: getPlugins(),
     optimization: getOptimization(),

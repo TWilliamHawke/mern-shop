@@ -6,7 +6,7 @@ type PropType = {
   errors: ErrorOutputType
 }
 
-const ErrorMessages: FC<PropType> = ({errors = []}) => {
+export const ErrorMessages: FC<PropType> = ({errors = []}) => {
 
   if(!errors.length) return null
   

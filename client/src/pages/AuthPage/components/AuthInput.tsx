@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { FC, ChangeEvent } from 'react';
 import InputMask from 'react-input-mask'
 
-const AuthInput = ({data, values, onInput}) => {
+type PropTypes = {
+  data: {
+    name: string,
+    label: string
+    type: string
+    hide: boolean
+  }
+  values: Record<string, string>
+  onInput: (e: ChangeEvent<HTMLInputElement>) => void
+}
+
+const AuthInput: FC<PropTypes> = ({data, values, onInput}) => {
   const {name, label, type} = data
-  const mask = name === 'phone' ? "+7(999)-999-99-99" : undefined
+  const mask = name === 'phone' ? "+7(999)-999-99-99" : ''
 
   return (
     <fieldset>
