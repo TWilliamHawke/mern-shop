@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 //import Spinner from 'src/components/Spinner';
 import ItemPreview from '../ItemPreview';
 import useUserType from 'src/hooks/useUserType'
+import { CategoryDataType } from 'src/types/itemsDataType';
+import Spinner from 'src/components/Spinner';
 
-export const Items = ({ header, categoryData }) => {
+type PropTypes = {
+  header: string
+  categoryData: CategoryDataType | null
+}
+
+export const Items: FC<PropTypes> = ({ header, categoryData }) => {
   const history = useHistory()
   const { isAdmin } = useUserType()
+
+  if(!categoryData) return <Spinner />
 
   return (
     <>

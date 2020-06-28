@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import convertPrice from '../../../utils/convertPrice';
+import { ItemDataType } from 'src/types/itemsDataType';
 
-const ItemPreview = ({itemData}) => {
+type PropTypes = {
+  itemData: ItemDataType
+}
+
+const ItemPreview: FC<PropTypes> = ({itemData}) => {
 
   const {image, price, title} = itemData
 

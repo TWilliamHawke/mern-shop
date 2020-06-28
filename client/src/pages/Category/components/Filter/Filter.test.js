@@ -4,15 +4,12 @@ import { shallow } from 'enzyme'
 import configMockStore from 'redux-mock-store'
 
 
-describe('test connected component', () => {
+describe('test dumb component', () => {
   let wrapper
   beforeAll(() => {
-    const mockStore = configMockStore()
-    const state = {items: {filters: 'filtersData'}}
-    const store = mockStore(state)
-    wrapper = shallow(<ConnectedFilter store={store} />).find('Filter')
+    wrapper = shallow(<Filter filters={{brands: [], fields: [{_id: ''}]}} />)
   })
-  test('component should receive props from connect function', () => {
-    expect(wrapper.prop('getCategory')).toBeInstanceOf(Function)
+  test('text', () => {
+    expect(wrapper.find('.filters').exists()).toBeTruthy()
   })
 })

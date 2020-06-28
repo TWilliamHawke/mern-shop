@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './categories.scss'
 // import useUserType from 'src/hooks/useUserType'
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useCategories } from 'src/hooks/useCategories';
 
-export const Categories = ({categories}) => {
-  // const {isUser} = useUserType()
+export const Categories: FC = () => {
+
+  const {categories} = useCategories()
 
   return (
     <>
@@ -26,8 +27,5 @@ export const Categories = ({categories}) => {
   );
 };
 
-const mapStateToProps = ({global: {categories}}) => ({
-  categories
-})
 
-export default connect(mapStateToProps)(Categories);
+export default Categories;

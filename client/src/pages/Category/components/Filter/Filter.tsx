@@ -1,22 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, FC, ChangeEvent } from 'react';
 import './filters.scss'
-import { connect } from 'react-redux';
-import { getCategory } from 'src/redux/dataFetchSaga/actions'
 import FilterField from '../FilterField';
+import { FiltersType } from 'src/types/itemsDataType';
+import { TfFilterToStringInput, CheckedFiltersType } from 'src/types/actionHelpersTypes';
+import { GetCategoryAction } from 'src/redux/dataFetchSaga/types';
 
-export const Filter = ({filters, getCategory}) => {
-  const [checkedFilters, setCheckedFilters] = useState({})
+type PropTypes = {
+  filters: FiltersType
+  getCategory: (d: TfFilterToStringInput) => GetCategoryAction
+}
+
+export const Filter: FC<PropTypes> = ({filters, getCategory}) => {
+  const [checkedFilters, setCheckedFilters] = useState<CheckedFiltersType>({})
   const [minmaxValue, setMinMaxValue] = useState({min: '', max: ''})
-  const [checkedBrands, setCheckedBrands] = useState({})
+  const [checkedBrands, setCheckedBrands] = useState<Record<string, boolean>>({})
 
-  const minValueHandler = e => {
+  const minValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!(e.target instanceof HTMLInputElement)) {
+      return;
+    }
+    const value = e.target.dataset.value || ''
     setMinMaxValue({
       ...minmaxValue,
-      [e.target.dataset.value]: e.target.value
+      [value]: e.target.value
     })
   }
 
-  const brandsHandler = e => {
+  const brandsHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCheckedBrands({
       ...checkedBrands,
       [e.target.id]: e.target.checked
@@ -24,7 +34,7 @@ export const Filter = ({filters, getCategory}) => {
   }
 
   const applyFilters = () => {
-    const data = {
+    const data: TfFilterToStringInput = {
       cat: filters._id,
       min: minmaxValue.min || minValue,
       max: minmaxValue.max || maxValue,
@@ -56,4 +66,4 @@ export const Filter = ({filters, getCategory}) => {
 //   filters
 // })
 
-export default connect(null, {getCategory})(Filter);
+export default Filter;
