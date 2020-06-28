@@ -1,5 +1,5 @@
 export const addFieldValidation = (
-  type: string, values: string, fieldName: string
+  type: string, values: string[], fieldName: string
   ): boolean => {
   if(fieldName.length < 3) return true
   if(type === 'selector' && values.length < 2) return true

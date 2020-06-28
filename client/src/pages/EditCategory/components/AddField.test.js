@@ -1,7 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import configMockStore from 'redux-mock-store'
-import ConnectedAddField, { AddField } from './AddField';
+import { AddField } from './AddField';
+
+jest.mock('react-redux', () => ({
+  useDispatch: () => jest.mock()
+}))
 
 
 describe('test dumb component', () => {
@@ -32,23 +35,9 @@ describe('test component with showform is true', () => {
   it('should render button', () => {
     expect(wrapper.find('form').exists()).toBe(true)
   })
-
+  // eslint-disable-next-line
   // it('should call testHandler onClick', () => {
   //   wrapper.find('.config-btn').simulate('click')
   //   expect(testHandler).toBeCalled()
   // })
-})
-
-describe('test connected component', () => {
-  let wrapper
-  beforeAll(() => {
-    const mockStore = configMockStore()
-    const state = {}
-    const store = mockStore(state)
-    wrapper = shallow(<ConnectedAddField store={store} />).find('AddField')
-  })
-  test('component should receive props from connect function', () => {
-    expect(wrapper.prop('addField')).toBeInstanceOf(Function)
-    expect(wrapper.prop('editField')).toBeInstanceOf(Function)
-  })
 })

@@ -6,6 +6,7 @@ export type FieldCutType<T> = {
   type: string
   measure: string
   enable?: boolean
+  multiple: boolean
 }
 
 export type FieldType<T> = FieldCutType<T> & {_id: string}

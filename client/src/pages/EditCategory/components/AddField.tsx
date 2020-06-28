@@ -1,15 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, FC, FormEvent, MouseEvent, ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
 import { addFieldValidation } from 'src/utils/addFieldValidation';
 import { editField, addField } from 'src/redux/dataFetchSaga/actions'
 import Values from './Values'
+import { FieldType } from 'src/types/templateDataType';
+import { EditFieldData } from 'src/types/fetchDataTypes';
 
-export const AddField = ({showForm, setShowForm, addField, data, editField}) => {
+type PropTypes = {
+  data?: FieldType<string>
+  setShowForm: (a: boolean | string) => void
+  showForm: boolean
+}
+
+export const AddField: FC<PropTypes> = ({showForm, setShowForm, data }) => {
   const [type, setType] = useState('text')
-  const [values, setValues] = useState([])
+  const [values, setValues] = useState<string[]>([])
   const [fieldName, setFieldName] = useState('')
   const [measure, setMeasure] = useState('')
   const [multiple, setMultiple] = useState(false)
+  const dispatch = useDispatch()
   
   const fetchValidation = () => {
     return addFieldValidation(type, values, fieldName)
@@ -27,28 +36,38 @@ export const AddField = ({showForm, setShowForm, addField, data, editField}) => 
     // eslint-disable-next-line
   }, [])
 
-  const submitHandler = e => {
+  const submitHandler = (e: FormEvent) => {
     e.preventDefault()
     if(fetchValidation()) return
-    const fieldData = {
+    const fieldData: EditFieldData = {
       fieldName, type, measure, values, multiple
     }
-    if(!data) return addField(fieldData)
-    fieldData.id = data.id
-    editField(fieldData)  
+    if(!data) return dispatch(addField(fieldData))
+    fieldData.id = data._id
+    dispatch(editField(fieldData))
   }  
 
-  const cancelHandler = e => {//hide form
+  const cancelHandler = (e: MouseEvent) => {//hide form
     e.preventDefault()
     setShowForm(false)
   }  
 
-  const selectorHandle = e => {
+  const selectorHandle = (e: ChangeEvent<HTMLSelectElement>) => {
     setType(e.target.value)
     if(e.target.value !== 'selector') setValues([])
   }
 
-  if(!showForm) return <tr><td colSpan={3}><button onClick={() => setShowForm('new')} className='config-btn'>Add field</button></td></tr>
+  if(!showForm) return (
+  <tr>
+    <td colSpan={3}>
+      <button
+        onClick={() => setShowForm('new')}
+        className='config-btn'>
+        Add field
+      </button>
+    </td>
+  </tr>
+  )
 
   return (
     <tr>
@@ -93,8 +112,4 @@ export const AddField = ({showForm, setShowForm, addField, data, editField}) => 
   );
 };
 
-const mapDispathtoProps = {
-  addField, editField
-}
-
-export default connect(null, mapDispathtoProps)(AddField);
+export default AddField;

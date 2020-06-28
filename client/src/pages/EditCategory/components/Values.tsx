@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, MouseEvent, FC } from 'react'
 import { newValueValidation } from 'src/utils/addFieldValidation';
 
+type PropTypes = {
+  setValues: React.Dispatch<React.SetStateAction<string[]>>
+  values: string[]
+  name: string
+}
 
-const Values = ({values, setValues, name}) => {
+const Values: FC<PropTypes> = ({values, setValues, name}) => {
 
   const [fieldValue, setFieldValue] = useState('')
 
-  const addHandler = e => {
+  const addHandler = (e: MouseEvent) => {
     e.preventDefault()
     const valArray = [...values, fieldValue]
     setValues(valArray)

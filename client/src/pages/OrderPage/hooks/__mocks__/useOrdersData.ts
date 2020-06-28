@@ -1,5 +1,6 @@
 export const mockedCancelOrder = jest.fn()
-export const useOrdersData = (all) => {
+// eslint-disable-next-line
+export const useOrdersData = (all: boolean) => {
   return {
     cancelOrder: mockedCancelOrder,
     orders: []
