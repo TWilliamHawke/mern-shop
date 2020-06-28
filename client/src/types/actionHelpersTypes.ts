@@ -24,17 +24,19 @@ export type TfItemDataInput = {
   catName: string
 }
 
+export type CheckedFiltersType = {
+  [key: string]: {
+    [key: string]: boolean
+  }
+};
+
 export type TfFilterToStringInput = {
   cat: string;
-  min: number;
-  max: number;
+  min: string;
+  max: string;
   checkedBrands: {
     [key: string]: boolean
   };
-  checkedFilters: {
-    [key: string]: {
-      [key: string]: boolean
-    }
-  };
+  checkedFilters: CheckedFiltersType
 }
 

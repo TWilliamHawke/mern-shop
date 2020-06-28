@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import convertPrice from 'src/utils/convertPrice'
 import './mainPreview.scss'
 import { Link } from 'react-router-dom'
+import { ItemDataType } from 'src/types/itemsDataType';
 
+type PropTypes = {
+  data: ItemDataType
+}
 
-const MainPreview = ({data, history}) => {
+const MainPreview: FC<PropTypes> = ({ data }) => {
 
   const price = convertPrice(data.price)
   return (
