@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import OrderCard from './components/OrderCard';
 import { useOrdersData } from './hooks/useOrdersData';
 import './order-page.scss'
 
-export const OrderPage = ({ all }) => {
+type PropTypes = {
+  all: boolean
+}
+
+export const OrderPage: FC<PropTypes> = ({ all }) => {
   const {cancelOrder, orders} = useOrdersData(all)
 
   const text = all ? 'Users' : 'You'

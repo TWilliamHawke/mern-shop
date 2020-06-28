@@ -1,6 +1,6 @@
 import { ItemDataType } from "./itemsDataType"
 
-type OrderType = {
+export type OrderType = {
   _id: string
   userId: string
   login: string

@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { FC } from 'react';
 import convertPrice from 'src/utils/convertPrice';
 import { convertDate } from 'src/utils/convertDate';
+import { OrderType } from 'src/types/ordersDataTypes';
+import { CancelOrderAction } from 'src/redux/dataFetchSaga/types';
 
-export const OrderCard = ({data, num, cancelOrder, isAdmin}) => {
+type PropTypes = {
+  data: OrderType
+  num: number
+  cancelOrder: (id: string) => CancelOrderAction
+  isAdmin: boolean
+}
+
+export const OrderCard: FC<PropTypes> = ({data, num, cancelOrder, isAdmin}) => {
 
   const cost = convertPrice(data.cost)
   const date = convertDate(data.date)

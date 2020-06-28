@@ -7,8 +7,10 @@ const Fields = ({data, addFieldId, setAddField, checkHandle, selectedFields}) =>
     <>
       {data.map(({_id: id, ...otherVal}) => {
         if(addFieldId === id) return <AddField key={id} data={{id, ...otherVal}} showForm={addFieldId === id} setShowForm={setAddField} />
+
         const {fieldName, measure, type, multiple} = otherVal
         const count = type === 'selector' ? multiple ? ' (select few)' : ' (select one)' : ''
+        
         return (
           <tr key={id}>
             <td><label htmlFor={id}>{`${fieldName}${count}${tfMeasure(measure)}`}</label></td>

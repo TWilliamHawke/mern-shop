@@ -10,7 +10,7 @@ import { AppState } from "src/redux/store"
 import { TemplateStore } from "src/redux/templateReducer/templateReducer"
 import { TfItemDataInput } from "src/types/actionHelpersTypes"
 
-export const saveMock = jest.fn() // for tests
+export const saveMock = '' // for tests
 
 type UseSaveItemHandlerType = (a: {customData: Record<string, string>
   itemData: LocalItemData
