@@ -3,9 +3,7 @@ import { transformErrors } from 'src/utils/actionHelpers'
 import { getTokenSaga } from '../authSaga/sagas'
 import { LOAD_IMAGE, SAVE_TEMPLATE, LOAD_TEMPLATE, EDIT_FIELD, ADD_FIELD, GET_FIELDS, ADD_ITEM, GET_CATEGORY, GET_ITEM, EDIT_ITEM, ADD_TO_CART, GET_CART, REMOVE_ONE, REMOVE_ALL, MAKE_ORDER, GET_MY_ORDERS, GET_ALL_ORDERS, CANCEL_ORDER, GET_FILTERS, ADD_POPULAR, REMOVE_POPULAR, GET_POPULAR } from './types'
 //services
-import itemService from '../../services/itemService'
-import templateSevice from '../../services/editTemplateService'
-import ordersService from '../../services/ordersService'
+import { api } from 'src/api'
 //actions
 import { fetchDataRequest, fetchDataFailure, fetchDataSuccess, fetchPopularSuccess } from '../globalReducer/actions'
 import { saveTemplateSuccess, loadImageSuccess, loadTemplateSuccess, getFieldsSuccess, clearTemplateData, addItemSuccess } from '../templateReducer/actions'
@@ -14,7 +12,8 @@ import { fetchCartSuccess, madeOrderSuccess, fetchOrdersSuccess } from '../order
 import { AnyAction, ActionCreator } from 'redux'
 import { SagaIterator } from 'redux-saga'
 
-export type Service = (...args: unknown[] ) => Promise<unknown> 
+// eslint-disable-next-line
+export type Service = (...args: any[] ) => Promise<unknown> 
 
 export const fetchSaga = (action: ActionCreator<AnyAction>, service: Service) => {
   return function* ({payload}: AnyAction): SagaIterator {
@@ -72,29 +71,29 @@ const takeFetchForAllSaga = (
 
 export default function* (): Generator {
   yield all([
-    takeFetchSaga(LOAD_IMAGE, loadImageSuccess, itemService.fetchImg),
-    takeFetchSaga(SAVE_TEMPLATE, saveTemplateSuccess, templateSevice.saveTemplate),
-    takeFetchSaga(LOAD_TEMPLATE, loadTemplateSuccess, itemService.fetchTemplate),
-    takeFetchSaga(EDIT_FIELD, clearTemplateData, templateSevice.editTemplate),
-    takeFetchSaga(ADD_FIELD, clearTemplateData, templateSevice.addField),
-    takeFetchSaga(GET_FIELDS, getFieldsSuccess, templateSevice.getFields),
-    takeFetchSaga(ADD_ITEM, addItemSuccess, itemService.addItem),
-    takeFetchSaga(EDIT_ITEM, addItemSuccess, itemService.editItem),
+    takeFetchSaga(LOAD_IMAGE, loadImageSuccess, api.item.fetchImg),
+    takeFetchSaga(SAVE_TEMPLATE, saveTemplateSuccess, api.template.saveTemplate),
+    takeFetchSaga(LOAD_TEMPLATE, loadTemplateSuccess, api.item.fetchTemplate),
+    takeFetchSaga(EDIT_FIELD, clearTemplateData, api.template.editTemplate),
+    takeFetchSaga(ADD_FIELD, clearTemplateData, api.template.addField),
+    takeFetchSaga(GET_FIELDS, getFieldsSuccess, api.template.getFields),
+    takeFetchSaga(ADD_ITEM, addItemSuccess, api.item.addItem),
+    takeFetchSaga(EDIT_ITEM, addItemSuccess, api.item.editItem),
 
-    takeFetchForAllSaga(GET_CATEGORY, loadCategorySuccess, itemService.fetchCategory),
-    takeFetchForAllSaga(GET_ITEM, loadItemSuccess, itemService.fetchItem),
-    takeFetchForAllSaga(GET_FILTERS, fetchFiltersSuccess, itemService.fetchFilters),
+    takeFetchForAllSaga(GET_CATEGORY, loadCategorySuccess, api.item.fetchCategory),
+    takeFetchForAllSaga(GET_ITEM, loadItemSuccess, api.item.fetchItem),
+    takeFetchForAllSaga(GET_FILTERS, fetchFiltersSuccess, api.item.fetchFilters),
 
-    takeFetchSaga(ADD_TO_CART, fetchCartSuccess, ordersService.addToCart),
-    takeFetchSaga(GET_CART, fetchCartSuccess, ordersService.fetchCart),
-    takeFetchSaga(REMOVE_ONE, fetchCartSuccess, ordersService.removeOne),
-    takeFetchSaga(REMOVE_ALL, fetchCartSuccess, ordersService.removeAll),
-    takeFetchSaga(MAKE_ORDER, madeOrderSuccess, ordersService.makeOrder),
-    takeFetchSaga(GET_MY_ORDERS, fetchOrdersSuccess, ordersService.fetchMyOrders),
-    takeFetchSaga(GET_ALL_ORDERS, fetchOrdersSuccess, ordersService.fetchAllOrders),
-    takeFetchSaga(CANCEL_ORDER, fetchOrdersSuccess, ordersService.cancelOrder),
-    takeFetchSaga(ADD_POPULAR, loadItemSuccess, itemService.addPopular),
-    takeFetchSaga(REMOVE_POPULAR, loadItemSuccess, itemService.removePoupular),
-    takeFetchForAllSaga(GET_POPULAR, fetchPopularSuccess, itemService.getPopular),
+    takeFetchSaga(ADD_TO_CART, fetchCartSuccess, api.orders.addToCart),
+    takeFetchSaga(GET_CART, fetchCartSuccess, api.orders.fetchCart),
+    takeFetchSaga(REMOVE_ONE, fetchCartSuccess, api.orders.removeOne),
+    takeFetchSaga(REMOVE_ALL, fetchCartSuccess, api.orders.removeAll),
+    takeFetchSaga(MAKE_ORDER, madeOrderSuccess, api.orders.makeOrder),
+    takeFetchSaga(GET_MY_ORDERS, fetchOrdersSuccess, api.orders.fetchMyOrders),
+    takeFetchSaga(GET_ALL_ORDERS, fetchOrdersSuccess, api.orders.fetchAllOrders),
+    takeFetchSaga(CANCEL_ORDER, fetchOrdersSuccess, api.orders.cancelOrder),
+    takeFetchSaga(ADD_POPULAR, loadItemSuccess, api.item.addPopular),
+    takeFetchSaga(REMOVE_POPULAR, loadItemSuccess, api.item.removePoupular),
+    takeFetchForAllSaga(GET_POPULAR, fetchPopularSuccess, api.item.getPopular),
   ])
 }

@@ -1,9 +1,8 @@
 import { call, takeEvery, all, put } from 'redux-saga/effects'
-import authService from '../../services/authService';
 import { CREATE_USER, LOGIN_USER, CHECK_USERTYPE, LOGOUT, CreateUserTypeAction, LoginUserTypeAction } from './types';
 import { authRequest, createUserSuccess, authFailure, loginSuccess, setUserType } from '../authReducer/actions';
 import { logout } from './actions'
-import storage from 'src/services/storageServices'
+import { storage } from 'src/utils/localStorage'
 import { fetchCartSuccess } from '../ordersReducer/actions';
 import { api } from 'src/api';
 import { SagaIterator } from 'redux-saga';
@@ -12,7 +11,7 @@ import { UsertypeType } from 'src/types/authDataTypes';
 export function* createUserRequest({payload}: CreateUserTypeAction): Generator {
   yield put(authRequest())
   try {
-    yield call(authService.sendUserData, payload)
+    yield call(api.auth.sendUserData, payload)
     
     yield put(createUserSuccess())
 
@@ -41,7 +40,7 @@ export function* loginUserSaga({payload}: LoginUserTypeAction): SagaIterator {
 }
 
 export function* refreshTokenSaga(userType: UsertypeType, refToken: string): SagaIterator {
-  const {data} = yield call(authService.refresh, {userType, refToken})
+  const {data} = yield call(api.auth.refresh, {userType, refToken})
   yield call(storage.setItem, 'userData', data)
   return data
 }

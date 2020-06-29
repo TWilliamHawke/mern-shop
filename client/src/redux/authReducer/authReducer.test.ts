@@ -13,7 +13,7 @@ describe('test auth_loading action', () => {
     const initialState = {
       ...reducerState,
       loading: false,
-      errors: 'errorArray',
+      errors: ['errorArray'],
       successMessage: true
     }
     expect(authReducer(initialState, authRequest())).toEqual({
@@ -47,12 +47,12 @@ describe('loginSuccess test', () => {
     const initialState = {
       ...reducerState,
       loading: true,
-      userType: 'guest'
+      userType: null
     }
-    expect(authReducer(initialState, loginSuccess('usertype'))).toEqual({
+    expect(authReducer(initialState, loginSuccess('admin'))).toEqual({
       ...reducerState,
       loading: false,
-      userType: 'usertype'
+      userType: 'admin'
     })
   })
 })
@@ -64,10 +64,10 @@ describe('authFailure test', () => {
       loading: true,
       errors: []
     }
-    expect(authReducer(initialState, {type: AUTH_FAILURE, payload: 'errorArray'})).toEqual({
+    expect(authReducer(initialState, {type: AUTH_FAILURE, payload: ['errorArray']})).toEqual({
       ...reducerState,
       loading: false,
-      errors: 'errorArray'
+      errors: ['errorArray']
     })
   })
 })
@@ -102,11 +102,11 @@ describe('SET_USERTYPE test', () => {
   it('should set user type', () => {
     const initialState = {
       ...reducerState,
-      userType: ''
+      userType: null
     }
-    expect(authReducer(initialState, {type: SET_USERTYPE, payload: 'testType'})).toEqual({
+    expect(authReducer(initialState, {type: SET_USERTYPE, payload: 'user'})).toEqual({
       ...reducerState,
-      userType: 'testType'
+      userType: 'user'
     })
   })
 })

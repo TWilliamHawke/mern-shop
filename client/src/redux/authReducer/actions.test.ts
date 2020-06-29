@@ -21,8 +21,8 @@ describe('auth reducer actions test', () => {
   })
 
   it('should return AUTH_FAILURE type', () => {
-    tfMock.mockImplementation(() => 'errorsArray')
-    expect(authFailure({data: {message: 'errors'}})).toEqual({type: AUTH_FAILURE, payload: 'errorsArray'})
+    tfMock.mockImplementation(() => ['errorsArray'])
+    expect(authFailure({data: {message: 'errors'}})).toEqual({type: AUTH_FAILURE, payload: ['errorsArray']})
     expect(transformErrors).toBeCalled()
   })
 

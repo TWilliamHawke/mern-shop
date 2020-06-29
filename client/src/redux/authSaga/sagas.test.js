@@ -1,8 +1,7 @@
 import { createUserRequest, logoutSaga, loginUserSaga, checkUserTypeSaga, refreshTokenSaga } from './sagas'
 import { call, put } from 'redux-saga/effects'
 import { authRequest, createUserSuccess, authFailure, setUserType, loginSuccess } from '../authReducer/actions'
-import authService from '../../services/authService'
-import storage from '../../services/storageServices'
+import { storage } from 'src/utils/localStorage'
 import { logout } from './actions'
 import { api } from 'src/api'
 
@@ -15,7 +14,7 @@ describe('test user createUserRequest acion', () => {
   })
 
   it('should call servise function', () => {
-    expect(iterator.next().value).toMatchObject(call(authService.sendUserData, 'someData'))
+    expect(iterator.next().value).toMatchObject(call(api.auth.sendUserData, 'someData'))
   })
 
   it('should call createUserSuccess acion', () => {

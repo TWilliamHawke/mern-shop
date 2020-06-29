@@ -1,4 +1,4 @@
-const storage = {
+export const storage = {
   getItem: <T>(field: string): T | null => {
     const string = localStorage.getItem(field)
     if(!string) return null
@@ -15,5 +15,3 @@ const storage = {
     localStorage.removeItem(field)
   }
 }
-
-export default storage

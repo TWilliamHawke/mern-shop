@@ -7,7 +7,11 @@
     "test": "jest --watch",
     "dev": "webpack",
     "build": "webpack --env.mode=production",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "lint": "npm run typescript && npm run lint:ts",
+    "lint:ts": "eslint ./src/**/*.{tsx,ts}",
+    "typescript": "tsc"
+
   },
   "keywords": [],
   "author": "",

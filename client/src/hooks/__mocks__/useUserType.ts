@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 const useUserType = () => ({
   isAdmin: true,
   isAuthorise: true,

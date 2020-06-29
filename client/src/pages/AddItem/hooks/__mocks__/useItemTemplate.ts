@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 export const useItemTemplate = () => {
   return {
     itemData: 'testData', oldItemData: {title: 'testTitle'}, inputHandler: jest.fn(), category: {other: 'fields'}
