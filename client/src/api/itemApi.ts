@@ -34,11 +34,11 @@ export const itemApi = {
     return axios.get(`/api/items/filters?cat=${category}`)
   },
 
-  addPopular: (token: string, data: string): Promise<void> => {
+  addPopular: (token: string, data: string): Promise<ItemDataType> => {
     return axios.put('/api/items/addpopular', {id: data}, {headers: {authorization: token}})
   },
   
-  removePoupular: (token: string, data: string): Promise<void> => {
+  removePoupular: (token: string, data: string): Promise<ItemDataType> => {
     return axios.put('/api/items/removepopular', {id: data}, {headers: {authorization: token}})   
   },
 

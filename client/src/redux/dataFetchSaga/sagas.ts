@@ -9,13 +9,14 @@ import { fetchDataRequest, fetchDataFailure, fetchDataSuccess, fetchPopularSucce
 import { saveTemplateSuccess, loadImageSuccess, loadTemplateSuccess, getFieldsSuccess, clearTemplateData, addItemSuccess } from '../templateReducer/actions'
 import { loadCategorySuccess, loadItemSuccess, fetchFiltersSuccess } from '../itemReducer/actions'
 import { fetchCartSuccess, madeOrderSuccess, fetchOrdersSuccess } from '../ordersReducer/actions'
-import { AnyAction, ActionCreator } from 'redux'
+import { AnyAction } from 'redux'
 import { SagaIterator } from 'redux-saga'
 
 // eslint-disable-next-line
-export type Service = (...args: any[] ) => Promise<unknown> 
+export type Service<T, U> = (data: T) => Promise<U>
+export type TokenFetchApi<T, U> = (token: string, data: T) => Promise<U>
 
-export const fetchSaga = (action: ActionCreator<AnyAction>, service: Service) => {
+export const fetchSaga = <T, U>(action: (payload: U) => AnyAction, service: TokenFetchApi<T, U>) => {
   return function* ({payload}: AnyAction): SagaIterator {
     try {
       //set global loading to true
@@ -36,7 +37,7 @@ export const fetchSaga = (action: ActionCreator<AnyAction>, service: Service) =>
   }
 }
 
-export const fetchForAllSaga = (action: ActionCreator<AnyAction>, service: Service) => {
+export const fetchForAllSaga = <T, U>(action: (payload: U) => AnyAction, service: Service<T, U>) => {
   return function* ({payload}: AnyAction): SagaIterator {
     try {
       //set global loading to true
@@ -58,40 +59,49 @@ export const fetchForAllSaga = (action: ActionCreator<AnyAction>, service: Servi
 
 
 
-const takeFetchSaga = (
-  actionType:string, actionCreator:ActionCreator<AnyAction>, service:Service) => {
-  return takeEvery(actionType, fetchSaga(actionCreator, service))
+const takeFetchSaga = <T, U>(
+  actionType:string,
+  actionCreator: (a: U) => AnyAction,
+  service:TokenFetchApi<T, U>
+  ) => {
+  return takeEvery(actionType, fetchSaga<T, U>(actionCreator, service))
 }
 
-const takeFetchForAllSaga = (
-  actionType:string, actionCreator:ActionCreator<AnyAction>, service:Service) => {
+const takeFetchForAllSaga = <T, U>(
+  actionType:string,
+  actionCreator:(payload: U) => AnyAction,
+  service:Service<T, U>
+  ) => {
   return takeEvery(actionType, fetchForAllSaga(actionCreator, service))
 }
 
 
 export default function* (): Generator {
   yield all([
-    takeFetchSaga(LOAD_IMAGE, loadImageSuccess, api.item.fetchImg),
     takeFetchSaga(SAVE_TEMPLATE, saveTemplateSuccess, api.template.saveTemplate),
     takeFetchSaga(LOAD_TEMPLATE, loadTemplateSuccess, api.item.fetchTemplate),
     takeFetchSaga(EDIT_FIELD, clearTemplateData, api.template.editTemplate),
     takeFetchSaga(ADD_FIELD, clearTemplateData, api.template.addField),
     takeFetchSaga(GET_FIELDS, getFieldsSuccess, api.template.getFields),
+    //editItem
+    takeFetchSaga(LOAD_IMAGE, loadImageSuccess, api.item.fetchImg),
     takeFetchSaga(ADD_ITEM, addItemSuccess, api.item.addItem),
     takeFetchSaga(EDIT_ITEM, addItemSuccess, api.item.editItem),
-
+    //category
     takeFetchForAllSaga(GET_CATEGORY, loadCategorySuccess, api.item.fetchCategory),
     takeFetchForAllSaga(GET_ITEM, loadItemSuccess, api.item.fetchItem),
     takeFetchForAllSaga(GET_FILTERS, fetchFiltersSuccess, api.item.fetchFilters),
-
+    //cart
     takeFetchSaga(ADD_TO_CART, fetchCartSuccess, api.orders.addToCart),
     takeFetchSaga(GET_CART, fetchCartSuccess, api.orders.fetchCart),
     takeFetchSaga(REMOVE_ONE, fetchCartSuccess, api.orders.removeOne),
     takeFetchSaga(REMOVE_ALL, fetchCartSuccess, api.orders.removeAll),
+    //orders
     takeFetchSaga(MAKE_ORDER, madeOrderSuccess, api.orders.makeOrder),
     takeFetchSaga(GET_MY_ORDERS, fetchOrdersSuccess, api.orders.fetchMyOrders),
     takeFetchSaga(GET_ALL_ORDERS, fetchOrdersSuccess, api.orders.fetchAllOrders),
     takeFetchSaga(CANCEL_ORDER, fetchOrdersSuccess, api.orders.cancelOrder),
+    //main page items
     takeFetchSaga(ADD_POPULAR, loadItemSuccess, api.item.addPopular),
     takeFetchSaga(REMOVE_POPULAR, loadItemSuccess, api.item.removePoupular),
     takeFetchForAllSaga(GET_POPULAR, fetchPopularSuccess, api.item.getPopular),
