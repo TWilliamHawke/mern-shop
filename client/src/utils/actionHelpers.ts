@@ -32,15 +32,17 @@ export const tfFilterToString = ({
   min,
   max,
   checkedBrands,
-  checkedFilters
+  checkedFilters //[key: string]: Record<string, boolean>
 }: TfFilterToStringInput): string => {
+
   const brands = Object.entries(checkedBrands)
-    .filter(brand => brand[1])
-    .map(brand => brand[0])
+    .flatMap(brand => brand[1] ? [brand[0]] : [])
     .join(',')
     
-    const filters = Object.values(checkedFilters)
-      .map(field => Object.entries(field).filter(f => f[1]).map(f => f[0]).join(','))
-      .filter(string => string !== '').join(';')
+    
+  const filters = Object.values(checkedFilters)
+    .map(field => Object.entries(field).flatMap(f => f[1] ? [f[0]] : []).join(','))
+    .filter(string => string !== '').join(';')
+    
   return `cat=${cat}&min=${min}&max=${max}&brands=${brands}&filters=${filters}`
 }

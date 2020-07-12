@@ -16,8 +16,16 @@ import { SagaIterator } from 'redux-saga'
 export type Service<T, U> = (data: T) => Promise<U>
 export type TokenFetchApi<T, U> = (token: string, data: T) => Promise<U>
 
-export const fetchSaga = <T, U>(action: (payload: U) => AnyAction, service: TokenFetchApi<T, U>) => {
-  return function* ({payload}: AnyAction): SagaIterator {
+type SerType<T, U> = Service<T, U> | TokenFetchApi<T, U>
+
+type FetchSagaOverload = {
+  <T, U>(action: (payload: U) => AnyAction, service: TokenFetchApi<T, U>): ({payload}: AnyAction) => SagaIterator
+  <T, U>(action: (payload: U) => AnyAction, service: Service<T, U>): ({payload}: AnyAction) => SagaIterator
+}
+
+// eslint-disable-next-line
+export const fetchSaga: FetchSagaOverload = (action:any, service:any) => {
+  return function* ({payload}: AnyAction) {
     try {
       //set global loading to true
       yield put(fetchDataRequest())
@@ -57,14 +65,12 @@ export const fetchForAllSaga = <T, U>(action: (payload: U) => AnyAction, service
   }
 }
 
-
-
 const takeFetchSaga = <T, U>(
   actionType:string,
   actionCreator: (a: U) => AnyAction,
   service:TokenFetchApi<T, U>
   ) => {
-  return takeEvery(actionType, fetchSaga<T, U>(actionCreator, service))
+  return takeEvery(actionType, fetchSaga(actionCreator, service))
 }
 
 const takeFetchForAllSaga = <T, U>(

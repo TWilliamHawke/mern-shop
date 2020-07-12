@@ -14,9 +14,7 @@ export type TfItemDataInput = {
   itemPrice: string | number;
   itemDiscount: string | number;
   imageUrl: string;
-  other: {
-    [key: string]: string
-  };
+  other: Record<string, string>
   oldImg?: string
   imageId: string | null
   id?: string
@@ -25,18 +23,14 @@ export type TfItemDataInput = {
 }
 
 export type CheckedFiltersType = {
-  [key: string]: {
-    [key: string]: boolean
-  }
+  [key: string]: Record<string, boolean>
 };
 
 export type TfFilterToStringInput = {
   cat: string;
   min: string;
   max: string;
-  checkedBrands: {
-    [key: string]: boolean
-  };
+  checkedBrands: Record<string, boolean>
   checkedFilters: CheckedFiltersType
 }
 
