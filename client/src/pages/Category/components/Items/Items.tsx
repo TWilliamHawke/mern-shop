@@ -17,16 +17,21 @@ export const Items: FC<PropTypes> = ({ header, categoryData }) => {
 
   if(!categoryData) return <Spinner />
 
+  const addItemHandler = () => history.push({pathname: 'addItem/', state: header})
+
   return (
     <>
       <h2>{header}</h2>
       {!categoryData.length && <p>Category is empty</p>}
       <div className='category-wrapper'>
         {categoryData.map(item => <ItemPreview key={item._id} itemData={item} />)}
-        {isAdmin && <div className='preview-wrapper plus-wrapper' onClick={() => history.push({pathname: 'addItem/', state: header})}>
-          <div className='add-item-plus'></div>
+        {isAdmin && (
+        <div
+          className='preview-wrapper plus-wrapper'
+          onClick={addItemHandler}>
+          <div className='add-item-plus' />
           Add new {header}
-        </div>}
+        </div>)}
       </div>
     </>
   );

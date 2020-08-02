@@ -7,13 +7,12 @@ import { ParamsType } from "src/types/hookTypes"
 import { getFilters, getCategory } from "src/redux/dataFetchSaga/actions"
 import { clearFilters } from "src/redux/itemReducer/actions"
 import { useEffect } from "react"
-import { GetCategoryAction } from "src/redux/dataFetchSaga/types"
 import { TfFilterToStringInput } from "src/types/actionHelpersTypes"
 
 type UseCategoryDataType = {
   categoryData: CategoryDataType | null
   filters: FiltersType | null
-  getCategory: (d: TfFilterToStringInput) => GetCategoryAction
+  getCategory: (d: TfFilterToStringInput) => void
 }
 
 export const useCategoryData = (): UseCategoryDataType => {
@@ -34,6 +33,6 @@ export const useCategoryData = (): UseCategoryDataType => {
   return {
     categoryData,
     filters,
-    getCategory: (d: TfFilterToStringInput) => dispatch(getCategory(d))
+    getCategory: (d: TfFilterToStringInput) => void dispatch(getCategory(d))
   }
 }

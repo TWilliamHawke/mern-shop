@@ -1,3 +1,5 @@
+// template/fields
+
 const transformFields = (data) => {
   const [category, fields] = data
 

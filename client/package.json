@@ -11,7 +11,6 @@
     "lint": "npm run typescript && npm run lint:ts",
     "lint:ts": "eslint ./src/**/*.{tsx,ts}",
     "typescript": "tsc"
-
   },
   "keywords": [],
   "author": "",
@@ -26,6 +25,7 @@
     "@babel/preset-react": "^7.10.1",
     "@babel/preset-typescript": "^7.10.1",
     "@testing-library/react": "^10.4.3",
+    "@testing-library/react-hooks": "^3.3.0",
     "@types/enzyme": "^3.10.5",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/jest": "^26.0.3",

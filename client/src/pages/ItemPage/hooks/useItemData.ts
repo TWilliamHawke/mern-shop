@@ -11,14 +11,13 @@ import { ItemState } from "src/redux/itemReducer/itemReducer"
 import { GlobalStore } from "src/redux/globalReducer/globalReducer"
 import { ParamsType } from "src/types/hookTypes"
 import { ItemDataType } from 'src/types/itemsDataType'
-import { AddPopularAction, RemovePopularAction } from "src/redux/dataFetchSaga/types"
 
 type UseItemDataType = {
   itemData: ItemDataType | null
   gotoEditItem: () => void
   isAdmin: boolean,
   addToCartHandler: () => void
-  popularHandler: () => AddPopularAction | RemovePopularAction | undefined
+  popularHandler: () => void
   loading: boolean
 }
 
@@ -34,7 +33,6 @@ export const useItemData = (): UseItemDataType => {
   useEffect(() => {
     dispatch(getItem(params.item))
 
-    // eslint-disable-next-line
   }, [params.item, dispatch])
 
   useEffect(() => {
@@ -51,16 +49,16 @@ export const useItemData = (): UseItemDataType => {
   }
 
   const addToCartHandler = () => {
-    if(isGuest) return history.push('/login')
-    if(loading || !itemData) return
+    if(isGuest) return history.push('/login');
+    if(loading || !itemData) return;
     dispatch(addToCart(itemData._id))
   }
 
   const popularHandler = () => {
-    if(loading || !itemData) return
-    const id = itemData._id.toString()
-    if(!itemData.popular) return dispatch(addPopular(id))
-    return dispatch(removePoupular(id))
+    if(loading || !itemData) return;
+    const id = itemData._id.toString();
+    if(!itemData.popular) return void dispatch(addPopular(id));
+    return void dispatch(removePoupular(id));
   }
 
   return {

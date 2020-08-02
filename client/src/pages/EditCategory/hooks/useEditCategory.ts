@@ -16,7 +16,7 @@ type UseEditCategoryType = {
   setBrands: (t: string[]) => void
   checkHandle: (e: ChangeEvent) => void
   fields: FieldType<string>[]
-  setAddField: React.Dispatch<React.SetStateAction<boolean | string>>
+  setAddField: (a: boolean | string) => void,
   selectedFields: Record<string, boolean>
 }
 
