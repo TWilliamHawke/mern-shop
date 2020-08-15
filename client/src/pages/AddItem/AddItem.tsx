@@ -15,6 +15,7 @@ export const AddItem: FC = () => {
   const { customData, setCustomData } = useCustomData(oldItemData?.other)
   const { saveItemHandler } = useSaveItemHandler({customData, itemData, oldItemData})
 
+  const header = oldItemData ? 'Edit this' : 'Add new'
     
   if(!category) return <Spinner />
 
@@ -25,6 +26,7 @@ export const AddItem: FC = () => {
       </div>
       <form className='add-item-form' onSubmit={saveItemHandler}>
         <DefaultFields
+          header={header}
           title={category.name}
           brands={category.brands}
           setInputValues={inputHandler}

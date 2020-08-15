@@ -12,13 +12,16 @@ const router = new Router()
 
 router.post('/image', checkAdmin, upload.single('itemImg'), async(req, res) => {
   try {
-    const img = req.file.path
-
+    const img = `images\\${req.file.filename}`
     const images = await Image.find({linkedTo: {$exists: false}})
+    //small bug after refactoring
     await images.map(({imageUrl}) => imageUrl.split('\\')[1])
-      .forEach(async file => await fs.unlink(`images/${file}`, err => {
-        if(err) throw err
-      }))
+      .forEach(async file => {
+        await fs.unlink(`src/images/${file}`, err => {
+          if(err) throw err
+        })
+        console.log(file, 'has been deleted')
+      })
 
     await Image.deleteMany({linkedTo: {$exists: false}})
 

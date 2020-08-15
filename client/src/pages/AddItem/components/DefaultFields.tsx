@@ -8,14 +8,15 @@ type PropTypes = {
   brands: string[]
   setInputValues: InputHandlerType
   inputValues: Record<string, string | number | undefined>
+  header: string
 }
 
-const DefaultFields: FC<PropTypes> = ({title, inputValues, setInputValues, brands}) => {
+const DefaultFields: FC<PropTypes> = ({title, inputValues, setInputValues, brands, header}) => {
   
   return(
     <div className='default-field'>
       <div className='default-field-text'>
-        <h3>Add new {title}</h3>
+        <h3>{header} {title}</h3>
         
         <DefaultInputs setInputValues={setInputValues} inputValues={inputValues} />
 

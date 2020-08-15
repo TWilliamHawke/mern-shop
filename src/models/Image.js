@@ -27,8 +27,11 @@ ImageSchema.statics.changeLink = async function(oldImg, newImg, title) {
     const oldImage = await this.findOne({linkedTo: title})
     if(!oldImage) return true
     const oldFile = oldImage.imageUrl.split('\\')[1]
-    await fs.unlink(`images/${oldFile}`, err => {
-      if(err) throw err
+    await fs.unlink(`src/images/${oldFile}`, err => {
+      if(err) {
+        console.log('image detelion failed')
+        throw err
+      }
     })
     await this.deleteOne({linkedTo: title})
   }
