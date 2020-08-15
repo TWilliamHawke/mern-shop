@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { addItem, editItem } from 'src/redux/dataFetchSaga/actions'
+import { addItem, editItem } from 'src/redux/templateSaga/actions'
 import { LocalItemData } from './useItemTemplate'
 import { FormEvent } from 'react'
 

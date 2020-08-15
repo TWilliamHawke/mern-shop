@@ -1,4 +1,4 @@
-import { loadImage } from "src/redux/dataFetchSaga/actions";
+import { loadImage } from "src/redux/templateSaga/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "src/redux/store";
 import { TemplateStore } from "src/redux/templateReducer/templateReducer";

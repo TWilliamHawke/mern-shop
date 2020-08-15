@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory, useParams } from "react-router-dom"
 import { useEffect, useState, ChangeEvent } from "react"
-import { loadTemplate } from 'src/redux/dataFetchSaga/actions'
+import { loadTemplate } from 'src/redux/templateSaga/actions'
 import { clearTemplateData } from 'src/redux/templateReducer/actions';
 import { AppState } from "src/redux/store";
 import { TemplateStore } from "src/redux/templateReducer/templateReducer";

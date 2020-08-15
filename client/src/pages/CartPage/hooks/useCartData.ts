@@ -4,7 +4,7 @@ import { Orderstate } from "src/redux/ordersReducer/ordersReducer"
 import { GlobalStore } from "src/redux/globalReducer/globalReducer"
 import { CartDataType } from "src/types/ordersDataTypes"
 import { useEffect } from "react"
-import { getCart } from "src/redux/dataFetchSaga/actions"
+import { getCart } from "src/redux/ordersSaga/actions"
 
 export type UseCartDataType = {
   cart: CartDataType | null

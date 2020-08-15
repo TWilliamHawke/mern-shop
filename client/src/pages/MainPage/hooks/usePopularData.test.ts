@@ -1,6 +1,6 @@
 import { usePopularData } from './usePopularData'
 import { renderHook } from '@testing-library/react-hooks'
-import { getPopular } from 'src/redux/dataFetchSaga/actions'
+import { getPopular } from 'src/redux/itemSaga/actions'
 import { useSelector } from 'react-redux'
 
 const mockDispatch = jest.fn()

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppState } from "src/redux/store"
 import { GlobalStore } from "src/redux/globalReducer/globalReducer"
 import { useEffect } from "react"
-import { getPopular } from "src/redux/dataFetchSaga/actions"
+import { getPopular } from "src/redux/itemSaga/actions"
 import { CategoryDataType } from "src/types/itemsDataType"
 
 type HookData = {

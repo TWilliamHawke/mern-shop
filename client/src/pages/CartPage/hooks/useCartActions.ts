@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux"
-import { makeOrder, addToCart, removeOne, removeAll } from "src/redux/dataFetchSaga/actions"
-import { MakeOrderAction, AddToCartAction, RemoveAllAction, RemoveOneAction } from "src/redux/dataFetchSaga/types"
+import { addToCart, removeOne, removeAll } from "src/redux/ordersSaga/actions"
+import { MakeOrderAction, AddToCartAction, RemoveAllAction, RemoveOneAction } from "src/redux/ordersSaga/types"
+import { makeOrder } from 'src/redux/ordersSaga/actions'
 
 type UseCartActionsType = {
   makeOrder: (a: number) => MakeOrderAction

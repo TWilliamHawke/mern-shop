@@ -1,11 +1,10 @@
 import { useSelector, useDispatch } from "react-redux"
-import { getAllOrders, getMyOrders } from 'src/redux/dataFetchSaga/actions'
-import { cancelOrder } from 'src/redux/dataFetchSaga/actions'
+import { cancelOrder, getAllOrders, getMyOrders } from 'src/redux/ordersSaga/actions'
 import { useEffect } from "react"
 import { AppState } from "src/redux/store"
 import { Orderstate } from "src/redux/ordersReducer/ordersReducer"
 import { OrdersDataType } from "src/types/ordersDataTypes"
-import { CancelOrderAction } from "src/redux/dataFetchSaga/types"
+import { CancelOrderAction } from "src/redux/ordersSaga/types"
 
 type UseOrdersDataType = (all: boolean) => ({
   orders: OrdersDataType

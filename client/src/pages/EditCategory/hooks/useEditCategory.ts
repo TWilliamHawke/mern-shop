@@ -4,7 +4,7 @@ import { TemplateStore } from "src/redux/templateReducer/templateReducer"
 import { useEffect, useState, ChangeEvent } from "react"
 import { useHistory, useParams, useLocation } from "react-router-dom"
 import { ParamsType } from "src/types/hookTypes"
-import { getFields, saveTemplate } from "src/redux/dataFetchSaga/actions"
+import { getFields, saveTemplate } from "src/redux/templateSaga/actions"
 import { clearTemplateData } from "src/redux/templateReducer/actions"
 import { FieldType } from "src/types/templateDataType"
 

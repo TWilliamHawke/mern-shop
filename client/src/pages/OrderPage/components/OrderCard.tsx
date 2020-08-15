@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import convertPrice from 'src/utils/convertPrice';
 import { convertDate } from 'src/utils/convertDate';
 import { OrderType } from 'src/types/ordersDataTypes';
-import { CancelOrderAction } from 'src/redux/dataFetchSaga/types';
+import { CancelOrderAction } from 'src/redux/ordersSaga/types';
 
 type PropTypes = {
   data: OrderType

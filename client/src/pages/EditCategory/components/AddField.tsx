@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FC, FormEvent, MouseEvent, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { addFieldValidation } from 'src/utils/addFieldValidation';
-import { editField, addField } from 'src/redux/dataFetchSaga/actions'
+import { editField, addField } from 'src/redux/templateSaga/actions'
 import Values from './Values'
 import { FieldType } from 'src/types/templateDataType';
 import { EditFieldData } from 'src/types/fetchDataTypes';

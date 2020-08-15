@@ -2,7 +2,8 @@ import { useEffect } from "react"
 import { useParams, useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
-import { getItem, addToCart, addPopular, removePoupular } from "src/redux/dataFetchSaga/actions"
+import { getItem, addPopular, removePoupular } from "src/redux/itemSaga/actions"
+import { addToCart } from 'src/redux/ordersSaga/actions'
 import { clearItemData } from "src/redux/itemReducer/actions"
 import useUserType from "src/hooks/useUserType"
 // types
