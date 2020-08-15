@@ -1,77 +1,17 @@
 const { Router } = require('express')
 const { checkUser, checkAdmin } = require('../middleware/checkToken')
-const User = require('../models/User')
-const Order = require('../models/Order.js')
+//controllers
+const { postOrders } = require('../controllers/orders/postOrders')
+const { getOrders } = require('../controllers/orders/getOrders')
+const { getAllOrders } = require('../controllers/orders/getAllOrders')
+const { deleteOrder } = require('../controllers/orders/deleteOrder')
 
 const router = new Router()
 
 
-router.post('/', checkUser, async(req, res) => {
-  try {
-    const user = await User.findById(req.user.id)
-    const {cart, login} = await user.populate('cart.item').execPopulate()
-    const items = cart.map(({item, count}) => ({
-      title: item.title,
-      id: item._id,
-      count
-    }))
-
-    console.log(items[0])
-
-    const cost = cart.reduce((sum, {item, count}) => sum + item.price * count, 0)
-
-    const order = new Order({
-      userId: user._id,
-      login,
-      items,
-      cost
-    })
-
-    user.cart = []
-    await user.save()
-    await order.save()
-
-    res.json({message: 'ok'})
-
-  } catch(e) {
-    console.log(e)
-    res.status(500).json({message: 'Server error'})
-  }
-})
-
-router.get('/', checkUser, async(req, res) => {
-  try {
-    const orders = await Order.find({userId: req.user.id})
-
-    res.json(orders)
-  } catch(e) {
-    console.log(e)
-    res.status(500).json({message: 'Server error'})
-  }
-})
-
-router.get('/all', checkAdmin, async(req, res) => {
-  try {
-    const orders = await Order.find({})
-
-    res.json(orders)
-  } catch(e) {
-    console.log(e)
-    res.status(500).json({message: 'Server error'})
-  }
-})
-
-router.delete('/', checkUser, async(req, res) => {
-  try {
-    await Order.findByIdAndDelete(req.body.id)
-    const orders = await Order.find({userId: req.user.id})
-
-    res.json(orders)
-  } catch(e) {
-    console.log(e)
-    res.status(500).json({message: 'Server error'})
-  }
-
-})
+router.post('/', checkUser, postOrders)
+router.get('/', checkUser, getOrders)
+router.get('/all', checkAdmin, getAllOrders)
+router.delete('/', checkUser, deleteOrder)
 
 module.exports = router

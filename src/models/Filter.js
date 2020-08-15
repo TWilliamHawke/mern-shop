@@ -1,4 +1,5 @@
 const {Schema, model, Types} = require('mongoose')
+const { createFilters } = require('./Static/createFilters')
 
 const filterSchema = new Schema({
   catName: {type: String, required: true},
@@ -6,41 +7,7 @@ const filterSchema = new Schema({
   value: {type: String, required: true}
 })
 
-filterSchema.statics.createFilters = async function(fieldsArray, catName) {
-  try {
-
-    const existFilters = await this.find({catName})
-
-    const checkExist = (item, array) => {
-      let match = false
-      for(exist of array) {
-        if(exist.value == item.value && exist.field == item.field) {
-          match = true
-          break
-        }
-      }
-      return match
-    }
-
-    fieldsArray
-      .filter(filter => !checkExist(filter, existFilters))
-      .forEach(async ({field, value}) => {
-        const newFilter = new this({field, value, catName})
-        existFilters.push(newFilter)
-        await newFilter.save()
-      })
-
-    const itemFilters = existFilters
-        .filter(filter => checkExist(filter, fieldsArray))
-        .map(filter => filter._id)
-
-    return itemFilters
-  
-  } catch(e) {
-    throw e
-  }
-}
-
+filterSchema.statics.createFilters = createFilters
 
 
 module.exports = model('Filter', filterSchema)

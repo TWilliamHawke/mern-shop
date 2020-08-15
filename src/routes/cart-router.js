@@ -1,67 +1,17 @@
 const { Router } = require('express')
 const { checkUser } = require('../middleware/checkToken')
-const User = require('../models/User')
+//controllers
+const { postCart } = require('../controllers/cart/postCart')
+const { getCart } = require('../controllers/cart/getCart')
+const { putCart } = require('../controllers/cart/putCart')
+const { delCart } = require('../controllers/cart/delCart')
 
 
 const router = new Router()
 
-router.post('/', checkUser, async(req, res) => {
-  try {
-    if(!req.body.id) return res.status(422).json({message: 'Wrong data'})
-    const user = await User.findById(req.user.id)
-    if(!user) res.status(422).json({message: 'User not found'})
-    await user.addToCart(req.body.id)
-    const {cart} = await user.populate('cart.item').execPopulate()
-
-    res.json(cart)
-  } catch(e) {
-    console.log(e)
-    res.status(500).json({message: 'Server error'})
-  }
-})
-
-router.get('/', checkUser, async(req, res) => {
-  try {
-    const user = await User.findById(req.user.id)
-    if(!user) res.status(422).json({message: 'User not found'})
-
-    const {cart} = await user.populate('cart.item').execPopulate()
-
-    res.json(cart)
-  } catch(e) {
-    console.log(e)
-    res.status(500).json({message: 'Server error'})
-  }
-})
-
-router.put('/', checkUser, async(req, res) => {
-  try {
-    if(!req.body.id) return res.status(422).json({message: 'Wrong data'})
-    const user = await User.findById(req.user.id)
-    if(!user) res.status(422).json({message: 'User not found'})
-    await user.removeOne(req.body.id)
-    const {cart} = await user.populate('cart.item').execPopulate()
-
-    res.json(cart)
-  } catch(e) {
-    console.log(e)
-    res.status(500).json({message: 'Server error'})
-  }
-})
-
-router.delete('/', checkUser, async(req, res) => {
-  try {
-    if(!req.body.id) return res.status(422).json({message: 'Wrong data'})
-    const user = await User.findById(req.user.id)
-    if(!user) res.status(422).json({message: 'User not found'})
-    await user.removeAll(req.body.id)
-    const {cart} = await user.populate('cart.item').execPopulate()
-
-    res.json(cart)
-  } catch(e) {
-    console.log(e)
-    res.status(500).json({message: 'Server error'})
-  }
-})
+router.post('/', checkUser, postCart)
+router.get('/', checkUser, getCart)
+router.put('/', checkUser, putCart)
+router.delete('/', checkUser, delCart)
 
 module.exports = router
