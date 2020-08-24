@@ -1,14 +1,14 @@
 import { call, takeEvery, all, put } from 'redux-saga/effects'
-import { CREATE_USER, LOGIN_USER, CHECK_USERTYPE, LOGOUT, CreateUserTypeAction, LoginUserTypeAction } from './types';
+import * as types from './types';
 import { authRequest, createUserSuccess, authFailure, loginSuccess, setUserType } from '../authReducer/actions';
 import { logout } from './actions'
 import { storage } from 'src/utils/localStorage'
 import { fetchCartSuccess } from '../ordersReducer/actions';
 import { api } from 'src/api';
 import { SagaIterator } from 'redux-saga';
-import { UsertypeType } from 'src/types/authDataTypes';
+import { refreshTokenSaga } from '../dataFetchSaga/getTokenSaga';
 
-export function* createUserRequest({payload}: CreateUserTypeAction): Generator {
+export function* createUserRequest({payload}: types.CreateUserTypeAction): Generator {
   yield put(authRequest())
   try {
     yield call(api.auth.sendUserData, payload)
@@ -25,7 +25,7 @@ export function* logoutSaga(): Generator {
   yield put(setUserType('guest'))
 }
 
-export function* loginUserSaga({payload}: LoginUserTypeAction): SagaIterator {
+export function* loginUserSaga({payload}: types.LoginUserTypeAction): SagaIterator {
   yield put(authRequest())
   try {
     const { data } = yield call(api.auth.login, payload)
@@ -39,31 +39,10 @@ export function* loginUserSaga({payload}: LoginUserTypeAction): SagaIterator {
 
 }
 
-export function* refreshTokenSaga(userType: UsertypeType, refToken: string): SagaIterator {
-  const {data} = yield call(api.auth.refresh, {userType, refToken})
-  yield call(storage.setItem, 'userData', data)
-  return data
-}
-
-export function* getTokenSaga(): SagaIterator {
-  try {
-    const tokens = yield call(storage.getItem, 'userData')
-    const {userType, tokens: {refToken, token, tokenDie}} = tokens
-  
-    if(tokenDie > Date.now()) return `Bearer ${token}`
-  
-    const userData = yield call(refreshTokenSaga, userType, refToken)
-    return `Bearer ${userData.tokens.token}`  
-  } catch(e) {
-    yield put(logout())
-  }
-}
-
-
 export function* checkUserTypeSaga(): SagaIterator {
   try {  
     const tokens = yield call(storage.getItem, 'userData')
-    const {userType, tokens: {refToken}} = tokens
+    const { userType, tokens: {refToken} } = tokens
     const data = yield call(refreshTokenSaga, userType, refToken)
     yield put(setUserType(data.userType))
     yield put(fetchCartSuccess(data.cart))
@@ -74,9 +53,9 @@ export function* checkUserTypeSaga(): SagaIterator {
 
 export default function* authSaga(): Generator {
   yield all([
-    takeEvery(CREATE_USER, createUserRequest),
-    takeEvery(LOGOUT, logoutSaga),
-    takeEvery(LOGIN_USER, loginUserSaga),
-    takeEvery(CHECK_USERTYPE, checkUserTypeSaga)
+    takeEvery(types.CREATE_USER, createUserRequest),
+    takeEvery(types.LOGOUT, logoutSaga),
+    takeEvery(types.LOGIN_USER, loginUserSaga),
+    takeEvery(types.CHECK_USERTYPE, checkUserTypeSaga)
   ])
 }

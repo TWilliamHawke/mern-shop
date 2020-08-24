@@ -1,15 +1,10 @@
-const{ Schema, model } = require('mongoose')
+const { Schema, model } = require('mongoose')
 const { setLink } = require('./Static/setLink')
 const { changeLink } = require('./Static/changeLink')
 
 const ImageSchema = new Schema({
-  imageUrl: {
-    type: String,
-    required: true
-  },
-  linkedTo: {
-    type: String
-  }
+  imageUrl: { type: String, required: true },
+  linkedTo: String
 })
 
 ImageSchema.statics.setLink = setLink

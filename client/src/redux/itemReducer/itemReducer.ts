@@ -1,4 +1,4 @@
-import { LOAD_CATEGORY_SUCCESS, LOAD_ITEM_SUCCESS, FETCH_FILTERS_SUCCESS, CLEAR_FILTERS, CLEAR_ITEMDATA, FetchItemsActionsType, } from "./types"
+import * as types from "./types"
 import { CategoryDataType, ItemDataType, FiltersType } from "src/types/itemsDataType"
 
 export type ItemState = {
@@ -13,31 +13,31 @@ export const initialState: ItemState = {
   filters: null
 }
 
-const reducer = (state = initialState, action: FetchItemsActionsType): ItemState => {
+const reducer = (state = initialState, action: types.FetchItemsActionsType): ItemState => {
   switch (action.type) {
-    case LOAD_CATEGORY_SUCCESS:
+    case types.LOAD_CATEGORY_SUCCESS:
       return {
         ...state,
         categoryData: action.payload
       }
-    case FETCH_FILTERS_SUCCESS:
+    case types.FETCH_FILTERS_SUCCESS:
       return {
         ...state,
         filters: action.payload.filters,
         categoryData: action.payload.categoryData,
       }
-    case LOAD_ITEM_SUCCESS:
+    case types.LOAD_ITEM_SUCCESS:
       return {
         ...state,
         itemData: action.payload
       }
-    case CLEAR_FILTERS:
+    case types.CLEAR_FILTERS:
       return {
         ...state,
         categoryData: null,
         filters: null
       }
-    case CLEAR_ITEMDATA:
+    case types.CLEAR_ITEMDATA:
       return {
         ...state,
         itemData: null

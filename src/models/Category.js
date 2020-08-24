@@ -1,19 +1,15 @@
 const {Schema, model, Types} = require('mongoose')
 
 const categorySchema = new Schema({
-  name: {type: String},
-  path: {type: String},
-  minValue: { type: Number, default: 0},
-  maxValue: { type: Number, default: 0},
+  name: String,
+  path: String,
+  minValue: { type: Number, default: 0 },
+  maxValue: { type: Number, default: 0 },
   fields: [
-    {
-        type: Types.ObjectId, ref: 'Field'
-    }
+    { type: Types.ObjectId, ref: 'Field' }
   ],
   brands: [
-    {
-      type: String,
-    }
+    { type: String, }
   ]
 })
 

@@ -1,4 +1,4 @@
-import { FETCH_DATA_REQUEST, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE, CLEAR_GLOBAL_ERRORS, FETCH_POPULAR_SUCCESS, GlobalDataActionsType } from "./types"
+import * as types from "./types"
 import { ErrorOutputType } from "src/types/authDataTypes"
 import { CategoryDataType } from "src/types/itemsDataType"
 
@@ -30,31 +30,31 @@ export const initialState: GlobalStore = {
   popular: []
 }
 
-const globalReducer = (state = initialState, action: GlobalDataActionsType): GlobalStore => {
+const globalReducer = (state = initialState, action: types.GlobalDataActionsType): GlobalStore => {
   switch (action.type) {
-    case FETCH_DATA_REQUEST:
+    case types.FETCH_DATA_REQUEST:
       return {
         ...state,
         loading: true,
         errors: []
       }
-    case FETCH_DATA_SUCCESS:
+    case types.FETCH_DATA_SUCCESS:
       return {
         ...state,
         loading: false
       }
-    case FETCH_DATA_FAILURE:
+    case types.FETCH_DATA_FAILURE:
       return {
         ...state,
         loading: false,
         errors: action.payload,
       }
-    case CLEAR_GLOBAL_ERRORS:
+    case types.CLEAR_GLOBAL_ERRORS:
       return {
         ...state,
         errors: []
       }
-    case FETCH_POPULAR_SUCCESS:
+    case types.FETCH_POPULAR_SUCCESS:
       return {
         ...state,
         popular: action.payload

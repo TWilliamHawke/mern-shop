@@ -1,6 +1,6 @@
 import { put, call, takeEvery, ForkEffect } from 'redux-saga/effects'
 import { transformErrors } from 'src/utils/actionHelpers'
-import { getTokenSaga } from '../authSaga/sagas'
+import { getTokenSaga } from './getTokenSaga'
 //actions
 import { fetchDataRequest, fetchDataFailure, fetchDataSuccess } from '../globalReducer/actions'
 import { AnyAction } from 'redux'

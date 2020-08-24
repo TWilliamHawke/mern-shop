@@ -10,14 +10,10 @@ const fieldSchema = new Schema({
     type: String,
     required: true
   },
-  measure: {
-    type: String,
-  },
+  measure: String,
   multiple: Boolean,
   values: [
-    {
-      type: String,
-    }
+    { type: String, }
   ]
 })
 

@@ -1,4 +1,4 @@
-import { ADD_FIELD_SUCCESS, GET_FIELDS_SUCCESS, SAVE_TEMPLATE_SUCCESS, SAVE_TEMPLATE_REDIRRECT, LOAD_IMAGE_SUCCESS, LOAD_TEMPLATE_SUCCESS, CLEAR_TEMPLATE_DATA, ADD_ITEM_SUCCESS, FetchTemplateActionsType } from "./types"
+import * as types from "./types"
 import { FieldType, CategoryTemplateType } from "src/types/templateDataType"
 import { ItemDataType } from "src/types/itemsDataType"
 
@@ -27,50 +27,50 @@ export const initialState: TemplateStore = {
   itemData: null
 }
 
-const templateReducer = (state = initialState, action: FetchTemplateActionsType): TemplateStore => {
+const templateReducer = (state = initialState, action: types.FetchTemplateActionsType): TemplateStore => {
   switch (action.type) {
-    case ADD_FIELD_SUCCESS:
+    case types.ADD_FIELD_SUCCESS:
       return {
         ...state,
         noContent: true
       }
-    case GET_FIELDS_SUCCESS:
+    case types.GET_FIELDS_SUCCESS:
       return {
         ...state,
         noContent: false,
         fields: action.payload.fields,
         brands: action.payload.brands
       }
-    case SAVE_TEMPLATE_SUCCESS:
+    case types.SAVE_TEMPLATE_SUCCESS:
       return {
         ...state,
         saveSuccess: true
       }
-    case SAVE_TEMPLATE_REDIRRECT:
+    case types.SAVE_TEMPLATE_REDIRRECT:
       return {
         ...state,
         saveSuccess: false,
         noContent: true
       }
-    case LOAD_IMAGE_SUCCESS: 
+    case types.LOAD_IMAGE_SUCCESS: 
       return {
         ...state,
         imageId: action.payload.id,
         imageUrl: action.payload.img
       }
-    case LOAD_TEMPLATE_SUCCESS:
+    case types.LOAD_TEMPLATE_SUCCESS:
       return {
         ...state,
         category: action.payload.category,
         itemData: action.payload.itemData,
         imageUrl: action.payload.itemData?.image || 'images/no-image.png'
       }
-    case ADD_ITEM_SUCCESS: 
+    case types.ADD_ITEM_SUCCESS: 
       return {
         ...state,
         saveItemSuccess: true
       }
-    case CLEAR_TEMPLATE_DATA:
+    case types.CLEAR_TEMPLATE_DATA:
       return {
         ...state,
         noContent: true,

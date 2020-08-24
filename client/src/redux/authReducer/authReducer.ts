@@ -1,4 +1,4 @@
-import { AUTH_REQUEST, CREATE_USER_SUCCESS, LOGIN_SUCCESS, AUTH_FAILURE, HIDE_SUCCESS_MESSAGE, REDIRECT_SUCCESS, SET_USERTYPE, AuthFetchActionTypes, CREATE_USER_REQUEST } from "./types"
+import * as types from "./types"
 import { ErrorOutputType, UsertypeType } from "src/types/authDataTypes"
 
 export type AuthState = {
@@ -17,48 +17,48 @@ export const initialState: AuthState = {
   allowRedirect: false,
 }
 
-const authReducer = (state = initialState, action: AuthFetchActionTypes): AuthState => {
+const authReducer = (state = initialState, action: types.AuthFetchActionTypes): AuthState => {
 
   switch (action?.type) {
-    case AUTH_REQUEST:
+    case types.AUTH_REQUEST:
       return {
         ...state,
         loading: true,
         successMessage: false,
         errors: []
       }
-    case CREATE_USER_REQUEST: 
+    case types.CREATE_USER_REQUEST: 
       return state
-    case AUTH_FAILURE: 
+    case types.AUTH_FAILURE: 
       return {
         ...state,
         errors: action.payload,
         loading: false
       }
-    case LOGIN_SUCCESS: 
+    case types.LOGIN_SUCCESS: 
       return {
         ...state,
         userType: action.payload,
         loading: false,
       }
-    case HIDE_SUCCESS_MESSAGE:
+    case types.HIDE_SUCCESS_MESSAGE:
       return {
         ...state,
         successMessage: false
       }
-    case REDIRECT_SUCCESS:
+    case types.REDIRECT_SUCCESS:
       return {
         ...state,
         allowRedirect: false
       }
-    case CREATE_USER_SUCCESS:
+    case types.CREATE_USER_SUCCESS:
       return {
         ...state,
         loading: false,
         successMessage: true,
         allowRedirect: true,
       }
-    case SET_USERTYPE:
+    case types.SET_USERTYPE:
       return {
         ...state,
         userType: action.payload
